@@ -5,9 +5,9 @@ import App from './App';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
+    // <React.StrictMode>  关闭严格模式，方便API调试
+    <App/>
+    // </React.StrictMode>
 );
 
 
