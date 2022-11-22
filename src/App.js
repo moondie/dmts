@@ -6,6 +6,7 @@ import {BrowserRouter, Routes, Route} from 'react-router-dom'
 import {AuthComponent} from "@/components/AuthComponent";
 import Login from '@/pages/Login'
 import EWDSLayout from '@/pages/Layout'
+import Main from "@/pages/Main";
 
 
 const App = () => (
@@ -21,6 +22,7 @@ const App = () => (
             <Routes>
                 <Route path='/' element={<AuthComponent><EWDSLayout/></AuthComponent>}></Route>
                 <Route path='/login' element={<Login/>}></Route>
+                <Route path='/main' element={<AuthComponent><Main/></AuthComponent>}></Route>
             </Routes>
         </div>
 

@@ -11,9 +11,69 @@ import './index.scss'
 import {useStore} from '@/store'
 import {useEffect} from 'react'
 
-const {Header, Sider} = Layout
+const {Header,Content, Sider} = Layout
 
-const EWDSLayout = () => {
+const sidebar_items = [
+    {
+        label: (
+            <Link to='/main'>数据概览</Link>
+        ),
+        key: '/main',
+        icon: <HomeOutlined/>,
+        children: [
+            {
+                label: (
+                    <Link to='/main/xxx'>xxx数据概览</Link>
+                ),
+                key: '/main/xxx',
+            },
+            {
+                label: (
+                    <Link to='/main/yyy'>yyy数据概览</Link>
+                ),
+                key: '/main/yyy',
+            }
+        ],
+    },
+    {
+        label: (
+            <Link to="/task">分析任务管理</Link>
+        ),
+        key: '/task',
+        icon: <DiffOutlined/>,
+        children: [
+            {
+                label: (
+                    <Link to='/task/create'>新建分析任务</Link>
+                ),
+                key: '/task/create',
+            },
+        ],
+    },
+    {
+        label: (
+            <Link to='/data'>分析数据查看</Link>
+        ),
+        key: '/data',
+        icon: <EditOutlined/>,
+        children: [
+            {
+                label: (
+                    <Link to='/data/url'>URL数据查看</Link>
+                ),
+                key: '/data/url',
+            },
+            {
+                label: (
+                    <Link to='/data/vulnerabilities'>漏洞数据查看</Link>
+                ),
+                key: '/data/vulnerabilities',
+            },
+        ],
+    },
+]
+
+const EWDSLayout = (content) => {
     const {pathname} = useLocation()
     const {userStore, loginStore} = useStore()
     const navigate = useNavigate()
@@ -41,7 +101,7 @@ const EWDSLayout = () => {
                 </div>
             </Header>
             <Layout>
-                <Sider width={200} className="site-layout-background">
+                <Sider width={250} className="site-layout-background">
                     {/* 高亮原理：defaultSelectedKeys === item key */}
                     {/* 获取当前激活的path路径？ */}
                     {/*
@@ -53,21 +113,19 @@ const EWDSLayout = () => {
                         theme="dark"
                         defaultSelectedKeys={pathname}
                         selectedKeys={pathname}
-                        style={{height: '100%', borderRight: 0}}
+                        style={{
+                            height: '100%',
+                            borderRight: 0,
+                            'overflow-y': 'scroll',
+                        }}
+                        items={sidebar_items}
                     >
-                        <Menu.Item icon={<HomeOutlined/>} key="/">
-                            <Link to='/'>数据概览</Link>
-                        </Menu.Item>
-                        <Menu.Item icon={<DiffOutlined/>} key="/article">
-                            <Link to="/article">分析任务管理</Link>
-                        </Menu.Item>
-                        <Menu.Item icon={<EditOutlined/>} key="/publish">
-                            <Link to='/publish'>分析数据查看</Link>
-                        </Menu.Item>
                     </Menu>
                 </Sider>
             </Layout>
-
+            <Content>
+                {content}
+            </Content>
         </Layout>
     )
 }
