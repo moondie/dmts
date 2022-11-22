@@ -1,32 +1,43 @@
 import './App.css';
 import React from 'react';
-import {Button, Space} from 'antd';
-import {BrowserRouter, Routes, Route} from 'react-router-dom'
-
+import {lazy, Suspense} from 'react'
+import {unstable_HistoryRouter as HistoryRouter, BrowserRouter, Routes, Route} from 'react-router-dom'
+import {history} from "@/utils";
 import {AuthComponent} from "@/components/AuthComponent";
-import Login from '@/pages/Login'
-import EWDSLayout from '@/pages/Layout'
-import Main from "@/pages/Main";
 
+const Login = lazy(() => import('./pages/Login'))
+const EWDSLayout = lazy(() => import('./pages/Layout'))
+const Main = lazy(() => import('./pages/Main'))
 
 const App = () => (
-    <BrowserRouter>
-        {/*<Space wrap>*/}
-        {/*    <Button type="primary">Primary Button</Button>*/}
-        {/*    <Button>Default Button</Button>*/}
-        {/*    <Button type="dashed">Dashed Button</Button>*/}
-        {/*    <Button type="text">Text Button</Button>*/}
-        {/*    <Button type="link">Link Button</Button>*/}
-        {/*</Space>*/}
+    <HistoryRouter history={history}>
         <div className='App'>
-            <Routes>
-                <Route path='/' element={<AuthComponent><EWDSLayout/></AuthComponent>}></Route>
-                <Route path='/login' element={<Login/>}></Route>
-                <Route path='/main' element={<AuthComponent><Main/></AuthComponent>}></Route>
-            </Routes>
+            <Suspense
+                fallback={
+                    <div
+                        style={{
+                            textAlign: 'center',
+                            marginTop: 200
+                        }}
+                    >
+                        loading...
+                    </div>
+                }
+            >
+                <Routes>
+                    <Route path='/' element={
+                        <AuthComponent>
+                            <EWDSLayout/>
+                        </AuthComponent>
+                    }>
+                        <Route path='main' index element={<Main/>}></Route>
+                    </Route>
+                    <Route path='/login' element={<Login/>}></Route>
+                </Routes>
+            </Suspense>
         </div>
 
-    </BrowserRouter>
+    </HistoryRouter>
 
 
 );

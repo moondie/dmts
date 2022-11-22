@@ -1,6 +1,8 @@
 import {Card, Form, Input, Checkbox, Button, message} from 'antd'
 import logo from '@/assets/logo.png'
 import {useNavigate} from 'react-router-dom'
+
+import sha256 from 'crypto-js/sha256'
 // 导入样式文件
 import './index.scss'
 
@@ -11,11 +13,10 @@ function Login() {
     const navigate = useNavigate()
 
     async function onFinish(values) {
-        console.log(values)
-        // values：放置的是所有表单项中用户输入的内容
         // todo:登录
-        const {userName, password} = values
-        await loginStore.getToken({userName, password})
+        let {name, password} = values
+        password = sha256(name + password).toString()//密码hash之后传输
+        await loginStore.getToken({name, password})
         // 跳转首页
         navigate('/', {replace: true})
         // 提示用户
@@ -24,7 +25,6 @@ function Login() {
 
     return (
         <div className="login">
-            <Button type='primary'>asdf</Button>
             <Card className="login-container">
                 <img className="login-logo" src={logo} alt=""/>
                 {/* 登录表单 */}
@@ -33,13 +33,13 @@ function Login() {
                     validateTrigger={['onBlur', 'onChange']}
                     initialValues={{
                         remember: true,
-                        userName: 'ewds',
+                        name: 'ewds',
                         password: 'ewds123'
                     }}
                     onFinish={onFinish}
                 >
                     <Form.Item
-                        name="userName"
+                        name="name"
                         rules={[
                             {
                                 required: true,

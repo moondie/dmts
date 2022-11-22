@@ -10,18 +10,13 @@ class LoginStore {
         makeAutoObservable(this)
     }
 
-    getToken = async ({userName, password}) => {
+    getToken = async ({name, password}) => {
         // 调用登录接口
-        // const res = await http.post('http://geek.itheima.net/v1_0/authorizations', {
-        //     userName, password
+        // const res = await http.post('/auth/login', {
+        //     name, password
         // })
-        const res = {
-            data: {
-                token: 123
-            }
-        }
-        // 存入token
-        this.token = res.data.token
+        // this.token = res.data.token
+        this.token = '123'
         // 存入ls
         setToken(this.token)
     }
