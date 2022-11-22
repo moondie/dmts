@@ -73,7 +73,7 @@ const sidebar_items = [
     },
 ]
 
-const EWDSLayout = (content) => {
+const EWDSLayout = () => {
     const {pathname} = useLocation()
     const {userStore, loginStore} = useStore()
     const navigate = useNavigate()
@@ -116,7 +116,7 @@ const EWDSLayout = (content) => {
                         style={{
                             height: '100%',
                             borderRight: 0,
-                            'overflow-y': 'scroll',
+                            overflowY: 'scroll',
                         }}
                         items={sidebar_items}
                     >
@@ -124,7 +124,6 @@ const EWDSLayout = (content) => {
                 </Sider>
             </Layout>
             <Content>
-                {content}
             </Content>
         </Layout>
     )
