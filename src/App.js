@@ -3,7 +3,10 @@ import React from 'react';
 import {Button, Space} from 'antd';
 import {BrowserRouter, Routes, Route} from 'react-router-dom'
 
-import Login from './pages/Login'
+import {AuthComponent} from "@/components/AuthComponent";
+import Login from '@/pages/Login'
+import EWDSLayout from '@/pages/Layout'
+
 
 const App = () => (
     <BrowserRouter>
@@ -16,7 +19,7 @@ const App = () => (
         {/*</Space>*/}
         <div className='App'>
             <Routes>
-                <Route path='/' element={<Login/>}></Route>
+                <Route path='/' element={<AuthComponent><EWDSLayout/></AuthComponent>}></Route>
                 <Route path='/login' element={<Login/>}></Route>
             </Routes>
         </div>

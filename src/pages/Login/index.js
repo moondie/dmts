@@ -4,9 +4,10 @@ import {useNavigate} from 'react-router-dom'
 // 导入样式文件
 import './index.scss'
 
-// import { useStore } from '@/store'
+import {useStore} from '@/store'
+
 function Login() {
-    // const { loginStore } = useStore()
+    const {loginStore} = useStore()
     const navigate = useNavigate()
 
     async function onFinish(values) {
@@ -14,7 +15,7 @@ function Login() {
         // values：放置的是所有表单项中用户输入的内容
         // todo:登录
         const {userName, password} = values
-        // await loginStore.getToken({ mobile, code })
+        await loginStore.getToken({userName, password})
         // 跳转首页
         navigate('/', {replace: true})
         // 提示用户
@@ -23,6 +24,7 @@ function Login() {
 
     return (
         <div className="login">
+            <Button type='primary'>asdf</Button>
             <Card className="login-container">
                 <img className="login-logo" src={logo} alt=""/>
                 {/* 登录表单 */}
