@@ -1,5 +1,5 @@
-import {Button, Layout, Menu, Popconfirm} from 'antd'
-import {Outlet, Link, useLocation, useNavigate} from 'react-router-dom'
+import {Layout, Menu, Popconfirm} from 'antd'
+import {Link, useLocation, useNavigate, Routes, Route} from 'react-router-dom'
 import {observer} from 'mobx-react-lite'
 import {
     HomeOutlined,
@@ -9,18 +9,28 @@ import {
 } from '@ant-design/icons'
 import './index.scss'
 import {useStore} from '@/store'
-import {useEffect} from 'react'
+import React, {lazy, useEffect} from 'react'
+import {Footer} from "antd/es/layout/layout";
 
 const {Header, Content, Sider} = Layout
 
+const Error = lazy(() => import('./Error'))
+const Main = lazy(() => import('./Main'))
+const Task = lazy(() => import('./Task'))
+const Data = lazy(() => import('./Data'))
+
 const sidebar_items = [
     {
-        label: (
-            <Link to='/main'>数据概览</Link>
-        ),
-        key: '/main',
+        label: '数据概览',
+        key: 'main',
         icon: <HomeOutlined/>,
         children: [
+            {
+                label: (
+                    <Link to='/main'>总体数据概览</Link>
+                ),
+                key: '/main',
+            },
             {
                 label: (
                     <Link to='/main/xxx'>xxx数据概览</Link>
@@ -36,12 +46,16 @@ const sidebar_items = [
         ],
     },
     {
-        label: (
-            <Link to="/task">分析任务管理</Link>
-        ),
-        key: '/task',
+        label: '分析任务管理',
+        key: 'task',
         icon: <DiffOutlined/>,
         children: [
+            {
+                label: (
+                    <Link to='/task'>分析任务总览</Link>
+                ),
+                key: '/task',
+            },
             {
                 label: (
                     <Link to='/task/create'>新建分析任务</Link>
@@ -51,12 +65,16 @@ const sidebar_items = [
         ],
     },
     {
-        label: (
-            <Link to='/data'>分析数据查看</Link>
-        ),
-        key: '/data',
+        label: '分析数据查看',
+        key: 'data',
         icon: <EditOutlined/>,
         children: [
+            {
+                label: (
+                    <Link to='/data'>分析数据总览</Link>
+                ),
+                key: '/data',
+            },
             {
                 label: (
                     <Link to='/data/url'>URL数据查看</Link>
@@ -85,18 +103,9 @@ const EWDSLayout = () => {
         loginStore.loginOut()
         navigate('/login')
     }
-    const onClickGetHandler = () => {
-        userStore.getTestData()
-    }
-    const onClickPostHandler = () => {
 
-    }
     return (
         <Layout>
-            <div>
-                <Button type='primary' onClick={onClickGetHandler}>接口测试 get</Button>
-                <Button type='primary'>接口测试 post</Button>
-            </div>
             <Header className="header">
                 <div className="logo"/>
                 <div className="user-info">
@@ -122,20 +131,42 @@ const EWDSLayout = () => {
                     <Menu
                         mode="inline"
                         theme="dark"
+                        defaultOpenKeys={[pathname.split('/')[1]]}
                         defaultSelectedKeys={pathname}
                         selectedKeys={pathname}
                         style={{
                             height: '100%',
                             borderRight: 0,
-                            overflowY: 'scroll',
+                            overflowY: 'auto',
                         }}
                         items={sidebar_items}
                     >
                     </Menu>
                 </Sider>
+                <Layout
+                    style={{
+                        padding: '0',
+                    }}
+                >
+                    <Content
+                        style={{
+                            padding: 24,
+                            margin: 0,
+                            overflowY: 'auto',
+                        }}
+                    >
+                        {/* 根目录下的路由 */}
+                        <Routes>
+                            {/* 子页面路由 */}
+                            <Route path='main/*' element={<Main/>}></Route>
+                            <Route path='task/*' element={<Task/>}></Route>
+                            <Route path='data/*' element={<Data/>}></Route>
+                            <Route path='*' element={<Error/>}></Route>
+                        </Routes>
+                        <Footer style={{ textAlign: 'center' }}>HUST EWDS@2022</Footer>
+                    </Content>
+                </Layout>
             </Layout>
-            <Content>
-            </Content>
         </Layout>
     )
 }

@@ -1,13 +1,12 @@
 import './App.css';
 import React from 'react';
 import {lazy, Suspense} from 'react'
-import {unstable_HistoryRouter as HistoryRouter, BrowserRouter, Routes, Route} from 'react-router-dom'
+import {unstable_HistoryRouter as HistoryRouter, BrowserRouter, Routes, Route, Navigate} from 'react-router-dom'
 import {history} from "@/utils";
 import {AuthComponent} from "@/components/AuthComponent";
 
 const Login = lazy(() => import('./pages/Login'))
 const EWDSLayout = lazy(() => import('./pages/Layout'))
-const Main = lazy(() => import('./pages/Main'))
 
 const App = () => (
     <HistoryRouter history={history}>
@@ -25,14 +24,16 @@ const App = () => (
                 }
             >
                 <Routes>
-                    <Route path='/' element={
+                    <Route path='/login' element={<Login/>}></Route>
+                    {/* EWDSLayout中继续路由，不知是否有更好的写法可以改进 */}
+                    <Route path="/" element={<Navigate to ="/main" />}/>
+                    <Route path='/*' element={
                         <AuthComponent>
                             <EWDSLayout/>
                         </AuthComponent>
                     }>
-                        <Route path='main' index element={<Main/>}></Route>
                     </Route>
-                    <Route path='/login' element={<Login/>}></Route>
+
                 </Routes>
             </Suspense>
         </div>
