@@ -12,11 +12,11 @@ class LoginStore {
 
     getToken = async ({name, password}) => {
         // 调用登录接口
-        // const res = await http.post('/auth/login', {
-        //     name, password
-        // })
-        // this.token = res.data.token
-        this.token = '123'
+        const res = await http.post('/auth/login', {
+            name, password
+        })
+        this.token = res.data.token
+        // this.token = '123'
         // 存入ls
         setToken(this.token)
     }

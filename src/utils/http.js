@@ -4,9 +4,10 @@
 import axios from 'axios'
 import { getToken } from './token'
 import { history } from './history'
+import {message} from "antd";
 const http = axios.create({
     baseURL: 'http://localhost:8001',
-    timeout: 5000
+    // timeout: 5000
 })
 // 添加请求拦截器
 http.interceptors.request.use((config) => {
@@ -32,6 +33,7 @@ http.interceptors.response.use((response) => {
         // 跳回到登录 reactRouter默认状态下 并不支持在组件之外完成路由跳转
         // 需要自己来实现
         history.push('/login')
+        message.error('登录超时，请重新登录')
     }
     return Promise.reject(error)
 })

@@ -1,4 +1,4 @@
-import {Layout, Menu, Popconfirm} from 'antd'
+import {Button, Layout, Menu, Popconfirm} from 'antd'
 import {Outlet, Link, useLocation, useNavigate} from 'react-router-dom'
 import {observer} from 'mobx-react-lite'
 import {
@@ -11,7 +11,7 @@ import './index.scss'
 import {useStore} from '@/store'
 import {useEffect} from 'react'
 
-const {Header,Content, Sider} = Layout
+const {Header, Content, Sider} = Layout
 
 const sidebar_items = [
     {
@@ -85,8 +85,18 @@ const EWDSLayout = () => {
         loginStore.loginOut()
         navigate('/login')
     }
+    const onClickGetHandler = () => {
+        userStore.getTestData()
+    }
+    const onClickPostHandler = () => {
+
+    }
     return (
         <Layout>
+            <div>
+                <Button type='primary' onClick={onClickGetHandler}>接口测试 get</Button>
+                <Button type='primary'>接口测试 post</Button>
+            </div>
             <Header className="header">
                 <div className="logo"/>
                 <div className="user-info">
@@ -108,6 +118,7 @@ const EWDSLayout = () => {
              defaultSelectedKeys: 初始化渲染的时候生效一次
              selectedKeys: 每次有值更新时都会重新渲染视图
           */}
+
                     <Menu
                         mode="inline"
                         theme="dark"
@@ -128,4 +139,4 @@ const EWDSLayout = () => {
         </Layout>
     )
 }
-export default EWDSLayout
+export default observer(EWDSLayout)

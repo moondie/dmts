@@ -16,6 +16,12 @@ class UserStore {
             'name': 'ewds'
         }
     }
+    getTestData = () => {
+        // http.get('/getTestData').then(res => {
+        http.get('/tokenOvertime').then(res => {
+            console.log(res)
+        })
+    }
 }
 
 export default UserStore
