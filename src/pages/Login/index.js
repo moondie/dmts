@@ -15,7 +15,9 @@ function Login() {
     async function onFinish(values) {
         // todo:登录
         let {name, password} = values
-        password = sha256(name + password).toString()//密码hash之后传输
+        const hashName = sha256(name).toString()
+        password = sha256(password).toString()
+        password = sha256(hashName + password).toString()//密码hash之后传输
         await loginStore.getToken({name, password})
         // 跳转首页
         navigate('/', {replace: true})
