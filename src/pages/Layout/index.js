@@ -5,7 +5,8 @@ import {
     HomeOutlined,
     DiffOutlined,
     EditOutlined,
-    LogoutOutlined
+    LogoutOutlined,
+    UserOutlined
 } from '@ant-design/icons'
 import './index.scss'
 import {useStore} from '@/store'
@@ -18,8 +19,10 @@ const Error = lazy(() => import('./Error'))
 const Main = lazy(() => import('./Main'))
 const Task = lazy(() => import('./Task'))
 const Data = lazy(() => import('./Data'))
+const User = lazy(() => import('./User'))
 
 const sidebar_items = [
+    // 数据概览
     {
         label: '数据概览',
         key: 'main',
@@ -45,6 +48,7 @@ const sidebar_items = [
             }
         ],
     },
+    // 分析任务
     {
         label: '分析任务管理',
         key: 'task',
@@ -64,6 +68,7 @@ const sidebar_items = [
             },
         ],
     },
+    // 分析数据
     {
         label: '分析数据查看',
         key: 'data',
@@ -89,6 +94,32 @@ const sidebar_items = [
             },
         ],
     },
+    // 用户管理
+    {
+        label: '用户管理',
+        key: 'user',
+        icon: <UserOutlined/>,
+        children: [
+            {
+                label: (
+                    <Link to='/user'>用户总览</Link>
+                ),
+                key: '/user',
+            },
+            {
+                label: (
+                    <Link to='/user/add'>新增用户</Link>
+                ),
+                key: '/user/add',
+            },
+            {
+                label: (
+                    <Link to='/user/settings'>个人设置</Link>
+                ),
+                key: '/user/settings',
+            },
+        ],
+    },
 ]
 
 const EWDSLayout = () => {
@@ -109,9 +140,17 @@ const EWDSLayout = () => {
             <Header className="header">
                 <div className="logo"/>
                 <div className="user-info">
-                    <span className="user-name">{userStore.userInfo.name}</span>
+                    <span className="user-name">
+                        <Link
+                            to='/user/settings'
+                            style={{color:'#fff'}}
+                        >
+                            <UserOutlined/> {userStore.userInfo.name}
+                        </Link>
+                    </span>
                     <span className="user-logout">
             <Popconfirm
+                placement="bottomRight"
                 onConfirm={onConfirm}
                 title="是否确认退出？" okText="退出" cancelText="取消">
               <LogoutOutlined/> 退出
@@ -161,6 +200,7 @@ const EWDSLayout = () => {
                             <Route path='main/*' element={<Main/>}></Route>
                             <Route path='task/*' element={<Task/>}></Route>
                             <Route path='data/*' element={<Data/>}></Route>
+                            <Route path='user/*' element={<User/>}></Route>
                             <Route path='*' element={<Error/>}></Route>
                         </Routes>
                         <Footer style={{ textAlign: 'center' }}>HUST EWDS@2022</Footer>
