@@ -1,21 +1,11 @@
 import React, { useState } from 'react';
-import { PlusOutlined } from '@ant-design/icons';
 import {
     Form,
     Input,
     Button,
-    Radio,
-    Select,
-    Cascader,
-    DatePicker,
-    InputNumber,
-    TreeSelect,
-    Switch,
-    Checkbox,
-    Upload, Tabs,
+    Tabs,
 } from 'antd';
-const { RangePicker } = DatePicker;
-const { TextArea } = Input;
+const { TextArea, Password } = Input;
 
 /**
  *  /user/settings页面，提供用户修改信息操作。
@@ -23,10 +13,6 @@ const { TextArea } = Input;
  */
 
 const UserDescription = () => {
-    const [componentDisabled, setComponentDisabled] = useState(true);
-    const onFormLayoutChange = ({ disabled }) => {
-        setComponentDisabled(disabled);
-    };
     return (
         <>
             <Form
@@ -37,7 +23,6 @@ const UserDescription = () => {
                     span: 14,
                 }}
                 layout="horizontal"
-                onValuesChange={onFormLayoutChange}
                 initialValues={{
                     role: 'user'
                 }}
@@ -56,10 +41,6 @@ const UserDescription = () => {
 };
 
 const UserPassword = () => {
-    const [componentDisabled, setComponentDisabled] = useState(true);
-    const onFormLayoutChange = ({ disabled }) => {
-        setComponentDisabled(disabled);
-    };
     return (
         <>
             <Form
@@ -70,32 +51,43 @@ const UserPassword = () => {
                     span: 14,
                 }}
                 layout="horizontal"
-                onValuesChange={onFormLayoutChange}
-                initialValues={{
-                    role: 'user'
-                }}
                 colon={false}
             >
                 <Form.Item
                     label="旧密码："
                     name="old_password"
-                    rules={[{ required: true, message: "请输入旧密码" }]}
+                    rules={[
+                        { required: true, message: "请输入旧密码" },
+                    ]}
                 >
-                    <Input.Password placeholder="请输入旧密码" />
+                    <Password placeholder="请输入旧密码" />
                 </Form.Item>
 
                 <Form.Item
                     label="新密码："
                     name="new_password"
-                    rules={[{ required: true, message: "请输入新密码" }]}
+                    rules={[
+                        { required: true, message: "请输入新密码" },
+                        { len: 6, message: '密码长度必须为6位及以上', validateTrigger: 'onBlur'},
+                    ]}
                 >
-                    <Input.Password placeholder="请输入新密码" />
+                    <Password placeholder="请输入新密码" />
                 </Form.Item>
 
                 <Form.Item
-                    label="重复新密码："
-                    name="new_password_repeat"
-                    rules={[{ required: true, message: "请输入新密码" }]}
+                    label="确认新密码："
+                    name="new_password_confirm"
+                    rules={[
+                        { required: true, message: "请输入同样的新密码" },
+                        ({ getFieldValue }) => ({
+                            validator(_, value) {
+                                if (!value || getFieldValue('new_password') === value) {
+                                    return Promise.resolve();
+                                }
+                                return Promise.reject(new Error('两次输入的密码不匹配！'));
+                            },
+                        }),
+                    ]}
                 >
                     <Input.Password placeholder="请输入新密码" />
                 </Form.Item>

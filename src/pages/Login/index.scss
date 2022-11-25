@@ -7,11 +7,10 @@
   background: center/cover url('~@/assets/login.png');
 
   .login-logo {
-    width: 200px;
     height: 60px;
     display: block;
     margin: 0 auto 20px;
-    background: #444444;
+    filter: invert(100%);
   }
 
   .login-container {

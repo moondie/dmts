@@ -7,6 +7,8 @@ import sha256 from 'crypto-js/sha256'
 import './index.scss'
 
 import {useStore} from '@/store'
+import {LockOutlined, UserOutlined} from "@ant-design/icons";
+import Password from "antd/es/input/Password";
 
 function Login() {
     const {loginStore} = useStore()
@@ -54,7 +56,7 @@ function Login() {
                             }
                         ]}
                     >
-                        <Input size="large" placeholder="请输入用户名"/>
+                        <Input prefix={<UserOutlined className="site-form-item-icon" />} size="large" placeholder="请输入用户名"/>
                     </Form.Item>
                     <Form.Item
                         name="password"
@@ -70,7 +72,7 @@ function Login() {
                             }
                         ]}
                     >
-                        <Input size="large" type='password' placeholder="请输入密码"/>
+                        <Password prefix={<LockOutlined className="site-form-item-icon" />} size="large" placeholder="请输入密码"/>
                     </Form.Item>
                     <Form.Item
                         name="remember"

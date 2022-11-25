@@ -2,7 +2,7 @@
 import './index.scss'
 
 const Error = () => (
-    <h1>请求了错误的页面！</h1>
+    <h2>请求了错误的页面！</h2>
 )
 
 export default Error;

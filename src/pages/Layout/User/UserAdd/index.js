@@ -6,19 +6,16 @@ import {
     Radio,
 } from 'antd';
 
-const { TextArea } = Input;
+const { TextArea, Password } = Input;
 
 /**
  *  /user/add页面，提供添加用户操作。
  *  name: 用户名
+ *  password: 密码
  *  role: 用户权限
  *  description: 用户描述
  */
 const UserAdd = () => {
-    const [componentDisabled, setComponentDisabled] = useState(true);
-    const onFormLayoutChange = ({ disabled }) => {
-        setComponentDisabled(disabled);
-    };
     return (
         <>
             <Form
@@ -29,7 +26,6 @@ const UserAdd = () => {
                     span: 14,
                 }}
                 layout="horizontal"
-                onValuesChange={onFormLayoutChange}
                 initialValues={{
                     role: 'user'
                 }}
@@ -38,6 +34,14 @@ const UserAdd = () => {
                 <Form.Item label="用户名：" name="name" rules={[{ required: true, message: "请输入用户名！" }]}>
                     <Input placeholder="请输入用户名" />
                 </Form.Item>
+
+                <Form.Item label="密码：" name="password" rules={[
+                    { required: true, message: "请输入密码！" },
+                    { len: 6, message: '密码长度必须为6位及以上', validateTrigger: 'onBlur'},
+                ]}>
+                    <Password placeholder="请输入密码" />
+                </Form.Item>
+
                 <Form.Item label="用户权限：" name="role">
                     <Radio.Group>
                         <Radio.Button value="admin"> 管理员 </Radio.Button>
