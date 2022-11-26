@@ -18,7 +18,7 @@
  */
 
 import {Link, Navigate, Route, Routes} from "react-router-dom";
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import {EditOutlined, EllipsisOutlined, SettingOutlined, UserAddOutlined, UserDeleteOutlined} from '@ant-design/icons';
 import {
     message,
@@ -44,9 +44,9 @@ import avatar from '@/assets/avatar.png'
 // 测试数据导入
 import {user_list} from "@/TestData"
 
-const { Meta } = Card;
-const { Panel } = Collapse;
-const { TextArea, Password } = Input;
+const {Meta} = Card;
+const {Panel} = Collapse;
+const {TextArea, Password} = Input;
 
 /**
  *  /user页面，提供用户列表一览。
@@ -87,7 +87,7 @@ const UserEditInfo = ({item}) => {
                 </Form.Item>
 
                 <Form.Item label="" name="description">
-                    <TextArea placeholder="请输入用户描述" rows={4} />
+                    <TextArea placeholder="请输入用户描述" rows={4}/>
                 </Form.Item>
 
                 <Form.Item label="">
@@ -115,19 +115,19 @@ const UserEditPassword = () => {
                     label=""
                     name="new_password"
                     rules={[
-                        { required: true, message: "请输入新密码" },
-                        { len: 6, message: '密码长度必须为6位及以上', validateTrigger: 'onBlur'},
+                        {required: true, message: "请输入新密码"},
+                        {len: 6, message: '密码长度必须为6位及以上', validateTrigger: 'onBlur'},
                     ]}
                 >
-                    <Password placeholder="请输入新密码" />
+                    <Password placeholder="请输入新密码"/>
                 </Form.Item>
 
                 <Form.Item
                     label=""
                     name="new_password_confirm"
                     rules={[
-                        { required: true, message: "请输入同样的新密码" },
-                        ({ getFieldValue }) => ({
+                        {required: true, message: "请输入同样的新密码"},
+                        ({getFieldValue}) => ({
                             validator(_, value) {
                                 if (!value || getFieldValue('new_password') === value) {
                                     return Promise.resolve();
@@ -137,7 +137,7 @@ const UserEditPassword = () => {
                         }),
                     ]}
                 >
-                    <Input.Password placeholder="请输入新密码" />
+                    <Input.Password placeholder="请输入新密码"/>
                 </Form.Item>
 
                 <Form.Item label="">
@@ -176,45 +176,47 @@ const UserCard = ({item}) => {
         message.success('啊没删呢');
     };
     // 测试延迟加载
-    setTimeout(()=>{
+    setTimeout(() => {
         setLoading(false);
     }, 500)
+
     function toggleEditPanel() {
         setCollapse(!collapse);
     }
+
     return (
-        <Col key={item.id}>
+        <Col>
             <Card
                 style={{
                     width: 300,
                     marginTop: 16,
                 }}
                 actions={[
-                    <EditOutlined onClick={toggleEditPanel} />,
+                    <EditOutlined onClick={toggleEditPanel}/>,
                     <Popconfirm
                         onConfirm={onUserDeleteConfirm}
                         placement="bottom"
                         title="是否确认删除用户" okText="删除" cancelText="取消">
-                        <UserDeleteOutlined />
+                        <UserDeleteOutlined/>
                     </Popconfirm>,
                 ]}
             >
                 <Skeleton loading={loading} avatar active>
                     <Meta
-                        avatar = <Avatar src={avatar} />
+                        avatar=<Avatar src={avatar}/>
                     title = {<>
                     {item.name}
                     <Tag style={{marginLeft: 8}}
-                         color={item.role==='admin' ? "red" : "blue"}
+                         color={item.role === 'admin' ? "red" : "blue"}
                     >
-                        {item.role==='admin' ? "管理员" : "普通用户"}
+                        {item.role === 'admin' ? "管理员" : "普通用户"}
                     </Tag>
                 </>}
                     description = {item.description}
                     /></Skeleton>
                 <Collapse collapsible="icon" bordered={false} ghost activeKey={collapse ? "1" : ""}>
                     <Panel showArrow={false} header="" key="1">
-                        <Divider />
+                        <Divider/>
                         <UserEdit item={item}/>
                     </Panel>
                 </Collapse>
@@ -230,19 +232,19 @@ const UserContent = () => {
                 <Link
                     to='/user/add'
                     style={{
-                        color:'#fff'
+                        color: '#fff'
                     }}
                 >
-                    <UserAddOutlined /> 新建用户
+                    <UserAddOutlined/> 新建用户
                 </Link>
             </Button>
 
             <Row gutter={20}>
-            {
-                user_list.map((item, index) => (
-                    <UserCard item={item}/>
-                ))
-            }
+                {
+                    user_list.map((item, index) => (
+                        <UserCard key={item.name} item={item}/>
+                    ))
+                }
             </Row>
         </div>
     );
