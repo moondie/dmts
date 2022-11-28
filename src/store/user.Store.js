@@ -10,15 +10,18 @@ class UserStore {
 
     getUserInfo = () => {
         // 调用接口获取数据
-        // const res = await http.get('/user/profile')
-        // this.userInfo = res.data
-        this.userInfo = {
-            'name': 'ewds'
-        }
+        http.get('/users/getProfile').then(user => {
+            this.userInfo = {
+                name: user.name,
+                description: user.description
+            }
+        }).catch(err => {
+            console.log(err)
+        })
     }
     getTestData = () => {
         http.get('/getTestData').then(res => {
-        // http.get('/tokenOvertime').then(res => {
+            // http.get('/tokenOvertime').then(res => {
             console.log(res)
         })
     }
