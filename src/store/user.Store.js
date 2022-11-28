@@ -1,4 +1,4 @@
-import {makeAutoObservable} from 'mobx'
+import {makeAutoObservable, runInAction} from 'mobx'
 import {http} from '@/utils'
 
 class UserStore {
@@ -8,18 +8,16 @@ class UserStore {
         makeAutoObservable(this)
     }
 
-    getUserInfo = () => {
+    getUserInfo = async () => {
         // 调用接口获取数据
-        http.get('/users/getProfile').then(user => {
-            this.userInfo = {
-                name: user.name,
-                role: user.role,
-                description: user.description
-            }
-        }).catch(err => {
-            console.log(err)
-        })
+        const user = await http.get('/users/getProfile')
+        this.userInfo = {
+            name: user.name,
+            role: user.role,
+            description: user.description
+        }
     }
+
     getTestData = () => {
         http.get('/getTestData').then(res => {
             // http.get('/tokenOvertime').then(res => {

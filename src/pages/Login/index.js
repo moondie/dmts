@@ -77,13 +77,11 @@ function Login() {
                     <Form.Item
                         name="remember"
                         valuePropName="checked"
-
                     >
                         <Checkbox className="login-checkbox-label">
                             我已阅读并同意「用户协议」和「隐私条款」
                         </Checkbox>
                     </Form.Item>
-
                     <Form.Item>
                         <Button type="primary" htmlType="submit" size="large" block>
                             登录
