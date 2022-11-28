@@ -1,26 +1,23 @@
+/**
+ *  /user页面，提供用户列表一览。
+ *  使用卡片方式实现，并且在数据加载时有可视化提示。
+ *
+ *  组件：
+ *  · UserEditInfo: 修改用户信息界面。
+ *  · UserEditPassword: 修改用户密码
+ *  · UserEdit: 编辑用户界面的分栏。
+ *  · UserCard: 单个用户卡片。
+ *  · UserContent: 用户界面的内容，包含多个用户卡片。
+ */
 import {Link} from "react-router-dom";
 import React, {useEffect, useState} from 'react';
 import {observer} from 'mobx-react-lite'
 import {EditOutlined, UserAddOutlined, UserDeleteOutlined} from '@ant-design/icons';
 import {
-    message,
-    Avatar,
-    Button,
-    Card,
-    Col,
-    Popconfirm,
-    Row,
-    Skeleton,
-    Tag,
-    Divider,
-    Collapse,
-    Input,
-    Tabs, Form, Radio
+    message, Avatar, Button, Card, Col, Popconfirm, Row, Skeleton, Tag, Divider, Collapse, Input, Tabs, Form, Radio
 } from 'antd';
 import {useStore} from '@/store'
-
 import avatar from '@/assets/avatar.png'
-
 
 const {Meta} = Card;
 const {Panel} = Collapse;
@@ -132,7 +129,6 @@ const UserEdit = ({item}) => {
     );
 };
 
-
 const UserCard = ({item}) => {
     const [loading, setLoading] = useState(true);
     const [collapse, setCollapse] = useState(false);
@@ -190,7 +186,7 @@ const UserCard = ({item}) => {
     )
 }
 
-const Index = () => {
+const UserContent = () => {
     const {managerUserStore, userStore} = useStore()
     useEffect(() => {
         managerUserStore.getAllUsers()
@@ -210,4 +206,4 @@ const Index = () => {
         </div>
     );
 };
-export default observer(Index)
+export default observer(UserContent)
