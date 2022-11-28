@@ -1,12 +1,14 @@
 import React from "react"
 import LoginStore from './login.Store'
 import UserStore from "@/store/user.Store";
+import ManagerUserStore from "@/store/managerUser.Store";
 
 class RootStore {
     // 组合模块
     constructor() {
         this.loginStore = new LoginStore()
         this.userStore = new UserStore()
+        this.managerUserStore = new ManagerUserStore()
     }
 }
 
