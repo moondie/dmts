@@ -18,7 +18,7 @@
  */
 
 import {Link, Navigate, Route, Routes} from "react-router-dom";
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {EditOutlined, EllipsisOutlined, SettingOutlined, UserAddOutlined, UserDeleteOutlined} from '@ant-design/icons';
 import {
     message,
@@ -35,7 +35,7 @@ import {
     Input,
     Tabs, Form, Radio
 } from 'antd';
-
+import {useStore} from '@/store'
 import UserSettings from "@/pages/Layout/User/UserSettings";
 import UserAdd from "@/pages/Layout/User/UserAdd";
 import {AdminComponent} from "@/components/AdminComponent";
@@ -226,22 +226,22 @@ const UserCard = ({item}) => {
 }
 
 const UserContent = () => {
+    const {managerUserStore, userStore} = useStore()
+    useEffect(() => {
+        userStore.getUserInfo()
+    }, [userStore])
+    managerUserStore.getAllUsers()
     return (
         <div className="site-card-wrapper">
             <Button type="primary">
-                <Link
-                    to='/user/add'
-                    style={{
-                        color: '#fff'
-                    }}
-                >
+                <Link to='/user/add' style={{color: '#fff'}}>
                     <UserAddOutlined/> 新建用户
                 </Link>
             </Button>
 
             <Row gutter={20}>
                 {
-                    user_list.map((item, index) => (
+                    managerUserStore.userList.map((item, index) => (
                         <UserCard key={item.name} item={item}/>
                     ))
                 }

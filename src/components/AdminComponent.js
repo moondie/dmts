@@ -4,29 +4,15 @@
 
 // 高阶组件:把一个组件当成另外一个组件的参数传入
 // 然后通过一定的判断 返回新的组件
-import { getToken } from '@/utils'
-import { Navigate } from 'react-router-dom'
-
 // 测试数据
-import {is_admin} from "@/TestData";
+import {useStore} from "@/store";
 
-function isAdmin (token) {
-  // TODO: 向后端请求数据，返回是否为admin用户
-  return is_admin;
-}
+function AdminComponent({children}) {
+    const {userStore} = useStore()
 
-function AdminVerify () {
-  const token = getToken()
-  return isAdmin(token);
-}
-
-function AdminComponent ({ children }) {
-  const token = getToken()
-  if (isAdmin(token)) {
-    return <>{children}</>
-  } else {
-    return <h2>对不起，您没有查看此页面的权限！</h2>
-  }
+    return (
+        userStore.userInfo.role === 'admin' ? <>{children}</> : <h2>对不起，您没有查看此页面的权限！</h2>
+    )
 }
 
 // <AuthComponent> <Layout/> </AuthComponent>
@@ -34,6 +20,5 @@ function AdminComponent ({ children }) {
 // 非登录：<Navigate to="/login" replace />
 
 export {
-  AdminVerify,
-  AdminComponent
+    AdminComponent
 }

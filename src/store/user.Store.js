@@ -13,6 +13,7 @@ class UserStore {
         http.get('/users/getProfile').then(user => {
             this.userInfo = {
                 name: user.name,
+                role: user.role,
                 description: user.description
             }
         }).catch(err => {
