@@ -8,7 +8,7 @@ class UserStore {
         makeAutoObservable(this)
     }
 
-    getUserInfo = async () => {
+    getProfile = async () => {
         // 调用接口获取数据
         const user = await http.get('/users/getProfile')
         this.userInfo = {
@@ -16,6 +16,12 @@ class UserStore {
             role: user.role,
             description: user.description
         }
+    }
+    changeDescription = async (values) => {
+        return await http.post('/users/changeDescription', values)
+    }
+    changePassword = async (values) => {
+        return await http.post('/users/changePassword', values)
     }
 
     getTestData = () => {

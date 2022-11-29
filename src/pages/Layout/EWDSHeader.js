@@ -15,7 +15,7 @@ const EWDSHeader = () => {
     }
     const {userStore, loginStore} = useStore()
     useEffect(() => {
-        userStore.getUserInfo()
+        userStore.getProfile()
     }, [])
     return (
         <Header className="header">
