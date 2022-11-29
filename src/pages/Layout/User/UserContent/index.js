@@ -18,35 +18,34 @@ import {
 } from 'antd';
 import {useStore} from '@/store'
 import avatar from '@/assets/avatar.png'
+import sha256 from "crypto-js/sha256";
 
 const {Meta} = Card;
 const {Panel} = Collapse;
 const {TextArea, Password} = Input;
 const UserEditInfo = ({item}) => {
+    const {managerUserStore} = useStore()
+    const onFinish = (values) => {
+        values.name = item.name
+        managerUserStore.changeDescription(values).then(success => {
+            managerUserStore.getAllUsers()//修改后重新获得一次用户信息
+            message.success('修改成功')
+        }).catch(err => {
+            message.error('修改失败')
+        })
+    }
     return (
         <>
             <Form
-                labelCol={{
-                    span: 0,
-                }}
-                wrapperCol={{
-                    span: 0,
-                }}
+                labelCol={{span: 0,}}
+                wrapperCol={{span: 0,}}
                 layout="horizontal"
                 initialValues={{
                     role: item.role,
                     description: item.description,
                 }}
                 colon={false}
-            >
-
-                <Form.Item label="" name="role">
-                    <Radio.Group>
-                        <Radio.Button value="admin"> 管理员 </Radio.Button>
-                        <Radio.Button value="user"> 普通用户 </Radio.Button>
-                    </Radio.Group>
-                </Form.Item>
-
+                onFinish={onFinish}>
                 <Form.Item label="" name="description">
                     <TextArea placeholder="请输入用户描述" rows={4}/>
                 </Form.Item>
@@ -59,25 +58,27 @@ const UserEditInfo = ({item}) => {
     );
 };
 
-const UserEditPassword = () => {
+const UserEditPassword = ({item}) => {
+    const {managerUserStore} = useStore()
+    const onFinish = ({new_password}) => {
+        let data = {}
+        data.name = item.name
+        data.password = sha256(sha256(data.name) + sha256(new_password)).toString()
+        managerUserStore.changePassword(data).then(success => {
+            message.success('修改成功')
+        }).catch(err => {
+            message.error('修改失败')
+        })
+    }
     return (
         <>
-            <Form
-                labelCol={{
-                    span: 0,
-                }}
-                wrapperCol={{
-                    span: 0,
-                }}
-                layout="horizontal"
-                colon={false}
-            >
+            <Form labelCol={{span: 0,}} wrapperCol={{span: 0,}} layout="horizontal" colon={false} onFinish={onFinish}>
                 <Form.Item
                     label=""
                     name="new_password"
                     rules={[
                         {required: true, message: "请输入新密码"},
-                        {len: 6, message: '密码长度必须为6位及以上', validateTrigger: 'onBlur'},
+                        {min: 6, message: '密码长度必须为6位及以上', validateTrigger: 'onBlur'},
                     ]}
                 >
                     <Password placeholder="请输入新密码"/>
@@ -98,7 +99,7 @@ const UserEditPassword = () => {
                         }),
                     ]}
                 >
-                    <Input.Password placeholder="请输入新密码"/>
+                    <Input.Password placeholder="请输入同样的新密码"/>
                 </Form.Item>
 
                 <Form.Item label="">
@@ -122,7 +123,7 @@ const UserEdit = ({item}) => {
                 {
                     label: `修改用户密码`,
                     key: 'password',
-                    children: <UserEditPassword/>,
+                    children: <UserEditPassword item={item}/>,
                 },
             ]}
         />
@@ -132,14 +133,21 @@ const UserEdit = ({item}) => {
 const UserCard = ({item}) => {
     const [loading, setLoading] = useState(true);
     const [collapse, setCollapse] = useState(false);
+    const {managerUserStore} = useStore()
     const onUserDeleteConfirm = () => {
         // TODO: 用户删除后请求刷新页面
-        message.success('啊没删呢');
+        managerUserStore.removeUser({name: item.name}).then(success => {
+            managerUserStore.getAllUsers()
+            message.success('删除成功');
+        }).catch(err => {
+            message.error(err.response.data.msg)
+        })
+
     };
     // 测试延迟加载
     setTimeout(() => {
         setLoading(false);
-    }, 500)
+    }, 50)
 
     function toggleEditPanel() {
         setCollapse(!collapse);
@@ -165,11 +173,8 @@ const UserCard = ({item}) => {
                 <Skeleton loading={loading} avatar active>
                     <Meta
                         avatar=<Avatar src={avatar}/>
-                    title = {<>
-                    {item.name}
-                    <Tag style={{marginLeft: 8}}
-                         color={item.role === 'admin' ? "red" : "blue"}
-                    >
+                    title = {<>{item.name}
+                    <Tag style={{marginLeft: 8}} color={item.role === 'admin' ? "red" : "blue"}>
                         {item.role === 'admin' ? "管理员" : "普通用户"}
                     </Tag>
                 </>}

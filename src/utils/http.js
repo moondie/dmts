@@ -7,8 +7,8 @@ import {history} from './history'
 import {message} from "antd";
 
 const http = axios.create({
-    // baseURL: 'http://127.0.0.1:8001',
-    baseURL: 'http://10.12.159.62:8001',
+    baseURL: 'http://127.0.0.1:8001',
+    // baseURL: 'http://10.12.159.62:8001',
     // timeout: 5000
 })
 // 添加请求拦截器

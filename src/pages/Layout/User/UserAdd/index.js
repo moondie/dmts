@@ -1,12 +1,14 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import {
     Form,
     Input,
     Button,
-    Radio,
+    Radio, message,
 } from 'antd';
+import {useStore} from "@/store";
+import sha256 from "crypto-js/sha256";
 
-const { TextArea, Password } = Input;
+const {TextArea, Password} = Input;
 
 /**
  *  /user/add页面，提供添加用户操作。
@@ -16,41 +18,51 @@ const { TextArea, Password } = Input;
  *  description: 用户描述
  */
 const UserAdd = () => {
+    const {managerUserStore} = useStore()
+    const onFinish = ({name, password, description}) => {
+        managerUserStore.addUser({
+            'name': name,
+            'password': sha256(sha256(name) + sha256(password)).toString(),
+            'description': description
+        }).then(success => {
+            message.success('添加成功')
+        }).catch(err => {
+            message.error(err.response.data.msg)
+        })
+
+    }
     return (
         <>
             <Form
-                labelCol={{
-                    span: 4,
-                }}
-                wrapperCol={{
-                    span: 14,
-                }}
-                layout="horizontal"
-                initialValues={{
-                    role: 'user'
-                }}
-                colon={false}
-            >
-                <Form.Item label="用户名：" name="name" rules={[{ required: true, message: "请输入用户名！" }]}>
-                    <Input placeholder="请输入用户名" />
+                labelCol={{span: 4,}} wrapperCol={{span: 14,}} layout="horizontal"
+                initialValues={{role: 'user'}} colon={false} onFinish={onFinish}>
+                <Form.Item label="用户名：" name="name" rules={[{required: true, message: "请输入用户名！"}]}>
+                    <Input placeholder="请输入用户名"/>
                 </Form.Item>
 
                 <Form.Item label="密码：" name="password" rules={[
-                    { required: true, message: "请输入密码！" },
-                    { len: 6, message: '密码长度必须为6位及以上', validateTrigger: 'onBlur'},
+                    {required: true, message: "请输入密码！"},
+                    {min: 6, message: '密码长度必须为6位及以上', validateTrigger: 'onBlur'},
                 ]}>
-                    <Password placeholder="请输入密码" />
+                    <Password placeholder="请输入密码"/>
                 </Form.Item>
 
-                <Form.Item label="用户权限：" name="role">
-                    <Radio.Group>
-                        <Radio.Button value="admin"> 管理员 </Radio.Button>
-                        <Radio.Button value="user"> 普通用户 </Radio.Button>
-                    </Radio.Group>
+                <Form.Item label="确认密码：" name="" rules={[
+                    {required: true, message: "请输入同样的新密码！"},
+                    ({getFieldValue}) => ({
+                        validator(_, value) {
+                            if (!value || getFieldValue('password') === value) {
+                                return Promise.resolve();
+                            }
+                            return Promise.reject(new Error('两次输入的密码不匹配！'));
+                        },
+                    }),
+                ]}>
+                    <Password placeholder="请输入同样的密码"/>
                 </Form.Item>
 
                 <Form.Item label="描述：" name="description">
-                    <TextArea placeholder="请输入用户描述" rows={4} />
+                    <TextArea placeholder="请输入用户描述" rows={4}/>
                 </Form.Item>
 
                 <Form.Item label=" ">
