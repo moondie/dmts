@@ -2,7 +2,7 @@ import {Layout, Menu, Popconfirm} from 'antd'
 import {Link, useLocation} from "react-router-dom";
 import {useStore} from "@/store";
 import {observer} from 'mobx-react-lite'
-import {DiffOutlined, EditOutlined, HomeOutlined, UserOutlined} from "@ant-design/icons";
+import {DiffOutlined, EditOutlined, HomeOutlined, SnippetsOutlined, UserOutlined} from "@ant-design/icons";
 import React from "react";
 const {Sider} = Layout
 
@@ -24,6 +24,12 @@ const EWDSSider = () => {
                 getItem(<Link to='/main'>总体数据概览</Link>, '/main'),
                 getItem(<Link to='/main/xxx'>xxx数据概览</Link>, '/main/xxx'),
                 getItem(<Link to='/main/yyy'>yyy数据概览</Link>, '/main/yyy'),
+            ]),
+
+            // 分析计划
+            getItem('分析计划管理', 'plan', <SnippetsOutlined />, [
+                getItem(<Link to='/plan'>分析计划总览</Link>, '/plan'),
+                getItem(<Link to='/plan/create'>新建分析计划</Link>, '/plan/create'),
             ]),
 
             // 分析任务
