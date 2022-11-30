@@ -21,6 +21,7 @@ const PlanContent = () => (
         padding: 8,
         backgroundColor: '#fff',
         borderRadius: 16,
+        overflow: "auto",
     }}>
         <ProList
             rowKey="id"

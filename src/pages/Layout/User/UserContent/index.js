@@ -173,13 +173,16 @@ const UserCard = ({item}) => {
                 <Skeleton loading={loading} avatar active>
                     <Meta
                         avatar=<Avatar src={avatar}/>
-                    title = {<>{item.name}
-                    <Tag style={{marginLeft: 8}} color={item.role === 'admin' ? "red" : "blue"}>
-                        {item.role === 'admin' ? "管理员" : "普通用户"}
-                    </Tag>
-                </>}
-                    description = {item.description}
-                    /></Skeleton>
+                        title = {
+                            <> {item.name}
+                                <Tag style={{marginLeft: 8}} color={item.role === 'admin' ? "red" : "blue"}>
+                                    {item.role === 'admin' ? "管理员" : "普通用户"}
+                                </Tag>
+                            </>
+                        }
+                        description = {item.description}
+                    />
+                </Skeleton>
                 <Collapse collapsible="icon" bordered={false} ghost activeKey={collapse ? "1" : ""}>
                     <Panel showArrow={false} header="" key="1">
                         <Divider/>

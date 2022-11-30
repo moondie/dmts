@@ -1,31 +1,7 @@
 /**
  * 用于测试的数据。
  */
-import {Avatar} from "antd";
 import React from "react";
-
-// 用户列表的测试数据
-export const user_list = [
-    {
-        id: 1,
-        name: 'ewds',
-        description: 'The main user of the system',
-        role: 'admin',
-    },
-    {
-        id: 2,
-        name: 'USER1',
-        description: 'USER1 DESCRIPTION',
-        role: 'user',
-    },
-    {
-        id: 3,
-        name: 'USER2',
-        description: 'USER2 DESCRIPTION',
-        role: 'user',
-        avatar: <Avatar src="https://joeschmoe.io/api/v1/random" />,
-    },
-]
 
 // 分析计划列表总数据格式初步拟定
 // 对每个不同的前端页面，数据形式可能不同，看看是后端统一接口前端处理信息还是后端定义不同接口返回不同数据
@@ -164,4 +140,67 @@ export const plan_list_general = [
             task_count: 0,
         }
     },
+]
+
+// /data header的数据
+// 分析计划是否需要id作为主键
+export const plan_list_header = [
+    {
+        id: 1,
+        name: '分析计划 1',
+    },
+    {
+        id: 2,
+        name: '分析计划 2',
+    },
+]
+
+
+
+// /data/url 页面的数据
+// 问题：URL爬虫在什么时候进行，是否需要用户手动触发
+// 如果在创建任务的时候自动运行，运行失败是否需要重新创建任务
+// 如果用户手动运行，那是否存运行多次的不同结果，还是整合到全部url中
+export const plan_list_url = [
+    {
+        id: 1,
+        name: '分析计划 1',
+        start_url: 'http://10.12.159.61:8888/',
+        urls: [
+            {
+                method: 'GET',
+                url: 'http://10.12.159.61:8888/main/',
+                type: 'webpage',
+            }, {
+                method: 'POST',
+                url: 'http://10.12.159.61:8888/login/',
+                post_data: 'username=ewds&password=ewds123',
+                type: 'interface',
+            }, {
+                method: 'GET',
+                url: 'http://10.12.159.61:8888/statics/logo.png',
+                type: 'static',
+            }
+        ]
+    },
+    {
+        id: 2,
+        name: '分析计划 2',
+        start_url: 'https://www.baidu.com/',
+        urls: [
+            {
+                method: 'GET',
+                url: 'https://www.baidu.com/',
+                type: 'webpage',
+            }, {
+                method: 'GET',
+                url: 'https://www.baidu.com/s?wd=a',
+                type: 'webpage',
+            }, {
+                method: 'GET',
+                url: 'https://www.baidu.com/s?wd=a&rsv_spt=1&rsv_iqid=0xf7c5670c000072b3&issp=1&f=8&rsv_bp=1&rsv_idx=2&ie=utf-8&tn=baiduhome_pg&rsv_enter=1&rsv_dl=tb&rsv_sug3=2&rsv_sug1=1&rsv_sug7=100&rsv_sug2=0&rsv_btype=i&prefixsug=a&rsp=5&inputT=946&rsv_sug4=998',
+                type: 'webpage',
+            }
+        ]
+    }
 ]

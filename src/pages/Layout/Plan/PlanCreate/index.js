@@ -13,4 +13,4 @@ const PlanCreate = () => (
     </div>
 );
 
-export default PlanCreate();
+export default PlanCreate;

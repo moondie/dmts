@@ -7,6 +7,7 @@ import {
 } from 'antd';
 import {useStore} from "@/store";
 import sha256 from "crypto-js/sha256";
+import {useNavigate} from "react-router-dom";
 
 const {TextArea, Password} = Input;
 
@@ -19,6 +20,7 @@ const {TextArea, Password} = Input;
  */
 const UserAdd = () => {
     const {managerUserStore} = useStore()
+    const navigate = useNavigate()
     const onFinish = ({name, password, description}) => {
         managerUserStore.addUser({
             'name': name,
@@ -26,6 +28,7 @@ const UserAdd = () => {
             'description': description
         }).then(success => {
             message.success('添加成功')
+            navigate('/user')
         }).catch(err => {
             message.error(err.response.data.msg)
         })

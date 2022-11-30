@@ -1,6 +1,7 @@
 import React from 'react';
 import { Space, Table, Tag } from 'antd';
 import {Route, Routes} from "react-router-dom";
+import DataURL from "@/pages/Layout/Data/DataURL";
 const columns = [
         {
                 title: '分析任务名',
@@ -77,6 +78,7 @@ const DataContent = () => <Table columns={columns} dataSource={data} />;
 const Data = () => (
     <Routes>
         <Route path='' element={<DataContent/>}></Route>
+        <Route path='url' element={<DataURL/>}></Route>
     </Routes>
 );
 
