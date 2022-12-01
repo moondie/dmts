@@ -156,7 +156,6 @@ export const plan_list_header = [
 ]
 
 
-
 // /data/url 页面的数据
 // 问题：URL爬虫在什么时候进行，是否需要用户手动触发
 // 如果在创建任务的时候自动运行，运行失败是否需要重新创建任务
@@ -203,4 +202,87 @@ export const plan_list_url = [
             }
         ]
     }
+]
+
+
+// /task 页面的数据
+export const plan_list_task = [
+    {
+        id: 1,
+        name: '分析计划 1',
+
+        // 分析任务列表
+        tasks: [
+            // 存疑，是直接将分析任务写在分析计划中还是另写用序号连外键
+            {
+                id: 1,
+                name: 'Web分析任务 1',
+                type: 'web',
+                content: {
+                    create_time: '2022-11-29 12:00:00',
+                    status: 'success',
+                },
+                config: {
+                    // 是每次运行web分析的时候重新扫描一遍url并探测漏洞，还是预先进行爬取工作并有选择地分析漏洞
+                    scan_urls: [
+                        'http://10.12.159.61:8888/main/',
+                        'http://10.12.159.61:8888/cgi-bin/'
+                    ],
+                    vulnerabilities: [
+                        'xss',
+                        'sqli',
+                        'redos',
+                    ]
+                },
+
+            }, {
+                id: 2,
+                name: 'CGI分析任务 1',
+                type: 'cgi',
+                content: {
+                    create_time: '2022-11-29 12:00:00',
+                    status: 'waiting',
+                },
+                config: {
+
+                },
+            }
+        ],
+
+    },
+    {
+        id: 2,
+        name: '分析计划 2',
+        tasks: [
+            {
+                id: 1,
+                name: '删库跑路任务 1',
+                type: 'web',
+                content: {
+                    create_time: '2022-11-29 12:00:00',
+                    status: 'failed',
+                },
+                config: {
+                    // 是每次运行web分析的时候重新扫描一遍url并探测漏洞，还是预先进行爬取工作并有选择地分析漏洞
+                    scan_urls: [
+                        'https://www.baidu.com',
+                    ],
+                    vulnerabilities: [
+                        'xss',
+                    ]
+                },
+
+            }, {
+                id: 2,
+                name: '删库跑路任务 2',
+                type: 'cgi',
+                content: {
+                    create_time: '2022-11-29 12:00:00',
+                    status: 'running',
+                },
+                config: {
+                },
+            }
+        ]
+    },
 ]

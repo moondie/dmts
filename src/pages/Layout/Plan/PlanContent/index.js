@@ -2,7 +2,9 @@
  *  分析计划列表页面的内容。用antd的高级列表ProList实现。
  *  列表标题：分析计划名 name
  *  列表描述：初始URL start_url
- *  列表内容：分析任务数 count
+ *  列表内容：创建者 user
+ *          创建时间 create_time
+ *          分析任务数 task_count
  *  列表操作：编辑分析计划（待实现）
  *          删除分析计划（待实现）
  */
@@ -40,15 +42,15 @@ const PlanContent = () => (
                             {
                                 //(typeof text == 'string' ? [] : text).map((t) => {})}
                             }
-                            <div>
+                            <div style={{width: 64}}>
                                 <div style={{ color: '#00000073' }}>创建者</div>
                                 <div style={{ color: '#000000D9' }}>{text.user}</div>
                             </div>
-                            <div>
+                            <div style={{width: 128}}>
                                 <div style={{ color: '#00000073' }}>创建时间</div>
                                 <div style={{ color: '#000000D9' }}>{text.create_time}</div>
                             </div>
-                            <div>
+                            <div style={{width: 128}}>
                                 <div style={{ color: '#00000073' }}>分析任务数</div>
                                 <div style={{ color: '#000000D9' }}>{text.task_count}</div>
                             </div>

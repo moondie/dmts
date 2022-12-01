@@ -1,17 +1,16 @@
 /**
  * 创建分析计划页面。
  */
-import React, {useState} from 'react';
+import React from 'react';
 import {plan_list_header} from "@/TestData";
-import { ProTable } from '@ant-design/pro-components';
-import {Button, Form, Popconfirm, Select, Tag} from "antd";
-import {Link, Navigate, useLocation, useNavigate, useSearchParams} from "react-router-dom";
+import {Form, Select} from "antd";
+import {useLocation, useNavigate, useSearchParams} from "react-router-dom";
 
-const DataHeader = () => {
+const PlanHeader = () => {
     const [params] = useSearchParams()
     const {pathname} = useLocation()
     let plan_id = parseInt(params.get("plan"))
-    if (isNaN(plan_id)) plan_id = 1;
+    if (isNaN(plan_id)) plan_id = "请选择分析计划";
     const navigate = useNavigate()
     const onPlanChange = (id) => {
         navigate(pathname + '?plan=' + id)
@@ -31,7 +30,7 @@ const DataHeader = () => {
                 }}
                 colon={false}
             >
-                <Form.Item label="选择分析任务：" name="task">
+                <Form.Item label="选择分析计划：" name="task">
                     <Select onChange={onPlanChange}>
                         {
                             plan_list_header.map((plan) => (
@@ -46,4 +45,4 @@ const DataHeader = () => {
     )
 }
 
-export default DataHeader;
+export default PlanHeader;

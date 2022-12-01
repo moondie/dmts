@@ -6,10 +6,10 @@ import {plan_list_url} from "@/TestData";
 import { ProTable } from '@ant-design/pro-components';
 import {Button, Popconfirm, Tag} from "antd";
 import {Link, useNavigate, useParams, useSearchParams} from "react-router-dom";
-import DataHeader from "@/pages/Layout/Data/DataHeader";
+import PlanHeader from "@/pages/Layout/PlanHeader";
 
 function getUrls(id){
-    // TODO: 向后端发送请求，得到当前分析任务的URL列表
+    // TODO: 向后端发送请求，得到当前分析计划的URL列表
     for (let i in plan_list_url) {
         if (plan_list_url[i].id === id)
             return plan_list_url[i].urls
@@ -72,7 +72,7 @@ const DataURL = () => {
     const urls = getUrls(plan_id)
     return (
         <>
-            <DataHeader/>
+            <PlanHeader/>
             <div style={{
                 margin: 8,
                 padding: 8,
