@@ -3,12 +3,13 @@
  */
 import React from 'react';
 import {plan_list_url} from "@/TestData";
-import { ProTable } from '@ant-design/pro-components';
+import {ProTable} from '@ant-design/pro-components';
 import {Button, Popconfirm, Tag} from "antd";
 import {Link, useNavigate, useParams, useSearchParams} from "react-router-dom";
 import PlanHeader from "@/pages/Layout/PlanHeader";
+import URLChart from "@/pages/Layout/Data/DataURL/URLChart";
 
-function getUrls(id){
+function getUrls(id) {
     // TODO: 向后端发送请求，得到当前分析计划的URL列表
     for (let i in plan_list_url) {
         if (plan_list_url[i].id === id)
@@ -73,6 +74,16 @@ const DataURL = () => {
     return (
         <>
             <PlanHeader/>
+            {plan_id ? <div style={{
+                margin: 8,
+                padding: 8,
+                backgroundColor: '#fff',
+                borderRadius: 16,
+                overflow: "auto",
+            }}>
+                <URLChart/>
+            </div> : null}
+
             <div style={{
                 margin: 8,
                 padding: 8,

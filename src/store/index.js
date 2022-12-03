@@ -2,6 +2,7 @@ import React from "react"
 import LoginStore from './login.Store'
 import UserStore from "@/store/user.Store";
 import ManagerUserStore from "@/store/managerUser.Store";
+import ChartStore from "@/store/chart.Store";
 
 class RootStore {
     // 组合模块
@@ -9,6 +10,7 @@ class RootStore {
         this.loginStore = new LoginStore()
         this.userStore = new UserStore()
         this.managerUserStore = new ManagerUserStore()
+        this.chartStore = new ChartStore()
     }
 }
 
