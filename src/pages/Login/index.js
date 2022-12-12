@@ -37,8 +37,8 @@ function Login() {
                     validateTrigger={['onBlur', 'onChange']}
                     initialValues={{
                         remember: true,
-                        name: 'ewds',
-                        password: 'ewds123'
+                        // name: 'ewds',
+                        // password: 'ewds123'
                     }}
                     onFinish={onFinish}
                 >
