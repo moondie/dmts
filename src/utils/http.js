@@ -8,7 +8,7 @@ import {message} from "antd";
 
 const http = axios.create({
     // baseURL: 'http://127.0.0.1:8001',
-    baseURL: 'http://222.20.94.23:8162',
+    baseURL: 'http://222.20.94.23:23781',
     // baseURL: 'http://10.12.159.62:8001',
     // timeout: 5000
 })
