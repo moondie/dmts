@@ -2,7 +2,7 @@
  * 创建分析计划页面。
  */
 import React, {useEffect, useState} from 'react';
-import {Button, Form, Input, InputNumber, List, message, Select, Typography} from "antd";
+import {Button, Divider, Form, Input, InputNumber, List, message, Select, Typography} from "antd";
 import {useStore} from "@/store";
 import {useNavigate} from "react-router-dom";
 
@@ -77,19 +77,20 @@ const PlanCreate = () => {
                     新建Web扫描渗透分析任务：
                 </Title>
                 <Form
-                    style={{
-                        padding: 8,
-                    }}
                     labelCol={{
                         span: 4,
                     }}
                     wrapperCol={{
                         span: 14,
                     }}
+                    initialValues={{
+                        max_scan_time: 600,
+                    }}
                     colon={false}
                     layout="horizontal"
                     onFinish={onFinish}
                 >
+                    <Divider orientation="left" style={{fontWeight: 'bold'}}>基础设置</Divider>
                     <Form.Item
                         label="起始URL："
                         name="target_url"

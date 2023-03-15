@@ -29,19 +29,29 @@ function getConfig(task_id) {
 
 }
 
-const status_color = {
-    'success': '#52c41a',
-    'failed' : '#c41a52',
-    'running': '#1a52c4',
-    'waiting': '#808080',
+const status_style = {
+    'success': {
+        color: '#52c41a',
+        description: '成功',
+        action: '重新运行',
+    },
+    'failed' : {
+        color: '#c41a52',
+        description: '失败',
+        action: '重新运行'
+    },
+    'running': {
+        color: '#1a52c4',
+        description: '运行中',
+        action: '终止',
+    },
+    'waiting': {
+        color: '#808080',
+        description: '待运行',
+        action: '运行',
+    },
 }
 
-const status_CN = {
-    'success': '成功',
-    'failed': '失败',
-    'running': '运行中',
-    'waiting': '待运行',
-}
 
 const TaskContentActionsRender = ({id}) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -61,8 +71,8 @@ const TaskContentActionsRender = ({id}) => {
     const scan_urls = record.config.scan_urls === undefined ? [] : record.config.scan_urls
     return (
         <>
-        <Button style={{margin: 6}} key="run" type='primary'>
-            重新运行
+        <Button style={{margin: 6}} key="run_state" type='primary'>
+            {status_style[record.content.status].action}
         </Button>
         <Button style={{margin: 6}} key="view" onClick={showModal}>
             查看详情
@@ -81,9 +91,11 @@ const TaskContentActionsRender = ({id}) => {
             {
                 // TODO: 详细信息展示
                 scan_urls.map((url)=>(
-                    <p><a href={url} target='_blank'>
-                        {url}
-                    </a></p>
+                    <p>
+                        <a href={url} target='_blank'>
+                            {url}
+                        </a>
+                    </p>
                 ))
             }
         </Modal>
@@ -141,11 +153,11 @@ const TaskContent = () => {
                                             width: 8,
                                             height: 8,
                                             borderRadius: '50%',
-                                            backgroundColor: status_color[text.status],
+                                            backgroundColor: status_style[text.status].color,
                                             marginInlineEnd: 8,
                                         }}
                                     />
-                                        {status_CN[text.status]}
+                                        {status_style[text.status].description}
                                     </div>
                                 </div>
                             ),
@@ -153,7 +165,7 @@ const TaskContent = () => {
                         actions: {
                             dataIndex: 'id',
                             render: (id) => (
-                                <TaskContentActionsRender key={id} id={id}/>
+                                <TaskContentActionsRender key={id.props.record.id} id={id}/>
                             )
                         },
                     }}

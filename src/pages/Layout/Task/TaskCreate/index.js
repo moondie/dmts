@@ -1,128 +1,122 @@
-import React, { useState } from 'react';
-import { PlusOutlined } from '@ant-design/icons';
-import {
-    Form,
-    Input,
-    Button,
-    Radio,
-    Select,
-    Cascader,
-    DatePicker,
-    InputNumber,
-    TreeSelect,
-    Switch,
-    Checkbox,
-    Upload,
-} from 'antd';
-const { RangePicker } = DatePicker;
-const { TextArea } = Input;
+/**
+ * 创建分析计划页面。
+ */
+import React, {useState} from 'react';
+import {Button, Divider, Form, Input, Select, Radio, Typography, message, Switch} from "antd";
+import {useNavigate} from "react-router-dom";
+
+const {Title} = Typography;
+const {Option} = Select;
+
+const selectBefore = (
+    <Select defaultValue="http://">
+        <Option value="http://">http://</Option>
+        <Option value="https://">https://</Option>
+    </Select>
+);
+
 const TaskCreate = () => {
-    const [componentDisabled, setComponentDisabled] = useState(true);
-    const onFormLayoutChange = ({ disabled }) => {
-        setComponentDisabled(disabled);
-    };
+    const [hideUserName, setHideUserName] = useState(true);
+    const navigate = useNavigate();
+
+    const onFinish = ({target_url, auto_login, form_fill, save_resources}) => {
+        message.success('暂时还没有接口，总之成功了');
+        navigate('/task');
+    }
+
+    const onAutoLoginChange = (checked) => {
+        setHideUserName(!checked);
+    }
+
     return (
         <>
-            <Checkbox
-                checked={componentDisabled}
-                onChange={(e) => setComponentDisabled(e.target.checked)}
-            >
-                Form disabled
-            </Checkbox>
-            <Form
-                labelCol={{
-                    span: 4,
-                }}
-                wrapperCol={{
-                    span: 14,
-                }}
-                layout="horizontal"
-                onValuesChange={onFormLayoutChange}
-                disabled={componentDisabled}
-            >
-                <Form.Item label="Chekbox" name="disabled" valuePropName="checked">
-                    <Checkbox>Checkbox</Checkbox>
-                </Form.Item>
-                <Form.Item label="Radio">
-                    <Radio.Group>
-                        <Radio value="apple"> Apple </Radio>
-                        <Radio value="pear"> Pear </Radio>
-                    </Radio.Group>
-                </Form.Item>
-                <Form.Item label="Input">
-                    <Input />
-                </Form.Item>
-                <Form.Item label="Select">
-                    <Select>
-                        <Select.Option value="demo">Demo</Select.Option>
-                    </Select>
-                </Form.Item>
-                <Form.Item label="TreeSelect">
-                    <TreeSelect
-                        treeData={[
-                            {
-                                title: 'Light',
-                                value: 'light',
-                                children: [
-                                    {
-                                        title: 'Bamboo',
-                                        value: 'bamboo',
-                                    },
-                                ],
-                            },
-                        ]}
-                    />
-                </Form.Item>
-                <Form.Item label="Cascader">
-                    <Cascader
-                        options={[
-                            {
-                                value: 'zhejiang',
-                                label: 'Zhejiang',
-                                children: [
-                                    {
-                                        value: 'hangzhou',
-                                        label: 'Hangzhou',
-                                    },
-                                ],
-                            },
-                        ]}
-                    />
-                </Form.Item>
-                <Form.Item label="DatePicker">
-                    <DatePicker />
-                </Form.Item>
-                <Form.Item label="RangePicker">
-                    <RangePicker />
-                </Form.Item>
-                <Form.Item label="InputNumber">
-                    <InputNumber />
-                </Form.Item>
-                <Form.Item label="TextArea">
-                    <TextArea rows={4} />
-                </Form.Item>
-                <Form.Item label="Switch" valuePropName="checked">
-                    <Switch />
-                </Form.Item>
-                <Form.Item label="Upload" valuePropName="fileList">
-                    <Upload action="/upload.do" listType="picture-card">
-                        <div>
-                            <PlusOutlined />
-                            <div
-                                style={{
-                                    marginTop: 8,
-                                }}
-                            >
-                                Upload
-                            </div>
-                        </div>
-                    </Upload>
-                </Form.Item>
-                <Form.Item label="Button">
-                    <Button>Button</Button>
-                </Form.Item>
-            </Form>
+            <div style={{
+                margin: 8,
+                padding: 8,
+                backgroundColor: '#fff',
+                borderRadius: 16,
+            }}>
+                <Title level={4} style={{
+                    margin: 8,
+                    padding: 8,
+                }}>
+                    新建动态爬虫任务：
+                </Title>
+                <Form
+                    labelCol={{
+                        span: 4,
+                    }}
+                    wrapperCol={{
+                        span: 14,
+                    }}
+                    initialValues={{
+                        auto_login: "off",
+                        form_fill: "off",
+                        save_resources: "off"
+                    }}
+                    colon={false}
+                    layout="horizontal"
+                    onFinish={onFinish}
+                >
+                    <Divider orientation="left" style={{fontWeight: 'bold'}}>基础设置</Divider>
+
+                    <Form.Item
+                        label="起始URL："
+                        name="target_url"
+                        rules={[{required: true, message: '请输入起始URL！'}]}>
+                        <Input addonBefore={selectBefore}
+                               placeHolder={'请输入待扫描网站域名/IP地址:端口，如：192.168.1.1:8000'}/>
+                    </Form.Item>
+
+                    <Form.Item
+                        label="自动登录："
+                        name="auto_login">
+                        <Switch checkedChildren="开启" unCheckedChildren="关闭" onChange={onAutoLoginChange}/>
+                    </Form.Item>
+
+                    <Form.Item label=" " hidden={hideUserName} style={{marginBottom: 0}}>
+                        <Form.Item
+                            label="用户名："
+                            name="username"
+                            style={{display: 'inline-block', width: 'calc(40% - 8px)', marginRight: 8}}>
+                            <Input placeHolder={'请输入用户名'}/>
+                        </Form.Item>
+
+                        <Form.Item
+                            label="密码："
+                            name="password"
+                            style={{display: 'inline-block', width: 'calc(40% - 8px)', marginLeft: 8}}>
+                            <Input type='password' placeHolder={'请输入密码'}/>
+                        </Form.Item>
+                    </Form.Item>
+
+
+                    <Form.Item
+                        label="表单自动填充分析："
+                        name="form_fill">
+                        <Switch checkedChildren="开启" unCheckedChildren="关闭"/>
+                    </Form.Item>
+
+                    <Form.Item
+                        label="静态资源存储："
+                        name="save_resources">
+                        <Switch checkedChildren="开启" unCheckedChildren="关闭"/>
+                    </Form.Item>
+
+                    <Divider orientation="left" style={{fontWeight: 'bold'}}>高级设置</Divider>
+
+                    <Form.Item
+                        label="待定">
+                    </Form.Item>
+
+
+                    <Form.Item label=" ">
+                        <Button type="primary" htmlType="submit">新建动态爬虫任务并运行</Button>
+                    </Form.Item>
+                </Form>
+            </div>
         </>
     );
-};
-export default () => <TaskCreate />;
+}
+
+export default TaskCreate;
