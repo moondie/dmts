@@ -21,7 +21,7 @@ import {useStore} from "@/store";
 
 const PlanContent = () => {
     const {scanStore} = useStore();
-    const [scanList, setScanList] = useState();
+    const [scanList, setScanList] = useState([]);
     useEffect(() => {
         (async () => {
             const statusDict = {

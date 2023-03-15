@@ -15,7 +15,7 @@ const EWDSHeader = () => {
     }
     const {userStore, loginStore} = useStore()
     useEffect(() => {
-        userStore.getProfile()
+        userStore.getProfile().catch(err => console.log(err));
     }, [])
     return (
         <Header className="header">
