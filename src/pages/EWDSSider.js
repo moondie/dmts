@@ -22,8 +22,6 @@ const EWDSSider = () => {
             // 数据概览
             getItem('数据概览', 'main', <HomeOutlined/>, [
                 getItem(<Link to='/main'>总体数据概览</Link>, '/main'),
-                getItem(<Link to='/main/xxx'>xxx数据概览</Link>, '/main/xxx'),
-                getItem(<Link to='/main/yyy'>yyy数据概览</Link>, '/main/yyy'),
             ]),
 
             // 分析计划
