@@ -1,5 +1,5 @@
 import {ProCard, StatisticCard} from '@ant-design/pro-components';
-import {Divider, Space, Tag} from 'antd';
+import {Divider, Progress, Space, Tag} from 'antd';
 import {CheckCircleOutlined, CloseCircleOutlined, MinusCircleOutlined} from '@ant-design/icons';
 import RcResizeObserver from 'rc-resize-observer';
 import React, {useEffect, useState} from "react";
@@ -34,6 +34,132 @@ const TimeComponent = () => {
 
 }
 
+const DataStatistic = () => (
+    <ProCard split="horizontal">
+        <ProCard split="vertical">
+            <StatisticCard
+                statistic={{
+                    title: '已扫描网站',
+                    value: 3,
+                    suffix: '个',
+                    description: <Statistic title="URL总数" value="500" suffix='个'
+                                            formatter={formatter}/>,
+                    formatter,
+                }}
+
+            />
+            <StatisticCard
+                statistic={{
+                    title: '已发现漏洞',
+                    value: 10,
+                    suffix: '个',
+                    description:
+                        <Space size={[2, 8]} wrap>
+                            <Tag color='red'><Statistic title='高危' value="2" suffix='个'
+                                                        formatter={formatter}/></Tag>
+                            <Tag color='yellow'><Statistic title="中危" value="3" suffix='个'
+                                                           formatter={formatter}/></Tag>
+                            <Tag color='default'><Statistic title="低危" value="5" suffix='个'
+                                                            formatter={formatter}/></Tag>
+                        </Space>,
+                    formatter,
+                }}
+            />
+        </ProCard>
+        <ProCard split="vertical">
+            <StatisticCard
+                statistic={{
+                    title: '运行中分析任务',
+                    value: '无',
+                }}
+            />
+            <StatisticCard
+                statistic={{
+                    title: '历史分析任务总数',
+                    value: '10',
+                    suffix: '个',
+                    description:
+                        <>
+                            <Statistic title="URL分析" value="3" suffix='个'
+                                       style={{display: 'inline-block'}} formatter={formatter}/>
+                            <Divider type='vertical'/>
+                            <Statistic title="Web渗透" value="5" suffix='个'
+                                       style={{display: 'inline-block'}} formatter={formatter}/>
+                            <Divider type='vertical'/>
+                            <Statistic title="CGI分析" value="2" suffix='个'
+                                       style={{display: 'inline-block'}} formatter={formatter}/>
+                        </>,
+                    formatter,
+                }}
+            />
+        </ProCard>
+    </ProCard>
+
+);
+
+const DataChart = () => (
+    <ProCard title="数据图示">
+        <MainChart/>
+    </ProCard>
+);
+
+const DataSystem = () => (
+    <ProCard title="系统状态">
+        <StatisticCard.Group direction='row'>
+            <StatisticCard
+                statistic={{
+                    title: '动态爬虫模块',
+                    value: '运行中',
+                    status: 'processing',
+                    valueStyle: {color: 'blue'},
+                }}
+            />
+            <StatisticCard.Divider type="vertical"/>
+            <StatisticCard
+                statistic={{
+                    title: '渗透测试模块',
+                    value: '已开启',
+                    status: 'success',
+                    valueStyle: {color: 'green'},
+                }}
+            />
+            <StatisticCard.Divider type="vertical"/>
+            <StatisticCard
+                statistic={{
+                    title: 'CGI分析模块',
+                    value: '未开启',
+                    status: 'default',
+                    valueStyle: {color: 'grey'},
+                }}
+            />
+        </StatisticCard.Group>
+        <StatisticCard.Divider type="horizontal"/>
+
+        <StatisticCard.Group direction='column'>
+
+            <StatisticCard>
+                <Statistic title='CPU占用' value='10' suffix='%'/>
+                <Progress steps={80} strokeColor={'limegreen'} size="small" percent={10} showInfo={false}/>
+            </StatisticCard>
+
+            <StatisticCard.Divider type="horizontal"/>
+
+            <StatisticCard>
+                <Statistic title='内存占用' value='3.2 / 16.0' suffix='GB'/>
+                <Progress steps={80} strokeColor={'blue'} size="small" percent={100 * 3.2 / 16.0} showInfo={false}/>
+            </StatisticCard>
+
+            <StatisticCard.Divider type="horizontal"/>
+
+            <StatisticCard>
+                <Statistic title='硬盘占用' value='10.5 / 40.0' suffix='GB'/>
+                <Progress steps={80} strokeColor={'grey'} size="small" percent={100 * 10.5 / 40.0} showInfo={false}/>
+            </StatisticCard>
+
+        </StatisticCard.Group>
+    </ProCard>
+)
+
 
 const MainContent = () => {
     const [responsive, setResponsive] = useState(false);
@@ -41,7 +167,7 @@ const MainContent = () => {
         <RcResizeObserver
             key="resize-observer"
             onResize={(offset) => {
-                setResponsive(offset.width < 596);
+                setResponsive(offset.width < 960);
             }}
         >
             <ProCard
@@ -52,79 +178,18 @@ const MainContent = () => {
                 bordered
             >
                 <ProCard split="horizontal">
-                    <ProCard split="horizontal">
-                        <ProCard split="vertical">
-                            <StatisticCard
-                                statistic={{
-                                    title: '已扫描网站',
-                                    value: 3,
-                                    suffix: '个',
-                                    description: <Statistic title="URL总数" value="500" suffix='个'
-                                                            formatter={formatter}/>,
-                                    formatter,
-                                }}
-
-                            />
-                            <StatisticCard
-                                statistic={{
-                                    title: '已发现漏洞',
-                                    value: 10,
-                                    suffix: '个',
-                                    description:
-                                        <Space size={[2, 8]} wrap>
-                                            <Tag color='red'><Statistic title='高危' value="2" suffix='个'
-                                                                        formatter={formatter}/></Tag>
-                                            <Tag color='yellow'><Statistic title="中危" value="3" suffix='个'
-                                                                           formatter={formatter}/></Tag>
-                                            <Tag color='default'><Statistic title="低危" value="5" suffix='个'
-                                                                            formatter={formatter}/></Tag>
-                                        </Space>,
-                                    formatter,
-                                }}
-                            />
-                        </ProCard>
-                        <ProCard split="vertical">
-                            <StatisticCard
-                                statistic={{
-                                    title: '运行中分析任务',
-                                    value: '无',
-                                }}
-                            />
-                            <StatisticCard
-                                statistic={{
-                                    title: '历史分析任务总数',
-                                    value: '10',
-                                    suffix: '个',
-                                    description:
-                                        <>
-                                            <Statistic title="URL分析" value="3" suffix='个'
-                                                       style={{display: 'inline-block'}} formatter={formatter}/>
-                                            <Divider type='vertical'/>
-                                            <Statistic title="Web渗透" value="5" suffix='个'
-                                                       style={{display: 'inline-block'}} formatter={formatter}/>
-                                            <Divider type='vertical'/>
-                                            <Statistic title="CGI分析" value="2" suffix='个'
-                                                       style={{display: 'inline-block'}} formatter={formatter}/>
-                                        </>,
-                                    formatter,
-                                }}
-                            />
-                        </ProCard>
+                    <ProCard split="vertical">
+                        <DataStatistic/>
                     </ProCard>
-                    <ProCard title="数据图示">
-                        <MainChart/>
+                    <ProCard split="vertical">
+                        <DataChart/>
                     </ProCard>
                 </ProCard>
-                <ProCard title="系统状态">
-                    <Statistic title="CPU占用" value="10" suffix='%'/>
-                    <Statistic title="内存占用" value="3.2 / 16.0" suffix='GB'/>
-                    <Statistic title="硬盘占用" value="10.5 / 40.0" suffix='GB'/>
 
-                    <Statistic title="动态爬虫模块" value="运行中" prefix={<CheckCircleOutlined />} valueStyle={{ color: 'green' }}/>
-                    <Statistic title="渗透测试模块" value="异常退出" prefix={<CloseCircleOutlined />} valueStyle={{ color: 'red' }}/>
-                    <Statistic title="CGI分析模块" value="已关闭" prefix={<MinusCircleOutlined />} valueStyle={{ color: 'grey' }}/>
-
+                <ProCard split="horizontal">
+                    <DataSystem/>
                 </ProCard>
+
             </ProCard>
         </RcResizeObserver>
 
