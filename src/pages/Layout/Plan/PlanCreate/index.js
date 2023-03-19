@@ -45,7 +45,6 @@ const PlanCreate = () => {
             target_url,
             profile_name,
             max_scan_time,
-            'user_name': userStore.userInfo.name,
         }).then(success => {
             message.success('添加成功，分析任务运行中……');
             navigate('/plan');
