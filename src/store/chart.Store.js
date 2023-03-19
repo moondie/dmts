@@ -1,51 +1,61 @@
 import {makeAutoObservable} from "mobx";
+import {http} from "@/utils";
 
 class ChartStore {
-    num = 0
+    num = 0;
     option = {
         title: {
-            text: '资源类型分布',
+            text: "资源类型分布",
             //subtext: 'Fake Data',
-            left: 'center'
+            left: "center"
         },
 
         tooltip: {
-            trigger: 'item'
+            trigger: "item"
         },
         legend: {
-            orient: 'vertical',
-            left: 'left'
+            orient: "vertical",
+            left: "left"
         },
         series: [
             {
-                name: '资源类型分布',
-                type: 'pie',
-                radius: '50%',
+                name: "资源类型分布",
+                type: "pie",
+                radius: "50%",
                 data: [
-                    {value: 1048, name: 'html'},
-                    {value: 735, name: 'js'},
-                    {value: 580, name: 'css'},
-                    {value: 484, name: '多媒体'},
-                    {value: 300, name: '其他'}
+                    {value: 1048, name: "html"},
+                    {value: 735, name: "js"},
+                    {value: 580, name: "css"},
+                    {value: 484, name: "多媒体"},
+                    {value: 300, name: "其他"}
                 ],
                 label: {
                     show: true,
-                    formatter: '{b} {d}%'
+                    formatter: "{b} {d}%"
                 },
                 emphasis: {
                     itemStyle: {
                         shadowBlur: 10,
                         shadowOffsetX: 0,
-                        shadowColor: 'rgba(0, 0, 0, 0.5)'
+                        shadowColor: "rgba(0, 0, 0, 0.5)"
                     }
                 }
             }
         ]
     };
+    getCpuUsage = async () => {
+        return await http.get("/getCpuUsage");
+    };
+    getMemUsage = async () => {
+        return await http.get("/getMemUsage");
+    };
+    getDiskUsage = async () => {
+        return await http.get("/getDiskUsage");
+    };
 
     constructor() {
-        makeAutoObservable(this)
+        makeAutoObservable(this);
     }
 }
 
-export default ChartStore
+export default ChartStore;

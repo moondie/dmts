@@ -109,62 +109,77 @@ const DataChart = () => (
     </ProCard>
 );
 
-const DataSystem = () => (
-    <ProCard title="系统状态">
-        <StatisticCard.Group direction="row">
-            <StatisticCard
-                statistic={{
-                    title: "动态爬虫模块",
-                    value: "运行中",
-                    status: "processing",
-                    valueStyle: {color: "blue"},
-                }}
-            />
-            <StatisticCard.Divider type="vertical"/>
-            <StatisticCard
-                statistic={{
-                    title: "渗透测试模块",
-                    value: "已开启",
-                    status: "success",
-                    valueStyle: {color: "green"},
-                }}
-            />
-            <StatisticCard.Divider type="vertical"/>
-            <StatisticCard
-                statistic={{
-                    title: "CGI分析模块",
-                    value: "未开启",
-                    status: "default",
-                    valueStyle: {color: "grey"},
-                }}
-            />
-        </StatisticCard.Group>
-        <StatisticCard.Divider type="horizontal"/>
-
-        <StatisticCard.Group direction="column">
-
-            <StatisticCard>
-                <Statistic title="CPU占用" value="10" suffix="%"/>
-                <Progress steps={80} strokeColor={"limegreen"} size="small" percent={10} showInfo={false}/>
-            </StatisticCard>
-
+const DataSystem = () => {
+    const [cpuUsage, setCpuUsage] = useState(0);
+    const {chartStore} = useStore();
+    useEffect(() => {
+        chartStore.getCpuUsage().then(res => {
+            setCpuUsage(res.usage);
+        });
+        setInterval(() => {
+            chartStore.getCpuUsage().then(res => {
+                setCpuUsage(res.usage);
+            });
+        }, 5000);
+    }, []);
+    return (
+        <ProCard title="系统状态">
+            <StatisticCard.Group direction="row">
+                <StatisticCard
+                    statistic={{
+                        title: "动态爬虫模块",
+                        value: "运行中",
+                        status: "processing",
+                        valueStyle: {color: "blue"},
+                    }}
+                />
+                <StatisticCard.Divider type="vertical"/>
+                <StatisticCard
+                    statistic={{
+                        title: "渗透测试模块",
+                        value: "已开启",
+                        status: "success",
+                        valueStyle: {color: "green"},
+                    }}
+                />
+                <StatisticCard.Divider type="vertical"/>
+                <StatisticCard
+                    statistic={{
+                        title: "CGI分析模块",
+                        value: "未开启",
+                        status: "default",
+                        valueStyle: {color: "grey"},
+                    }}
+                />
+            </StatisticCard.Group>
             <StatisticCard.Divider type="horizontal"/>
 
-            <StatisticCard>
-                <Statistic title="内存占用" value="3.2 / 16.0" suffix="GB"/>
-                <Progress steps={80} strokeColor={"blue"} size="small" percent={100 * 3.2 / 16.0} showInfo={false}/>
-            </StatisticCard>
+            <StatisticCard.Group direction="column">
 
-            <StatisticCard.Divider type="horizontal"/>
+                <StatisticCard>
+                    <Statistic title="CPU占用" value={cpuUsage} suffix="%"/>
+                    <Progress steps={80} strokeColor={"limegreen"} size="small" percent={cpuUsage} showInfo={false}/>
+                </StatisticCard>
 
-            <StatisticCard>
-                <Statistic title="硬盘占用" value="10.5 / 40.0" suffix="GB"/>
-                <Progress steps={80} strokeColor={"grey"} size="small" percent={100 * 10.5 / 40.0} showInfo={false}/>
-            </StatisticCard>
+                <StatisticCard.Divider type="horizontal"/>
 
-        </StatisticCard.Group>
-    </ProCard>
-);
+                <StatisticCard>
+                    <Statistic title="内存占用" value="3.2 / 16.0" suffix="GB"/>
+                    <Progress steps={80} strokeColor={"blue"} size="small" percent={100 * 3.2 / 16.0} showInfo={false}/>
+                </StatisticCard>
+
+                <StatisticCard.Divider type="horizontal"/>
+
+                <StatisticCard>
+                    <Statistic title="硬盘占用" value="10.5 / 40.0" suffix="GB"/>
+                    <Progress steps={80} strokeColor={"grey"} size="small" percent={100 * 10.5 / 40.0}
+                              showInfo={false}/>
+                </StatisticCard>
+
+            </StatisticCard.Group>
+        </ProCard>
+    );
+};
 
 
 const MainContent = () => {
