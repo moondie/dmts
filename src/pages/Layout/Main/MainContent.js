@@ -111,16 +111,33 @@ const DataChart = () => (
 
 const DataSystem = () => {
     const [cpuUsage, setCpuUsage] = useState(0);
+    const [memUsage, setMemUsage] = useState({totalMem: "16.0 GB", freeMem: "2.0 GB"});
+    const [diskUsage, setDiskUsage] = useState({totalCapacity: "100.0 GB", usedCapacity: "50.0 GB"});
     const {chartStore} = useStore();
     useEffect(() => {
         chartStore.getCpuUsage().then(res => {
             setCpuUsage(res.usage);
         });
-        setInterval(() => {
+        chartStore.getMemUsage().then(res => {
+            setMemUsage(res);
+        });
+        chartStore.getDiskUsage().then(res => {
+            setDiskUsage(res);
+        });
+        const interval = setInterval(() => {
             chartStore.getCpuUsage().then(res => {
                 setCpuUsage(res.usage);
             });
-        }, 5000);
+            chartStore.getMemUsage().then(res => {
+                setMemUsage(res);
+            });
+            chartStore.getDiskUsage().then(res => {
+                setDiskUsage(res);
+            });
+        }, 10000);
+        return () => {
+            clearInterval(interval);
+        };
     }, []);
     return (
         <ProCard title="系统状态">
@@ -153,34 +170,30 @@ const DataSystem = () => {
                 />
             </StatisticCard.Group>
             <StatisticCard.Divider type="horizontal"/>
-
             <StatisticCard.Group direction="column">
-
                 <StatisticCard>
                     <Statistic title="CPU占用" value={cpuUsage} suffix="%"/>
                     <Progress steps={80} strokeColor={"limegreen"} size="small" percent={cpuUsage} showInfo={false}/>
                 </StatisticCard>
-
                 <StatisticCard.Divider type="horizontal"/>
-
                 <StatisticCard>
-                    <Statistic title="内存占用" value="3.2 / 16.0" suffix="GB"/>
-                    <Progress steps={80} strokeColor={"blue"} size="small" percent={100 * 3.2 / 16.0} showInfo={false}/>
-                </StatisticCard>
-
-                <StatisticCard.Divider type="horizontal"/>
-
-                <StatisticCard>
-                    <Statistic title="硬盘占用" value="10.5 / 40.0" suffix="GB"/>
-                    <Progress steps={80} strokeColor={"grey"} size="small" percent={100 * 10.5 / 40.0}
+                    <Statistic title="内存占用" value={`${memUsage.freeMem} / ${memUsage.totalMem}`} suffix=""/>
+                    <Progress steps={80} strokeColor={"blue"} size="small"
+                              percent={100 * parseFloat(memUsage.freeMem) / parseFloat(memUsage.totalMem)}
                               showInfo={false}/>
                 </StatisticCard>
-
+                <StatisticCard.Divider type="horizontal"/>
+                <StatisticCard>
+                    <Statistic title="硬盘占用" value={`${diskUsage.usedCapacity} / ${diskUsage.totalCapacity}`}
+                               suffix=""/>
+                    <Progress steps={80} strokeColor={"grey"} size="small"
+                              percent={100 * parseFloat(diskUsage.usedCapacity) / parseFloat(diskUsage.totalCapacity)}
+                              showInfo={false}/>
+                </StatisticCard>
             </StatisticCard.Group>
         </ProCard>
     );
 };
-
 
 const MainContent = () => {
     const [responsive, setResponsive] = useState(false);
@@ -206,16 +219,13 @@ const MainContent = () => {
                         <DataChart/>
                     </ProCard>
                 </ProCard>
-
                 <ProCard split="horizontal">
                     <DataSystem/>
                 </ProCard>
-
             </ProCard>
         </RcResizeObserver>
 
-    )
-        ;
+    );
 };
 
 export default MainContent;
