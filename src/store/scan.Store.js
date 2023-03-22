@@ -16,10 +16,14 @@ class ScanStore {
 
     newScan = async (values) => {
         return await http.post("/scan/newScan", values);
-    }
+    };
+
+    getStatus = async () => {
+        return await http.get("/scan/status");
+    };
 
     constructor() {
-        makeAutoObservable(this)
+        makeAutoObservable(this);
     }
 }
 
