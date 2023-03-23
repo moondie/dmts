@@ -9,8 +9,10 @@
  *          删除分析计划（待实现）
  */
 
-import React, {useEffect, useRef, useState} from "react";
-import {Badge, Button, Descriptions, Empty} from "antd";
+import {useFocusEffect} from "@react-navigation/core";
+import React, {useEffect, useState} from "react";
+import {Badge, Button, Descriptions, Empty, message, Modal, Popconfirm, Upload} from "antd";
+import {InboxOutlined} from "@ant-design/icons";
 import {ProList} from "@ant-design/pro-components";
 import {Link} from "react-router-dom";
 
@@ -18,11 +20,74 @@ import moment from "moment-timezone";
 
 import {PlusOutlined} from "@ant-design/icons";
 import {useStore} from "@/store";
+import {getToken} from "@/utils";
+import {BASE_URL} from "@/utils/http";
+
+const {Dragger} = Upload;
+
+const UploadCgiFile = () => {
+    const props = {
+        name: "file",
+        multiple: true,
+        action: `${BASE_URL}/cgi/upload_cgi`,
+        // withCredentials: true,
+        maxCount: 1,
+        headers: {
+            Authorization: getToken()
+        },
+        onChange(info) {
+            const {status} = info.file;
+            if (status !== "uploading") {
+            }
+            if (status === "done") {
+                message.success(`${info.file.name} 文件上传成功`);
+            } else if (status === "error") {
+                message.error(`${info.file.name} 文件上传失败`);
+            }
+        },
+        onDrop(e) {
+            console.log("删除文件", e.dataTransfer.files);
+        },
+    };
+    return (
+        <Dragger {...props}>
+            <p className="ant-upload-drag-icon">
+                <InboxOutlined/>
+            </p>
+            <p className="ant-upload-text">点击或拖拽文件至此区域上传</p>
+            <p className="ant-upload-hint">
+                一次只上传一个CGI文件
+            </p>
+        </Dragger>
+    );
+};
 
 const CurrentScanCard = (props) => {
     const [displayState, setDisplayState] = useState({emptyDisplay: "block", descriptionsDisplay: "none"});
-    const [scanStatus, setScanStatus] = useState({errors: false, href: "", id: -1, status: "null", target_urls: []});
+    const [isLogModalOpen, setIsLogModalOpen] = useState(false);
+    const [logs, setLogs] = useState([]);
+    const [scanStatus, setScanStatus] = useState({
+        errors: false,
+        href: "",
+        id: -1,
+        scanId: "null",
+        status: "null",
+        target_urls: ["123"]
+    });
     const {scanStore} = useStore();
+
+    const showLogModal = () => {
+        scanStore.getLogs().then(logs => {
+            setLogs(logs);
+            setIsLogModalOpen(true);
+        });
+    };
+    const handleOk = () => {
+        setIsLogModalOpen(false);
+    };
+    const handleCancel = () => {
+        setIsLogModalOpen(false);
+    };
     const changeState = (display) => {
         if (display) {
             setDisplayState({emptyDisplay: "none", descriptionsDisplay: "block"});
@@ -30,143 +95,188 @@ const CurrentScanCard = (props) => {
             setDisplayState({emptyDisplay: "block", descriptionsDisplay: "none"});
         }
     };
-    useEffect(() => {
+    const {updateScanList} = props.props;
+    const onClickStop = () => {
+        scanStore.stopScan({scanId: scanStatus.scanId}).then(res => {
+            updateScanList();
+            message.success("已发送停止扫描指令");
+        }).catch(err => {
+            message.error("发送停止扫描指令失败");
+            console.log(err);
+        });
+    };
+    const updateRunningStatus = () => {
         scanStore.getStatus().then(status => {
-            status.startTime=moment.tz(Number(status.startTime), "Asia/Shanghai").format("YYYY-MM-DD HH:mm:ss")
+            status.startTime = moment.tz(Number(status.startTime), "Asia/Shanghai").format("YYYY-MM-DD HH:mm:ss");
             setScanStatus(status);
             if (status.id === -1) {
                 changeState(false);
+                updateScanList();
             } else {
                 changeState(true);
             }
+            message.success("更新扫描状态成功");
         });
+    };
+
+    useEffect(() => {
+        updateRunningStatus();
     }, []);
     return (
         <>
+            <Modal title="日志" open={isLogModalOpen} onOk={handleOk} onCancel={handleCancel}>
+                {logs.map(log => <p key={log.id}>{log.message}</p>)}
+            </Modal>
             <Descriptions style={{display: displayState.descriptionsDisplay}} bordered>
-                <Descriptions.Item label="URL">{scanStatus.target_urls[0]}</Descriptions.Item>
+                <Descriptions.Item
+                    label="URL">{scanStatus.target_urls ? scanStatus.target_urls[0] : "123"}</Descriptions.Item>
+                <Descriptions.Item label="scanId">{scanStatus.scanId}</Descriptions.Item>
                 <Descriptions.Item label="创建者">{scanStatus.userName}</Descriptions.Item>
                 <Descriptions.Item label="创建时间">{scanStatus.startTime}</Descriptions.Item>
-                <Descriptions.Item label="状态">{scanStatus.status}</Descriptions.Item>
-                {/*<Descriptions.Item label="Status">*/}
-                {/*    <Badge status="processing" text="Running"/>*/}
-                {/*</Descriptions.Item>*/}
+                <Descriptions.Item label="状态">
+                    <Badge status="processing" text={scanStatus.status}/>
+                </Descriptions.Item>
+                <Descriptions.Item label="操作">
+                    <Popconfirm
+                        placement="top"
+                        title="是否停止当前扫描？"
+                        onConfirm={() => onClickStop()}
+                        okText="Yes"
+                        cancelText="No">
+                        <Button style={{marginRight: 5}} type={"primary"} danger>停止</Button>
+                    </Popconfirm>
+
+                    <Button style={{marginRight: 5}} type={"primary"} onClick={() => showLogModal()}>查看日志</Button>
+                    <Button style={{marginRight: 5}} type={"primary"}
+                            onClick={() => updateRunningStatus()}>刷新</Button>
+                </Descriptions.Item>
             </Descriptions>
             <Empty style={{display: displayState.emptyDisplay}} description={"暂无数据"}/>
         </>
-
     );
 };
 
 const PlanContent = () => {
-    const {scanStore} = useStore();
-    const [scanList, setScanList] = useState([]);
-    const statusDict = {
-        "Stopped": "正常停止",
-        "Halted": "用户手动停止",
-        "Timeout": "超时停止"
-    };
-    const updateScanList = () => {
-        scanStore.getScanList().then(res => {
-            const list = [];
-            for (const item of res) {
-                const startTime = moment.tz(Number(item.startTime), "Asia/Shanghai").format("YYYY-MM-DD HH:mm:ss");
-                list.push({
-                    scanId: `scanId = ${item.scanId}`,
-                    targetURL: item.targetURL,
-                    content: {
-                        userName: item.userName,
-                        status: statusDict[item.status],
-                        startTime: startTime
-                    }
-                });
-            }
-            setScanList(list);
-        });
-    };
-    useEffect(() => {
-        updateScanList();
-    }, []);
-
-    return (
-        <>
-            <div style={{
-                margin: 8,
-                padding: 8,
-                backgroundColor: "#fff",
-                borderRadius: 16,
-                overflow: "auto",
-            }}>
-                <h2>正在进行的扫描</h2>
-                <CurrentScanCard props={{"updateScanList": updateScanList}}/>
-            </div>
-            <div style={{
-                margin: 8,
-                padding: 8,
-                backgroundColor: "#fff",
-                borderRadius: 16,
-                overflow: "auto",
-            }}>
-                <h2>已完成的扫描</h2>
-                <ProList
-                    rowKey="id"
-                    dataSource={scanList}
-                    metas={{
-                        title: {
-                            dataIndex: "targetURL",
-                        },
-                        description: {
-                            dataIndex: "scanId",
-                        },
+        const {scanStore} = useStore();
+        const [scanList, setScanList] = useState([]);
+        const statusDict = {
+            "Stopped": "正常停止",
+            "Halted": "用户手动停止",
+            "Timeout": "超时停止"
+        };
+        const updateScanList = () => {
+            scanStore.getScanList().then(res => {
+                const list = [];
+                for (const item of res) {
+                    const startTime = moment.tz(Number(item.startTime), "Asia/Shanghai").format("YYYY-MM-DD HH:mm:ss");
+                    list.push({
+                        scanId: `scanId = ${item.scanId}`,
+                        targetURL: item.targetURL,
                         content: {
-                            dataIndex: "content",
-                            render: (text) => (
-                                <div key="label" style={{display: "flex", justifyContent: "space-around"}}>
-                                    <div style={{width: 64}}>
-                                        <div style={{color: "#00000073"}}>创建者</div>
-                                        <div style={{color: "#000000D9"}}>{text.userName}</div>
-                                    </div>
-                                    <div style={{width: 128}}>
-                                        <div style={{color: "#00000073"}}>创建时间</div>
-                                        <div style={{color: "#000000D9"}}>{text.startTime}</div>
-                                    </div>
-                                    <div style={{width: 128}}>
-                                        <div style={{color: "#00000073"}}>状态</div>
-                                        <div style={{color: "#000000D9"}}><span>{text.status}</span></div>
-                                    </div>
-                                </div>
-                            ),
-                        },
-                        actions: {
-                            render: (text, row) => [
-                                <a href={row.html_url} target="_blank" rel="noopener noreferrer" key="link">
-                                    编辑
-                                </a>,
-                                <a href={row.html_url} target="_blank" rel="noopener noreferrer" key="view">
-                                    删除
-                                </a>,
-                            ],
-                        },
-                    }}
-                    toolbar={{
-                        actions: [
-                            <Button type="primary" key="primary">
-                                <Link to="/plan/create" style={{color: "#fff"}}>
-                                    <PlusOutlined/> 新建分析计划
-                                </Link>
-                            </Button>,
-                        ],
-                        search: {
-                            onSearch: (value) => {
-                                // TODO: 搜索分析计划，暂时不需要
+                            userName: item.userName,
+                            status: statusDict[item.status],
+                            startTime: startTime
+                        }
+                    });
+                }
+                setScanList(list);
+            });
+        };
+        useEffect(() => {
+            updateScanList();
+        }, []);
+
+        return (
+            <>
+                <div style={{
+                    margin: 8,
+                    padding: 8,
+                    backgroundColor: "#fff",
+                    borderRadius: 16,
+                    overflow: "auto",
+                }}>
+                    <h2>文件上传</h2>
+                    <UploadCgiFile/>
+                </div>
+
+                <div style={{
+                    margin: 8,
+                    padding: 8,
+                    backgroundColor: "#fff",
+                    borderRadius: 16,
+                    overflow: "auto",
+                }}>
+                    <h2>正在进行的扫描</h2>
+                    <CurrentScanCard props={{"updateScanList": updateScanList}}/>
+                </div>
+                <div style={{
+                    margin: 8,
+                    padding: 8,
+                    backgroundColor: "#fff",
+                    borderRadius: 16,
+                    overflow: "auto",
+                }}>
+                    <h2>已完成的扫描</h2>
+                    <ProList
+                        rowKey="id"
+                        dataSource={scanList}
+                        metas={{
+                            title: {
+                                dataIndex: "targetURL",
                             },
-                        },
-                    }}
-                >
-                </ProList>
-            </div>
-        </>
-    );
-};
+                            description: {
+                                dataIndex: "scanId",
+                            },
+                            content: {
+                                dataIndex: "content",
+                                render: (text) => (
+                                    <div key="label" style={{display: "flex", justifyContent: "space-around"}}>
+                                        <div style={{width: 64}}>
+                                            <div style={{color: "#00000073"}}>创建者</div>
+                                            <div style={{color: "#000000D9"}}>{text.userName}</div>
+                                        </div>
+                                        <div style={{width: 128}}>
+                                            <div style={{color: "#00000073"}}>创建时间</div>
+                                            <div style={{color: "#000000D9"}}>{text.startTime}</div>
+                                        </div>
+                                        <div style={{width: 128}}>
+                                            <div style={{color: "#00000073"}}>状态</div>
+                                            <div style={{color: "#000000D9"}}><span>{text.status}</span></div>
+                                        </div>
+                                    </div>
+                                ),
+                            },
+                            actions: {
+                                render: (text, row) => [
+                                    <a href={row.html_url} target="_blank" rel="noopener noreferrer" key="link">
+                                        编辑
+                                    </a>,
+                                    <a href={row.html_url} target="_blank" rel="noopener noreferrer" key="view">
+                                        删除
+                                    </a>,
+                                ],
+                            },
+                        }}
+                        toolbar={{
+                            actions: [
+                                <Button type="primary" key="primary">
+                                    <Link to="/plan/create" style={{color: "#fff"}}>
+                                        <PlusOutlined/> 新建分析计划
+                                    </Link>
+                                </Button>,
+                            ],
+                            search: {
+                                onSearch: (value) => {
+                                    // TODO: 搜索分析计划，暂时不需要
+                                },
+                            },
+                        }}
+                    >
+                    </ProList>
+                </div>
+            </>
+        );
+    }
+;
 
 export default PlanContent;

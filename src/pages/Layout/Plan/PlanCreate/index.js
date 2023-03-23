@@ -1,7 +1,7 @@
 /**
  * 创建分析计划页面。
  */
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState} from "react";
 import {Button, Divider, Form, Input, InputNumber, List, message, Select, Typography} from "antd";
 import {useStore} from "@/store";
 import {useNavigate} from "react-router-dom";
@@ -24,7 +24,7 @@ const PlanCreate = () => {
     const {userStore} = useStore();
 
     const [profileList, setProfileList] = useState([]);
-    const [profileContent, setprofileContent] = useState('');
+    const [profileContent, setprofileContent] = useState("");
 
     useEffect(() => {
         (async () => {
@@ -33,12 +33,12 @@ const PlanCreate = () => {
                 .then(res => {
                     const profile_list = [];
                     for (const profile of res?.profiles) {
-                        profile_list.push(<Select.Option value={profile}>{profile}</Select.Option>);
+                        profile_list.push(<Select.Option key={profile} value={profile}>{profile}</Select.Option>);
                     }
                     setProfileList(profile_list);
                 });
         })();
-    }, [])
+    }, []);
 
     const onFinish = ({target_url, profile_name, max_scan_time}) => {
         scanStore.newScan({
@@ -46,27 +46,27 @@ const PlanCreate = () => {
             profile_name,
             max_scan_time,
         }).then(success => {
-            message.success('添加成功，分析任务运行中……');
-            navigate('/plan');
+            message.success("添加成功，分析任务运行中……");
+            navigate("/plan");
         }).catch(err => {
-            message.error(err.response.data.msg)
-        })
+            message.error(err.response.data.msg);
+        });
 
-    }
+    };
 
     const onChangeProfile = (profile_name) => {
         scanStore.getProfile(profile_name).catch(err => message.error(err.response.data.msg))
             .then(res => {
-                setprofileContent(res.data)
-            })
-    }
+                setprofileContent(res.data);
+            });
+    };
 
     return (
         <>
             <div style={{
                 margin: 8,
                 padding: 8,
-                backgroundColor: '#fff',
+                backgroundColor: "#fff",
                 borderRadius: 16,
             }}>
                 <Title level={4} style={{
@@ -89,27 +89,26 @@ const PlanCreate = () => {
                     layout="horizontal"
                     onFinish={onFinish}
                 >
-                    <Divider orientation="left" style={{fontWeight: 'bold'}}>基础设置</Divider>
+                    <Divider orientation="left" style={{fontWeight: "bold"}}>基础设置</Divider>
                     <Form.Item
                         label="起始URL："
                         name="target_url"
-                        rules={[{required: true, message: '请输入起始URL！'}]}>
-                        <Input addonBefore={selectBefore}
-                               placeHolder={'请输入待扫描网站域名/IP地址:端口，如：192.168.1.1:8000'}/>
+                        rules={[{required: true, message: "请输入起始URL！"}]}>
+                        <Input placeholder={"请输入待扫描网站域名/IP地址:端口，如：http://192.168.1.1:8000"}/>
                     </Form.Item>
 
                     <Form.Item
                         label="扫描时间上限："
                         name="max_scan_time"
-                        rules={[{required: true, message: '请输入正确的扫描时间秒数！'}, {type: 'integer'}]}>
-                        <InputNumber step="60" addonAfter={'秒'} min={0}
-                                     placeHolder={'如：600'}/>
+                        rules={[{required: true, message: "请输入正确的扫描时间秒数！"}, {type: "integer"}]}>
+                        <InputNumber step="60" addonAfter={"秒"} min={0}
+                                     placeholder={"如：600"}/>
                     </Form.Item>
 
                     <Form.Item
                         label="扫描脚本选择："
                         name="profile_name"
-                        rules={[{required: true, message: '请选择扫描脚本！'}]}>
+                        rules={[{required: true, message: "请选择扫描脚本！"}]}>
                         <Select onChange={onChangeProfile}>
                             {profileList}
                         </Select>
@@ -119,7 +118,7 @@ const PlanCreate = () => {
                         label="扫描脚本预览："
                     >
                         <TextArea
-                            style={{color: 'black'}}
+                            style={{color: "black"}}
                             value={profileContent} autoSize={{minRows: 6, maxRows: 12}} disabled={true}/>
                     </Form.Item>
 
@@ -131,6 +130,6 @@ const PlanCreate = () => {
             </div>
         </>
     );
-}
+};
 
 export default PlanCreate;

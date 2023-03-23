@@ -18,8 +18,20 @@ class ScanStore {
         return await http.post("/scan/newScan", values);
     };
 
+    stopScan = async (values) => {
+        return await http.post("/scan/stopScan", values);
+    };
+
+    getLogs = async () => {
+        return await http.get("/scan/getLogs");
+    };
+
     getStatus = async () => {
         return await http.get("/scan/status");
+    };
+
+    getScanDetails = async (scanId) => {
+        return await http.get(`/scan/getScanDetails/?scanId=${scanId}`);
     };
 
     constructor() {
