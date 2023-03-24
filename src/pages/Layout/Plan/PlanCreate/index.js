@@ -2,7 +2,7 @@
  * 创建分析计划页面。
  */
 import React, {useEffect, useState} from "react";
-import {Button, Divider, Form, Input, InputNumber, List, message, Select, Typography} from "antd";
+import {Button, Divider, Form, Input, InputNumber, message, Select, Typography} from "antd";
 import {useStore} from "@/store";
 import {useNavigate} from "react-router-dom";
 
@@ -20,15 +20,12 @@ const selectBefore = (
 const PlanCreate = () => {
     const {scanStore} = useStore();
     const navigate = useNavigate();
-    // TODO: 这里的user_name是否应该这样传参存疑。
-    const {userStore} = useStore();
 
     const [profileList, setProfileList] = useState([]);
     const [profileContent, setprofileContent] = useState("");
 
     useEffect(() => {
         (async () => {
-            userStore.getProfile().catch(err => message.error(err.response.data.msg));
             scanStore.getProfiles().catch(err => message.error(err.response.data.msg))
                 .then(res => {
                     const profile_list = [];

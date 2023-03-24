@@ -9,12 +9,11 @@
  *          删除分析计划（待实现）
  */
 
-import {useFocusEffect} from "@react-navigation/core";
 import React, {useEffect, useState} from "react";
-import {Badge, Button, Descriptions, Empty, message, Modal, Popconfirm, Upload} from "antd";
+import {Badge, Button, Descriptions, Empty, message, Modal, Popconfirm, Typography, Upload} from "antd";
 import {InboxOutlined} from "@ant-design/icons";
 import {ProList} from "@ant-design/pro-components";
-import {Link} from "react-router-dom";
+import {Link, useLocation} from "react-router-dom";
 
 import moment from "moment-timezone";
 
@@ -24,6 +23,7 @@ import {getToken} from "@/utils";
 import {BASE_URL} from "@/utils/http";
 
 const {Dragger} = Upload;
+const {Title} = Typography;
 
 const UploadCgiFile = () => {
     const props = {
@@ -105,7 +105,7 @@ const CurrentScanCard = (props) => {
             console.log(err);
         });
     };
-    const updateRunningStatus = () => {
+    const updateRunningStatus = (show_message = true) => {
         scanStore.getStatus().then(status => {
             status.startTime = moment.tz(Number(status.startTime), "Asia/Shanghai").format("YYYY-MM-DD HH:mm:ss");
             setScanStatus(status);
@@ -115,13 +115,23 @@ const CurrentScanCard = (props) => {
             } else {
                 changeState(true);
             }
-            message.success("更新扫描状态成功");
+            if (show_message) {
+                message.success("更新扫描状态成功");
+            }
+
         });
     };
 
+
     useEffect(() => {
-        updateRunningStatus();
+        const status_interval = setInterval(() => {
+            updateRunningStatus(false);
+        }, 1000);
+        return () => {
+            clearInterval(status_interval);
+        }
     }, []);
+
     return (
         <>
             <Modal title="日志" open={isLogModalOpen} onOk={handleOk} onCancel={handleCancel}>
@@ -195,8 +205,18 @@ const PlanContent = () => {
                     borderRadius: 16,
                     overflow: "auto",
                 }}>
-                    <h2>文件上传</h2>
-                    <UploadCgiFile/>
+                    <Title level={4} style={{
+                        margin: 8,
+                        padding: 8,
+                    }}>
+                        文件上传
+                    </Title>
+                    <div style={{
+                        margin: 8,
+                        padding: 8,
+                    }}>
+                        <UploadCgiFile/>
+                    </div>
                 </div>
 
                 <div style={{
@@ -206,8 +226,18 @@ const PlanContent = () => {
                     borderRadius: 16,
                     overflow: "auto",
                 }}>
-                    <h2>正在进行的扫描</h2>
-                    <CurrentScanCard props={{"updateScanList": updateScanList}}/>
+                    <Title level={4} style={{
+                        margin: 8,
+                        padding: 8,
+                    }}>
+                        正在进行的扫描
+                    </Title>
+                    <div style={{
+                        margin: 8,
+                        padding: 8,
+                    }}>
+                        <CurrentScanCard props={{"updateScanList": updateScanList}}/>
+                    </div>
                 </div>
                 <div style={{
                     margin: 8,
@@ -216,7 +246,12 @@ const PlanContent = () => {
                     borderRadius: 16,
                     overflow: "auto",
                 }}>
-                    <h2>已完成的扫描</h2>
+                    <Title level={4} style={{
+                        margin: 8,
+                        padding: 8,
+                    }}>
+                        已完成的扫描
+                    </Title>
                     <ProList
                         rowKey="id"
                         dataSource={scanList}
@@ -259,11 +294,11 @@ const PlanContent = () => {
                         }}
                         toolbar={{
                             actions: [
-                                <Button type="primary" key="primary">
-                                    <Link to="/plan/create" style={{color: "#fff"}}>
+                                <Link to="/plan/create" style={{color: "#fff"}}>
+                                    <Button type="primary" key="primary">
                                         <PlusOutlined/> 新建分析计划
-                                    </Link>
-                                </Button>,
+                                    </Button>
+                                </Link>,
                             ],
                             search: {
                                 onSearch: (value) => {

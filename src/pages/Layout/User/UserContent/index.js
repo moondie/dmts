@@ -173,14 +173,14 @@ const UserCard = ({item}) => {
                 <Skeleton loading={loading} avatar active>
                     <Meta
                         avatar=<Avatar src={avatar}/>
-                        title = {
-                            <> {item.name}
-                                <Tag style={{marginLeft: 8}} color={item.role === 'admin' ? "red" : "blue"}>
-                                    {item.role === 'admin' ? "管理员" : "普通用户"}
-                                </Tag>
-                            </>
-                        }
-                        description = {item.description}
+                    title = {
+                    <> {item.name}
+                        <Tag style={{marginLeft: 8}} color={item.role === 'admin' ? "red" : "blue"}>
+                            {item.role === 'admin' ? "管理员" : "普通用户"}
+                        </Tag>
+                    </>
+                }
+                    description = {item.description}
                     />
                 </Skeleton>
                 <Collapse collapsible="icon" bordered={false} ghost activeKey={collapse ? "1" : ""}>
@@ -202,11 +202,11 @@ const UserContent = () => {
 
     return (
         <div className="site-card-wrapper">
-            <Button type="primary">
-                <Link to='/user/add' style={{color: '#fff'}}>
+            <Link to='/user/add' style={{color: '#fff'}}>
+                <Button type="primary">
                     <UserAddOutlined/> 新建用户
-                </Link>
-            </Button>
+                </Button>
+            </Link>
 
             <Row gutter={20}>
                 {managerUserStore.userList.map(item => <UserCard key={item.name} item={item}/>)}
