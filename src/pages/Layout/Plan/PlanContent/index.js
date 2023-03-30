@@ -129,7 +129,7 @@ const CurrentScanCard = (props) => {
         }, 1000);
         return () => {
             clearInterval(status_interval);
-        }
+        };
     }, []);
 
     return (
@@ -282,14 +282,18 @@ const PlanContent = () => {
                                 ),
                             },
                             actions: {
-                                render: (text, row) => [
-                                    <a href={row.html_url} target="_blank" rel="noopener noreferrer" key="link">
-                                        编辑
-                                    </a>,
-                                    <a href={row.html_url} target="_blank" rel="noopener noreferrer" key="view">
-                                        删除
-                                    </a>,
-                                ],
+                                render: (text, row) => {
+                                    //console.log(row.scanId);
+                                    const scanId = row.scanId.split(" ")[2];
+                                    //console.log(scanId);
+                                    return [
+                                        <Link to={`/plan/details/${scanId}`} key={scanId}>详情</Link>,
+                                        <a href={row.html_url} target="_blank" rel="noopener noreferrer"
+                                           key="delete">
+                                            删除
+                                        </a>,
+                                    ];
+                                },
                             },
                         }}
                         toolbar={{
