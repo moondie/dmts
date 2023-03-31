@@ -6,6 +6,7 @@ import moment from "moment-timezone";
 import BasicDescriptions from "@/pages/Layout/Plan/PlanDetails/BasicDescriptions";
 import VulnDetails from "@/pages/Layout/Plan/PlanDetails/VulnDetails";
 import RequestList from "@/pages/Layout/Plan/PlanDetails/RequestList";
+import {observer} from "mobx-react-lite";
 
 const getVulnsStatistics = (vulns) => {
     let res = {
@@ -69,14 +70,62 @@ const getRequestDetails = (urls0) => {
         };
         chartOptionData.push(item);
     }
+    const updateChartOption = (data) => {
+        const option = {
+            title: {
+                text: "资源类型分布",
+                //subtext: 'Fake Data',
+                left: "center"
+            },
+
+            tooltip: {
+                trigger: "item"
+            },
+            legend: {
+                orient: "vertical",
+                left: "left"
+            },
+            series: [
+                {
+                    name: "资源类型分布",
+                    type: "pie",
+                    radius: "50%",
+                    data: [
+                        {value: 1048, name: "html"},
+                        {value: 735, name: "js"},
+                        {value: 580, name: "css"},
+                        {value: 484, name: "多媒体"},
+                        {value: 300, name: "其他"}
+                    ],
+                    label: {
+                        show: true,
+                        formatter: "{b} {d}%"
+                    },
+                    emphasis: {
+                        itemStyle: {
+                            shadowBlur: 10,
+                            shadowOffsetX: 0,
+                            shadowColor: "rgba(0, 0, 0, 0.5)"
+                        }
+                    }
+                }
+            ]
+        };
+        if (!data) return option;
+        else {
+            option.series[0].data = data;
+            return option;
+        }
+    };
     return {
         "urls": urls,
-        "chartOptionData": chartOptionData
+        "chartOption": updateChartOption(chartOptionData)
     };
 };
+
 const PlanDescriptions = (props) => {
     const {scanId, setLoading} = props.props;
-    const {scanStore,chartStore} = useStore();
+    const {scanStore, chartStore} = useStore();
     const [details, setDetails] = useState({
         result: {logs: [], urls: [], vulns: []},
         scanId: "加载中",
@@ -88,10 +137,8 @@ const PlanDescriptions = (props) => {
             high: 0,
             medium: 0,
             low: 0
-        }, requestDetails: {
-            "urls": [],
-            "chartOptionData": []
-        }
+        },
+        chartOption: {}
     });
     const statusDict = {
         "Stopped": "正常停止",
@@ -103,9 +150,9 @@ const PlanDescriptions = (props) => {
             res.startTime = moment.tz(Number(res.startTime), "Asia/Shanghai").format("YYYY-MM-DD HH:mm:ss");
             res.status = statusDict[res.status];
             res.vulnsStatistics = getVulnsStatistics(res.result.vulns);
-            res.requestDetails = getRequestDetails(res.result.urls);
-            chartStore.setChartOptionData(res.requestDetails.chartOptionData)
-            //console.log(res);
+            const requestDetails = getRequestDetails(res.result.urls);
+            res.result.urls = requestDetails.urls;
+            res.chartOption = requestDetails.chartOption;
             setDetails(res);
             setLoading(false);
         });
@@ -128,4 +175,4 @@ const PlanDetails = () => {
             <PlanDescriptions props={{"scanId": scanId, "setLoading": setLoading}}/>
         </Spin>);
 };
-export default PlanDetails;
+export default observer(PlanDetails);

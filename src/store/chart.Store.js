@@ -44,7 +44,7 @@ class ChartStore {
         ]
     };
     setChartOptionData = (data) => {
-            this.option.series[0].data = data;
+        this.option.series[0].data = data;
     };
     getCpuUsage = async () => {
         return await http.get("/getCpuUsage");
