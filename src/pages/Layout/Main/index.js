@@ -8,7 +8,7 @@ const Error = lazy(() => import('@/pages/Layout/Error'))
 const Main = () => (
     <Routes>
         <Route path="" element={<MainContent/>}></Route>
-        {/* <Route path="/*" element={<Error/>}></Route> */}
+        <Route path="/*" element={<Error/>}></Route>
     </Routes>
 );
 export default Main;

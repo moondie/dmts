@@ -1,10 +1,11 @@
+import React, { useEffect, useState } from "react";
 import { ProCard, StatisticCard } from "@ant-design/pro-components";
 import { Button, Divider, Progress, Space, Tag } from "antd";
 import RcResizeObserver from "rc-resize-observer";
-import React, { useEffect, useState } from "react";
 import CountUp from "react-countup";
-import MainChart from "@/pages/Layout/Main/MainChart";
 import moment from "moment";
+import { AgeChart, LocationChart } from "@/pages/Layout/Main/MainChart";
+import { DemoLine } from "@/pages/Layout/Main/MainGraph";
 import { useStore } from "@/store";
 
 const { Statistic } = StatisticCard;
@@ -40,32 +41,31 @@ const TimeComponent = () => {
 };
 
 const DataStatistic = () => (
-    <ProCard split="horizontal">
+    <ProCard split="horizontal" title="扫描结果">
 
         <ProCard split="vertical">
             <StatisticCard
                 statistic={{
-                    title: "已扫描网站",
-                    value: 3,
+                    title: "已扫描仓库",
+                    value: 29392,
                     suffix: "个",
-                    description: <Statistic title="URL总数" value="500" suffix="个"
-                        formatter={formatter} />,
+                    // description: <Statistic title="URL总数" value="500" suffix="个"
+                    //     formatter={formatter} />,
                     formatter,
                 }}
-
             />
             <StatisticCard
                 statistic={{
-                    title: "已发现漏洞",
-                    value: 10,
+                    title: "已发现恶意组织",
+                    value: 2901,
                     suffix: "个",
                     description:
                         <Space size={[2, 8]} wrap>
-                            <Tag color="red"><Statistic title="高危" value="2" suffix="个"
+                            <Tag color="red"><Statistic title="高危" value="192" suffix="个"
                                 formatter={formatter} /></Tag>
-                            <Tag color="yellow"><Statistic title="中危" value="3" suffix="个"
+                            <Tag color="yellow"><Statistic title="中危" value="793" suffix="个"
                                 formatter={formatter} /></Tag>
-                            <Tag color="default"><Statistic title="低危" value="5" suffix="个"
+                            <Tag color="default"><Statistic title="低危" value="1976" suffix="个"
                                 formatter={formatter} /></Tag>
                         </Space>,
                     formatter,
@@ -75,24 +75,24 @@ const DataStatistic = () => (
         <ProCard split="vertical">
             <StatisticCard
                 statistic={{
-                    title: "运行中分析任务",
+                    title: "运行中扫描任务数量",
                     value: "无",
                 }}
             />
             <StatisticCard
                 statistic={{
-                    title: "历史分析任务总数",
+                    title: "历史扫描任务总数",
                     value: "10",
                     suffix: "个",
                     description:
                         <>
-                            <Statistic title="URL分析" value="3" suffix="个"
+                            <Statistic title="代码归属分析" value="3" suffix="个"
                                 style={{ display: "inline-block" }} formatter={formatter} />
                             <Divider type="vertical" />
-                            <Statistic title="Web渗透" value="5" suffix="个"
+                            <Statistic title="代码情报分析" value="5" suffix="个"
                                 style={{ display: "inline-block" }} formatter={formatter} />
                             <Divider type="vertical" />
-                            <Statistic title="CGI分析" value="2" suffix="个"
+                            <Statistic title="全量分析" value="2" suffix="个"
                                 style={{ display: "inline-block" }} formatter={formatter} />
                         </>,
                     formatter,
@@ -100,103 +100,72 @@ const DataStatistic = () => (
             />
         </ProCard>
     </ProCard>
-
 );
 
-const DataChart = () => (
-    <ProCard title="数据图示">
-        <MainChart />
+const DataStatus = () => (
+    <ProCard split="horizontal" title="系统状态">
+
+        <ProCard split="vertical">
+            <StatisticCard
+                statistic={{
+                    title: "动态爬虫模块",
+                    value: "运行中",
+                    status: "processing",
+                    valueStyle: { color: "blue" },
+                    description:
+                        <Space size={[2, 8]} wrap>
+                            <Tag color="#19CAAD"><a href="https://github.com">GitHub</a></Tag>
+                            <Tag color="#19CAAD"><a href="https://gitee.com">Gitee</a></Tag>
+                            <Tag color="#19CAAD"><a href="https://about.gitlab.com/">Gitlab</a></Tag>
+                        </Space>,
+                }}
+            />
+            <StatisticCard
+                statistic={{
+                    title: "代码归属模块",
+                    value: "已开启",
+                    status: "success",
+                    valueStyle: { color: "green" },
+
+                }}
+            />
+        </ProCard>
+        <ProCard split="vertical">
+            <StatisticCard
+                statistic={{
+                    title: "情报分析模块",
+                    value: "已开启",
+                    status: "success",
+                    valueStyle: { color: "green" },
+                    description:
+                        <Space size={[2, 8]} wrap>
+                            <Tag color="#19CAAD"><a href="https://weibo.com/">微博</a></Tag>
+                            <Tag color="#19CAAD"><a href="https://twitter.com/">推特</a></Tag>
+                            <Tag color="#19CAAD"><a href="https://www.github.com">GitHub</a></Tag>
+                            <Tag color="#19CAAD"><a href="https://www.linkedin.com/">领英</a></Tag>
+                            <Tag color="#19CAAD"><a href="https://www.facebook.com/">Facebook</a></Tag>
+                        </Space>,
+                }}
+            />
+            <StatisticCard
+                statistic={{
+                    title: "社会属性映射模块",
+                    value: "已开启",
+                    status: "success",
+                    valueStyle: { color: "green" },
+                    description:
+                        <Space size={[2, 8]} wrap>
+                            <Tag color="#19CAAD">性别</Tag>
+                        </Space>,
+                }}
+            />
+        </ProCard>
     </ProCard>
 );
 
-const DataSystem = () => {
-    const [cpuUsage, setCpuUsage] = useState(0);
-    const [memUsage, setMemUsage] = useState({ totalMem: "16.0 GB", freeMem: "2.0 GB" });
-    const [diskUsage, setDiskUsage] = useState({ totalCapacity: "100.0 GB", usedCapacity: "50.0 GB" });
-    const { chartStore } = useStore();
-    useEffect(() => {
-        chartStore.getCpuUsage().then(res => {
-            setCpuUsage(res.usage);
-        });
-        chartStore.getMemUsage().then(res => {
-            setMemUsage(res);
-        });
-        chartStore.getDiskUsage().then(res => {
-            setDiskUsage(res);
-        });
-        const interval = setInterval(() => {
-            chartStore.getCpuUsage().then(res => {
-                setCpuUsage(res.usage);
-            });
-            chartStore.getMemUsage().then(res => {
-                setMemUsage(res);
-            });
-            chartStore.getDiskUsage().then(res => {
-                setDiskUsage(res);
-            });
-        }, 10000);
-        return () => {
-            clearInterval(interval);
-        };
-    }, []);
-    return (
-        <ProCard title="系统状态">
-            <StatisticCard.Group direction="row">
-                <StatisticCard
-                    statistic={{
-                        title: "动态爬虫模块",
-                        value: "运行中",
-                        status: "processing",
-                        valueStyle: { color: "blue" },
-                    }}
-                />
-                <StatisticCard.Divider type="vertical" />
-                <StatisticCard
-                    statistic={{
-                        title: "渗透测试模块",
-                        value: "已开启",
-                        status: "success",
-                        valueStyle: { color: "green" },
-                    }}
-                />
-                <StatisticCard.Divider type="vertical" />
-                <StatisticCard
-                    statistic={{
-                        title: "CGI分析模块",
-                        value: "未开启",
-                        status: "default",
-                        valueStyle: { color: "grey" },
-                    }}
-                />
-            </StatisticCard.Group>
-            <StatisticCard.Divider type="horizontal" />
-            <StatisticCard.Group direction="column">
-                <StatisticCard>
-                    <Statistic title="CPU占用" value={cpuUsage} suffix="%" />
-                    <Progress steps={80} strokeColor={"limegreen"} size="small" percent={cpuUsage} showInfo={false} />
-                </StatisticCard>
-                <StatisticCard.Divider type="horizontal" />
-                <StatisticCard>
-                    <Statistic title="内存占用" value={`${memUsage.freeMem} / ${memUsage.totalMem}`} suffix="" />
-                    <Progress steps={80} strokeColor={"blue"} size="small"
-                        percent={100 * parseFloat(memUsage.freeMem) / parseFloat(memUsage.totalMem)}
-                        showInfo={false} />
-                </StatisticCard>
-                <StatisticCard.Divider type="horizontal" />
-                <StatisticCard>
-                    <Statistic title="硬盘占用" value={`${diskUsage.usedCapacity} / ${diskUsage.totalCapacity}`}
-                        suffix="" />
-                    <Progress steps={80} strokeColor={"grey"} size="small"
-                        percent={100 * parseFloat(diskUsage.usedCapacity) / parseFloat(diskUsage.totalCapacity)}
-                        showInfo={false} />
-                </StatisticCard>
-            </StatisticCard.Group>
-        </ProCard>
-    );
-};
 
 const MainContent = () => {
-    const [responsive, setResponsive] = useState(false);
+    const [responsive, setResponsive] = useState(true);
     return (
         <RcResizeObserver
             key="resize-observer"
@@ -207,20 +176,29 @@ const MainContent = () => {
             <ProCard
                 title="数据概览"
                 extra={<TimeComponent />}
-                split={responsive ? "horizontal" : "vertical"}
+                // split={responsive ? "horizontal" : "vertical"}
+                split="horizontal"
                 headerBordered
                 bordered
             >
-                <ProCard split="horizontal">
-                    <ProCard split="vertical">
+                <ProCard split="vertical">
+                    <ProCard split="horizontal">
                         <DataStatistic />
                     </ProCard>
-                    <ProCard split="vertical">
-                        <DataChart />
+                    <ProCard split="horizontal">
+                        <DataStatus />
                     </ProCard>
                 </ProCard>
-                <ProCard split="horizontal">
-                    <DataSystem />
+                <ProCard title="不同语言恶意代码仓库特征随时间的变化趋势图">
+                    <DemoLine />
+                </ProCard>
+                <ProCard split="vertical">
+                    <ProCard title="恶意代码年龄分布表">
+                        <AgeChart />
+                    </ProCard>
+                    <ProCard title="恶意代码地域分布表">
+                        <LocationChart />
+                    </ProCard>
                 </ProCard>
             </ProCard>
         </RcResizeObserver>
@@ -229,4 +207,3 @@ const MainContent = () => {
 };
 
 export default MainContent;
-
