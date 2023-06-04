@@ -37,12 +37,12 @@ const EWDSSider = () => {
             ]),
 
             // 分析数据
-            // getItem('分析数据查看', 'data', <EditOutlined/>, [
-            //     getItem(<Link to='/data'>分析数据总览</Link>, '/data'),
-            //     getItem(<Link to='/data/url'>URL数据查看</Link>, '/data/url'),
-            //     getItem(<Link to='/data/vulnerability'>漏洞数据查看</Link>, '/data/vulnerability'),
-            //     getItem(<Link to='/data/cgi'>cgi动态分析数据查看</Link>, '/data/cgi'),
-            // ]),
+            getItem('分析数据查看', 'data', <EditOutlined />, [
+                getItem(<Link to='/data'>分析数据总览</Link>, '/data'),
+                getItem(<Link to='/data/url'>代码归属模块</Link>, '/data/url'),
+                getItem(<Link to='/data/vulnerability'>情报分析模块</Link>, '/data/vulnerability'),
+                // getItem(<Link to='/data/cgi'>cgi动态分析数据查看</Link>, '/data/cgi'),
+            ]),
 
             // 前瞻性课题
             getItem('前瞻课题', 'data', <EditOutlined />, [
