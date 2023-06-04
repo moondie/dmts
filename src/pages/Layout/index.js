@@ -4,7 +4,7 @@ import {observer} from 'mobx-react-lite'
 import React, {lazy, useEffect} from 'react'
 import {Footer} from "antd/es/layout/layout";
 import EWDSHeader from "@/pages/Layout/EWDSHeader";
-import EWDSSider from "@/pages/EWDSSider";
+import EWDSSider from "@/pages/Layout/EWDSSider";
 import {Layout} from 'antd'
 
 const {Content} = Layout
