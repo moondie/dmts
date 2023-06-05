@@ -1,9 +1,9 @@
 import React from 'react';
 
-import PlanHeader from "@/pages/Layout/PlanHeader";
+import TaskHeader from '@/pages/Layout/TaskHeader';
 
 const DataContent = () => (
-    <PlanHeader/>
+    <TaskHeader />
 );
 
 export default DataContent;

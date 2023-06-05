@@ -2,11 +2,11 @@
  * 创建分析计划页面。
  */
 import React from 'react';
-import {plan_list_url} from "@/TestData";
-import {ProTable} from '@ant-design/pro-components';
-import {Button, Popconfirm, Tag} from "antd";
-import {Link, useNavigate, useParams, useSearchParams} from "react-router-dom";
-import PlanHeader from "@/pages/Layout/PlanHeader";
+import { plan_list_url } from "@/TestData";
+import { ProTable } from '@ant-design/pro-components';
+import { Button, Popconfirm, Tag } from "antd";
+import { Link, useNavigate, useParams, useSearchParams } from "react-router-dom";
+import TaskHeader from "@/pages/Layout/TaskHeader";
 import URLChart from "@/pages/Layout/Data/DataURL/URLChart";
 
 function getUrls(id) {
@@ -73,7 +73,7 @@ const DataURL = () => {
     const urls = getUrls(plan_id)
     return (
         <>
-            <PlanHeader/>
+            <TaskHeader />
             {plan_id ? <div style={{
                 margin: 8,
                 padding: 8,
@@ -81,7 +81,7 @@ const DataURL = () => {
                 borderRadius: 16,
                 overflow: "auto",
             }}>
-                <URLChart/>
+                <URLChart />
             </div> : null}
 
             <div style={{

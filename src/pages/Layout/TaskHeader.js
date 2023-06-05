@@ -2,18 +2,20 @@
  * 创建分析计划页面。
  */
 import React from 'react';
-import {plan_list_header} from "@/TestData";
-import {Form, Select} from "antd";
-import {useLocation, useNavigate, useSearchParams} from "react-router-dom";
+import { Form, Select } from "antd";
+import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
+import { useStore } from '@/store';
+import { observer } from "mobx-react-lite";
 
-const PlanHeader = () => {
+const TaskHeader = () => {
+    const { taskStore } = useStore()
     const [params] = useSearchParams()
-    const {pathname} = useLocation()
-    let plan_id = parseInt(params.get("plan"))
-    if (isNaN(plan_id)) plan_id = "请选择分析计划";
+    const { pathname } = useLocation()
+    let task_id = parseInt(params.get("task"))
+    if (isNaN(task_id)) task_id = "请选择扫描任务";
     const navigate = useNavigate()
     const onPlanChange = (id) => {
-        navigate(pathname + '?plan=' + id)
+        navigate(pathname + '?task=' + id)
     }
     return (
         <div style={{
@@ -26,15 +28,15 @@ const PlanHeader = () => {
             <Form
                 layout="horizontal"
                 initialValues={{
-                    task: plan_id
+                    task: task_id
                 }}
                 colon={false}
             >
-                <Form.Item label="选择分析计划：" name="task">
+                <Form.Item label="选择扫描任务：" name="task">
                     <Select onChange={onPlanChange}>
                         {
-                            plan_list_header.map((plan) => (
-                                <Select.Option key={plan.id} value={plan.id}>{plan.name}</Select.Option>
+                            taskStore.getTaskList().map((task) => (
+                                <Select.Option key={task.id} value={task.id}>{task.name}</Select.Option>
                             ))
                         }
                     </Select>
@@ -45,4 +47,4 @@ const PlanHeader = () => {
     )
 }
 
-export default PlanHeader;
+export default TaskHeader;

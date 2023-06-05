@@ -165,19 +165,19 @@ const DataStatus = () => (
 
 
 const MainContent = () => {
-    const [responsive, setResponsive] = useState(true);
+    const [responsive, setResponsive] = useState(false);
     return (
         <RcResizeObserver
             key="resize-observer"
             onResize={(offset) => {
-                setResponsive(offset.width < 960);
+                setResponsive(offset.width < 20000);
             }}
         >
             <ProCard
                 title="数据概览"
                 extra={<TimeComponent />}
-                // split={responsive ? "horizontal" : "vertical"}
-                split="horizontal"
+                split={responsive ? "horizontal" : "vertical"}
+                // split="horizontal"
                 headerBordered
                 bordered
             >

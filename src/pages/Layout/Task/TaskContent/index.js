@@ -7,27 +7,17 @@
  *
  */
 
-import React, {useState} from 'react';
-import {Button, List, Modal, Popconfirm, Tag} from 'antd';
+import React, { useState } from 'react';
+import { Button, List, Modal, Popconfirm, Tag } from 'antd';
 import { ProList } from '@ant-design/pro-components';
-import {Link, useLocation, useNavigate, useSearchParams} from "react-router-dom";
+import { Link, useLocation, useNavigate, useSearchParams } from "react-router-dom";
+import { observer } from "mobx-react-lite";
 
-import {plan_list_task} from "@/TestData";
-import {PlusOutlined} from "@ant-design/icons";
-import PlanHeader from "@/pages/Layout/PlanHeader";
+import { plan_list_task } from "@/TestData";
+import { PlusOutlined } from "@ant-design/icons";
+import TaskHeader from "@/pages/Layout/TaskHeader";
+import { useStore } from '@/store';
 
-function getTasks(id){
-    // TODO: 向后端发送请求，得到当前分析计划的分析任务列表
-    for (let i in plan_list_task) {
-        if (plan_list_task[i].id === id)
-            return plan_list_task[i].tasks
-    }
-    return []
-}
-
-function getConfig(task_id) {
-
-}
 
 const status_style = {
     'success': {
@@ -35,7 +25,7 @@ const status_style = {
         description: '成功',
         action: '重新运行',
     },
-    'failed' : {
+    'failed': {
         color: '#c41a52',
         description: '失败',
         action: '重新运行'
@@ -52,8 +42,22 @@ const status_style = {
     },
 }
 
+const language_color = {
+    "Python": {
+        color: "#12aa9c"
+    },
+    "Java": {
+        color: "#c4cbcf"
+    },
+    "C/C++": {
+        color: "#b2bbbe"
+    }
+}
 
-const TaskContentActionsRender = ({id}) => {
+
+const TaskContentActionsRender = ({ id }) => {
+    const { taskStore } = useStore()
+    const navigate = useNavigate()
     const [isModalOpen, setIsModalOpen] = useState(false);
     const showModal = () => {
         setIsModalOpen(true);
@@ -64,58 +68,55 @@ const TaskContentActionsRender = ({id}) => {
     const handleCancel = () => {
         setIsModalOpen(false);
     };
-    const onDeleteConfirm = () => {
-
+    const onLookData = () => {
+        // navigate("")
+        alert("查看数据(测试)")
     }
     const record = id.props.record
-    const scan_urls = record.config.scan_urls === undefined ? [] : record.config.scan_urls
+    const repos_info = record.repos_info === undefined ? [] : record.repos_info
     return (
         <>
-        <Button style={{margin: 6}} key="run_state" type='primary'>
-            {status_style[record.content.status].action}
-        </Button>
-        <Button style={{margin: 6}} key="view" onClick={showModal}>
-            查看详情
-        </Button>
-        <Button style={{margin: 6}} key="data" type='primary' ghost>
-            查看数据
-        </Button>
-        <Popconfirm placement="left" onConfirm={onDeleteConfirm} okType='danger'
-                    title="是否确认删除分析任务？" okText="删除" cancelText="取消">
-            <Button style={{margin: 6}} key="delete" danger>
-                删除
+            <Button style={{ margin: 6 }} key="view" onClick={showModal}>
+                查看详情
             </Button>
-        </Popconfirm>
-        <Modal key="info" title={"分析任务详情：" + record.name} open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
-            <h3>扫描URL：</h3>
-            {
-                // TODO: 详细信息展示
-                scan_urls.map((url)=>(
-                    <p>
-                        <a href={url} target='_blank'>
-                            {url}
-                        </a>
-                    </p>
-                ))
-            }
-        </Modal>
-    </>
-)
+            <Button style={{ margin: 6 }} key="data" type='primary' onClick={onLookData} ghost>
+                查看数据
+            </Button>
+            <Modal key="info" title={<h2>分析任务详情：</h2>} open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+                <h3>扫描类别：</h3>
+                <p>{record.name}</p>
+                <h3>代码语言种类：</h3>
+                {
+                    repos_info.languages.map((language) => (
+                        <p>{language}</p>
+                    ))
+                }
+                <h3>文件数量：</h3>
+                <p>{repos_info.file_number}</p>
+                <h3>文件大小</h3>
+                <p>{repos_info.size}</p>
+                <h3>运行时间：</h3>
+                <p>{repos_info.time}</p>
+                <h3>文件Hash值：</h3>
+                <p>{repos_info.hash}</p>
+            </Modal>
+        </>
+    )
 }
 
 const TaskContent = () => {
+    const { taskStore } = useStore()
     const [params] = useSearchParams()
-    const {pathname} = useLocation()
     const navigate = useNavigate()
-    let plan_id = parseInt(params.get("plan"))
-    let is_valid_id = isNaN(plan_id)
+    let task_id = parseInt(params.get("task"))
+    let is_valid_id = isNaN(task_id)
     const onCreateClick = () => {
-        navigate('/task/create?plan=' + plan_id)
+        navigate('/task/create?task=' + task_id)
     }
-    const tasks = getTasks(plan_id)
+    const task_list_info = taskStore.getTaskInfo(task_id)
     return (
         <>
-            <PlanHeader/>
+            <TaskHeader />
             <div style={{
                 margin: 8,
                 padding: 8,
@@ -125,7 +126,7 @@ const TaskContent = () => {
             }}>
                 <ProList
                     rowKey="id"
-                    dataSource={tasks}
+                    dataSource={task_list_info}
                     showActions="hover"
                     showExtra="hover"
                     metas={{
@@ -133,19 +134,19 @@ const TaskContent = () => {
                             dataIndex: 'name',
                         },
                         subTitle: {
-                            dataIndex: 'type',
-                            render: (type) => (
-                                <Tag color={type === 'web' ? "green" : "red"}>
-                                    {type}
+                            dataIndex: 'language',
+                            render: (language) => (
+                                <Tag color={language_color[language].color}>
+                                    {language}
                                 </Tag>
                             )
                         },
                         description: {
-                            dataIndex: 'content',
-                            render: (text) => (
+                            dataIndex: 'task_description',
+                            render: (description) => (
                                 <div key="label" style={{ display: 'flex', justifyContent: 'flex-start' }}>
                                     <div style={{ color: '#00000073', margin: 6 }}>创建时间：</div>
-                                    <div style={{ color: '#000000D9', margin: 6 }}>{text.create_time}</div>
+                                    <div style={{ color: '#000000D9', margin: 6 }}>{description.create_time}</div>
                                     <div style={{ color: '#00000073', margin: 6 }}>运行状态：</div>
                                     <div style={{ color: '#000000D9', margin: 6 }}><span
                                         style={{
@@ -153,11 +154,11 @@ const TaskContent = () => {
                                             width: 8,
                                             height: 8,
                                             borderRadius: '50%',
-                                            backgroundColor: status_style[text.status].color,
+                                            backgroundColor: status_style[description.status].color,
                                             marginInlineEnd: 8,
                                         }}
                                     />
-                                        {status_style[text.status].description}
+                                        {status_style[description.status].description}
                                     </div>
                                 </div>
                             ),
@@ -165,15 +166,18 @@ const TaskContent = () => {
                         actions: {
                             dataIndex: 'id',
                             render: (id) => (
-                                <TaskContentActionsRender key={id.props.record.id} id={id}/>
+                                <>
+                                    <TaskContentActionsRender id={id} task_id={task_id} />
+                                </>
+
                             )
                         },
                     }}
                     toolbar={{
                         actions: [
                             <Button type="primary" key="primary" onClick={onCreateClick}
-                                    disabled={is_valid_id}>
-                                    <PlusOutlined /> 新建分析任务
+                                disabled={is_valid_id}>
+                                <PlusOutlined /> 新建分析任务
                             </Button>,
                         ],
                         search: {
@@ -189,4 +193,4 @@ const TaskContent = () => {
     );
 }
 
-export default TaskContent;
+export default observer(TaskContent);
