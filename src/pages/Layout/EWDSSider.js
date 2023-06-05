@@ -39,17 +39,16 @@ const EWDSSider = () => {
             // 分析数据
             getItem('分析数据查看', 'data', <EditOutlined />, [
                 getItem(<Link to='/data'>分析数据总览</Link>, '/data'),
-                getItem(<Link to='/data/url'>代码归属模块</Link>, '/data/url'),
-                getItem(<Link to='/data/vulnerability'>情报分析模块</Link>, '/data/vulnerability'),
-                // getItem(<Link to='/data/cgi'>cgi动态分析数据查看</Link>, '/data/cgi'),
+                getItem(<Link to='/data/trace'>代码归属模块</Link>, '/data/trace'),
+                getItem(<Link to='/data/intelligence'>情报分析模块</Link>, '/data/intelligence'),
             ]),
 
             // 前瞻性课题
-            getItem('前瞻课题', 'data', <EditOutlined />, [
-                getItem(<Link to='/data'>AI代码特征分析</Link>, '/data/ai'),
-                getItem(<Link to='/data/url'>代码作者性别分析</Link>, '/data/gender'),
-                getItem(<Link to='/data/vulnerability'>二进制代码风格迁移分析</Link>, '/data/binary'),
-                getItem(<Link to='/data/cgi'>恶意代码事件溯源分析</Link>, '/data/major'),
+            getItem('前瞻课题', 'explore', <EditOutlined />, [
+                getItem(<Link to='/explore/ai'>AI代码特征分析</Link>, '/explore/ai'),
+                getItem(<Link to='/explore/gender'>代码作者性别分析</Link>, '/explore/gender'),
+                getItem(<Link to='/explore/binary'>二进制代码风格迁移分析</Link>, '/explore/binary'),
+                getItem(<Link to='/explore/event'>恶意代码事件溯源分析</Link>, '/explore/event'),
             ]),
 
             // 用户管理
