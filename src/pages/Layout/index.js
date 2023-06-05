@@ -1,41 +1,41 @@
 import './index.scss'
-import {Routes, Route} from 'react-router-dom'
-import {observer} from 'mobx-react-lite'
-import React, {lazy, useEffect} from 'react'
-import {Footer} from "antd/es/layout/layout";
+import { Routes, Route } from 'react-router-dom'
+import { observer } from 'mobx-react-lite'
+import React, { lazy, useEffect } from 'react'
+import { Footer } from "antd/es/layout/layout";
 import EWDSHeader from "@/pages/Layout/EWDSHeader";
 import EWDSSider from "@/pages/Layout/EWDSSider";
-import {Layout} from 'antd'
+import { Layout } from 'antd'
 
-const {Content} = Layout
+const { Content } = Layout
 
 const Error = lazy(() => import('./Error'))
 const Main = lazy(() => import('./Main'))
-const Plan = lazy(() => import('./Plan'))
 const Task = lazy(() => import('./Task'))
 const Data = lazy(() => import('./Data'))
+const Explore = lazy(() => import('./Explore'))
 const User = lazy(() => import('./User'))
 
 
 const EWDSLayout = () => {
     return (
         <Layout>
-            <EWDSHeader/>
+            <EWDSHeader />
             <Layout>
-                <EWDSSider/>
-                <Layout style={{padding: '0',}}>
-                    <Content style={{padding: 24, margin: 0, overflowY: 'auto',}}>
+                <EWDSSider />
+                <Layout style={{ padding: '0', }}>
+                    <Content style={{ padding: 24, margin: 0, overflowY: 'auto', }}>
                         <Routes>
                             {/* 子页面路由 */}
-                            <Route path='main/*' element={<Main/>}/>
-                            <Route path='plan/*' element={<Plan/>}/>
-                            <Route path='task/*' element={<Task/>}/>
-                            <Route path='data/*' element={<Data/>}/>
-                            <Route path='user/*' element={<User/>}/>
-                            <Route path='*' element={<Error/>}/>
+                            <Route path='main/*' element={<Main />} />
+                            <Route path='task/*' element={<Task />} />
+                            <Route path='data/*' element={<Data />} />
+                            <Route path='Explore/*' element={<Explore />} />
+                            <Route path='user/*' element={<User />} />
+                            <Route path='*' element={<Error />} />
                         </Routes>
                     </Content>
-                    <Footer style={{textAlign: 'center'}}>HUST EWDS@2022</Footer>
+                    <Footer style={{ textAlign: 'center' }}>华中科技大学 网络空间安全学院 信息安全实验室 代码透视组 2023</Footer>
                 </Layout>
             </Layout>
         </Layout>
