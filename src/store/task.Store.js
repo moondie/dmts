@@ -7,115 +7,91 @@ import { makeAutoObservable } from "mobx";
 import { http } from "@/utils";
 
 class taskStore {
-    task_list = [
-        {
-            id: 1,
-            name: 'https://github.com/THUDM/VisualGLM-6B',
-        },
-        {
-            id: 2,
-            name: 'https://github.com/imClumsyPanda/langchain-ChatGLM',
-        },
-    ]
-
     task_list_info = [
         {
             id: 1,
-            name: 'https://github.com/THUDM/VisualGLM-6B',
-
-            // 分析任务列表
-            tasks: [
-                {
-                    id: 1,
-                    name: '代码归属分析',
-                    language: 'Python',
-                    task_description: {
-                        create_time: '2022-11-29 12:00:00',
-                        status: 'success',
-                    },
-                    repos_info: {
-                        languages: [
-                            "Python",
-                            "Java"
-                        ],
-                        file_number: 100,
-                        size: "2.3M",
-                        time: "2022-11-29 12:00:00 - 2022-11-29 12:03:00",
-                        hash: "198f932540e0e8eb25c29c6201cbc1f90024c39b",
-                    },
-                }, {
-                    id: 2,
-                    name: '全量扫描',
-                    language: 'Python',
-                    task_description: {
-                        create_time: '2022-11-29 12:00:00',
-                        status: 'waiting',
-                    },
-                    repos_info: {
-                        languages: [
-                            "Python",
-                            "Java"
-                        ],
-                        file_number: 100,
-                        size: "2.3M",
-                        time: "2022-11-29 12:00:00 - 2022-11-29 12:03:00",
-                        hash: "198f932540e0e8eb25c29c6201cbc1f90024c39b",
-                    },
-                }
-            ],
-
+            name: "测试 1",
+            type: "全量分析",
+            language: 'Python',
+            task_description: {
+                create_time: '2022-11-29 12:00:00',
+                status: 'success',
+                url: "https://github.com/THUDM/VisualGLM-6B",
+            },
+            repos_info: {
+                languages: [
+                    "Python",
+                    "Java"
+                ],
+                file_number: 100,
+                size: "2.3M",
+                time: "2022-11-29 12:00:00 - 2022-11-29 12:03:00",
+                hash: "198f932540e0e8eb25c29c6201cbc1f90024c39b",
+            },
         },
         {
             id: 2,
-            name: 'https://github.com/imClumsyPanda/langchain-ChatGLM',
-            tasks: [
-                {
-                    id: 1,
-                    name: '代码情报分析',
-                    language: 'Python',
-                    task_description: {
-                        create_time: '2022-11-29 12:00:00',
-                        status: 'failed',
-                    },
-                    repos_info: {
-                        languages: [
-                            "Python",
-                            "Java"
-                        ],
-                        file_number: 100,
-                        size: "2.3M",
-                        time: "2022-11-29 12:00:00 - 2022-11-29 12:03:00",
-                        hash: "198f932540e0e8eb25c29c6201cbc1f90024c39b",
-                    },
-
-                }, {
-                    id: 2,
-                    name: '全量扫描',
-                    language: 'Python',
-                    task_description: {
-                        create_time: '2022-11-29 12:00:00',
-                        status: 'running',
-                    },
-                    repos_info: {
-                        languages: [
-                            "Python",
-                            "Java"
-                        ],
-                        file_number: 100,
-                        size: "2.3M",
-                        time: "2022-11-29 12:00:00 - 2022-11-29 12:03:00",
-                        hash: "198f932540e0e8eb25c29c6201cbc1f90024c39b",
-                    },
-                }
-            ]
+            name: '测试 2',
+            type: "全量扫描",
+            language: 'Golang',
+            task_description: {
+                create_time: '2022-11-29 12:00:00',
+                status: 'waiting',
+                url: "https://github.com/THUDM/VisualGLM-6B",
+            },
+            repos_info: {
+                languages: [
+                    "Python",
+                    "Java"
+                ],
+                file_number: 100,
+                size: "2.3M",
+                time: "2022-11-29 12:00:00 - 2022-11-29 12:03:00",
+                hash: "198f932540e0e8eb25c29c6201cbc1f90024c39b",
+            },
+        },
+        {
+            id: 3,
+            name: '测试 3',
+            type: "代码情报分析",
+            language: 'C/C++',
+            task_description: {
+                create_time: '2022-11-29 12:00:00',
+                status: 'failed',
+                url: "https://github.com/imClumsyPanda/langchain-ChatGLM",
+            },
+            repos_info: {
+                languages: [
+                    "Python",
+                    "Java"
+                ],
+                file_number: 100,
+                size: "2.3M",
+                time: "2022-11-29 12:00:00 - 2022-11-29 12:03:00",
+                hash: "198f932540e0e8eb25c29c6201cbc1f90024c39b",
+            },
+        }, {
+            id: 4,
+            name: '测试 4',
+            type: "全量扫描",
+            language: 'Java',
+            task_description: {
+                create_time: '2022-11-29 12:00:00',
+                status: 'running',
+                url: "https://github.com/imClumsyPanda/langchain-ChatGLM",
+            },
+            repos_info: {
+                languages: [
+                    "Python",
+                    "Java"
+                ],
+                file_number: 100,
+                size: "2.3M",
+                time: "2022-11-29 12:00:00 - 2022-11-29 12:03:00",
+                hash: "198f932540e0e8eb25c29c6201cbc1f90024c39b",
+            },
         },
     ]
-
-    getTaskList = () => {
-        // const res = await http.get("/task/list")
-        // this.task_list = res.data.task_list
-        return this.task_list
-    }
 
     getTaskListInfo = () => {
         return this.task_list_info

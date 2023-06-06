@@ -47,16 +47,18 @@ const language_color = {
         color: "#12aa9c"
     },
     "Java": {
-        color: "#c4cbcf"
+        color: "#d34431"
     },
     "C/C++": {
-        color: "#b2bbbe"
+        color: "#b2b213"
+    },
+    "Golang": {
+        color: "#b34563"
     }
 }
 
 
 const TaskContentActionsRender = ({ id }) => {
-    const { taskStore } = useStore()
     const navigate = useNavigate()
     const [isModalOpen, setIsModalOpen] = useState(false);
     const showModal = () => {
@@ -83,6 +85,8 @@ const TaskContentActionsRender = ({ id }) => {
                 查看数据
             </Button>
             <Modal key="info" title={<h2>分析任务详情：</h2>} open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+                <h3>扫描URL：</h3>
+                <p><a href={record.task_description.url}>{record.task_description.url}</a></p>
                 <h3>扫描类别：</h3>
                 <p>{record.name}</p>
                 <h3>代码语言种类：</h3>
@@ -106,17 +110,13 @@ const TaskContentActionsRender = ({ id }) => {
 
 const TaskContent = () => {
     const { taskStore } = useStore()
-    const [params] = useSearchParams()
     const navigate = useNavigate()
-    let task_id = parseInt(params.get("task"))
-    let is_valid_id = isNaN(task_id)
     const onCreateClick = () => {
-        navigate('/task/create?task=' + task_id)
+        navigate('/task/create')
     }
-    const task_list_info = taskStore.getTaskInfo(task_id)
+    const task_list_info = taskStore.getTaskListInfo()
     return (
         <>
-            <TaskHeader />
             <div style={{
                 margin: 8,
                 padding: 8,
@@ -147,6 +147,8 @@ const TaskContent = () => {
                                 <div key="label" style={{ display: 'flex', justifyContent: 'flex-start' }}>
                                     <div style={{ color: '#00000073', margin: 6 }}>创建时间：</div>
                                     <div style={{ color: '#000000D9', margin: 6 }}>{description.create_time}</div>
+                                    <div style={{ color: '#00000073', margin: 6 }}>扫描URL：</div>
+                                    <div style={{ color: '#00000073', margin: 6 }}><a href={description.url}>{description.url}</a></div>
                                     <div style={{ color: '#00000073', margin: 6 }}>运行状态：</div>
                                     <div style={{ color: '#000000D9', margin: 6 }}><span
                                         style={{
@@ -167,7 +169,7 @@ const TaskContent = () => {
                             dataIndex: 'id',
                             render: (id) => (
                                 <>
-                                    <TaskContentActionsRender id={id} task_id={task_id} />
+                                    <TaskContentActionsRender id={id} />
                                 </>
 
                             )
@@ -175,8 +177,7 @@ const TaskContent = () => {
                     }}
                     toolbar={{
                         actions: [
-                            <Button type="primary" key="primary" onClick={onCreateClick}
-                                disabled={is_valid_id}>
+                            <Button type="primary" key="primary" onClick={onCreateClick} >
                                 <PlusOutlined /> 新建分析任务
                             </Button>,
                         ],
