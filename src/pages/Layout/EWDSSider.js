@@ -31,10 +31,10 @@ const EWDSSider = () => {
             ]),
 
             // 分析数据
-            getItem('分析数据查看', 'data', <EditOutlined />, [
-                getItem(<Link to='/data'>分析数据总览</Link>, '/data'),
-                getItem(<Link to='/data/trace'>代码归属模块</Link>, '/data/trace'),
-                getItem(<Link to='/data/intelligence'>情报分析模块</Link>, '/data/intelligence'),
+            getItem('分析数据查看', 'result', <EditOutlined />, [
+                getItem(<Link to='/result'>分析数据总览</Link>, '/result'),
+                getItem(<Link to='/result/trace'>代码归属模块</Link>, '/result/trace'),
+                getItem(<Link to='/result/intelligence'>情报分析模块</Link>, '/result/intelligence'),
             ]),
 
             // 前瞻性课题

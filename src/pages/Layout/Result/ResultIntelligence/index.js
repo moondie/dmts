@@ -6,8 +6,8 @@
 
 import React from "react";
 
-const GenderFeature = () => (
+const ResultIntelligence = () => (
     <h2>基于情报分析的社会属性和心理属性分析结果</h2>
 );
 
-export default GenderFeature
+export default ResultIntelligence

@@ -12,7 +12,7 @@ const { Content } = Layout
 const Error = lazy(() => import('./Error'))
 const Main = lazy(() => import('./Main'))
 const Task = lazy(() => import('./Task'))
-const Data = lazy(() => import('./Data'))
+const Result = lazy(() => import('./Result'))
 const Explore = lazy(() => import('./Explore'))
 const User = lazy(() => import('./User'))
 
@@ -29,7 +29,7 @@ const EWDSLayout = () => {
                             {/* 子页面路由 */}
                             <Route path='main/*' element={<Main />} />
                             <Route path='task/*' element={<Task />} />
-                            <Route path='data/*' element={<Data />} />
+                            <Route path='result/*' element={<Result />} />
                             <Route path='Explore/*' element={<Explore />} />
                             <Route path='user/*' element={<User />} />
                             <Route path='*' element={<Error />} />

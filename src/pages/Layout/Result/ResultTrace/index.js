@@ -6,8 +6,8 @@
 
 import React from "react";
 
-const GenderFeature = () => (
+const ResultTrace = () => (
     <h2>代码归属分类结果</h2>
 );
 
-export default GenderFeature
+export default ResultTrace

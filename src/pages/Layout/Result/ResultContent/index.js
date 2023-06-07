@@ -108,7 +108,7 @@ const TaskContentActionsRender = ({ id }) => {
     )
 }
 
-const TaskContent = () => {
+const ResultContext = () => {
     const { taskStore } = useStore()
     const navigate = useNavigate()
     const onCreateClick = () => {
@@ -194,4 +194,4 @@ const TaskContent = () => {
     );
 }
 
-export default observer(TaskContent);
+export default observer(ResultContext);
