@@ -6,15 +6,8 @@
 
 import React from "react";
 
+const EventFeature = () => (
+    <h2>重要恶意代码事件溯源分析</h2>
+);
 
-class eventFeature {
-    constructor() {
-
-    }
-
-    render() {
-        <div>重要恶意代码事件溯源分析</div>
-    }
-}
-
-export default new eventFeature()
+export default EventFeature

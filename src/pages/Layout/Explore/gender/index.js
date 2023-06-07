@@ -6,15 +6,8 @@
 
 import React from "react";
 
+const GenderFeature = () => (
+    <h2>不同性别代码特征差异图</h2>
+);
 
-class genderFeature {
-    constructor() {
-
-    }
-
-    render() {
-        <div>不同性别代码特征差异图</div>
-    }
-}
-
-export default new genderFeature()
+export default GenderFeature

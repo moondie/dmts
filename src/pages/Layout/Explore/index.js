@@ -1,18 +1,18 @@
 import React from 'react';
 import { Navigate, Route, Routes } from "react-router-dom";
 
-import aiFeature from "@/pages/Layout/Explore/ai";
-import binaryToSourceFeature from "@/pages/Layout/Explore/binary";
-import eventFeature from "@/pages/Layout/Explore/event";
-import genderFeature from "@/pages/Layout/Explore/gender";
+import AiFeature from "@/pages/Layout/Explore/Ai";
+import BinaryToSourceFeature from "@/pages/Layout/Explore/Binary";
+import EventFeature from "@/pages/Layout/Explore/Event";
+import GenderFeature from "@/pages/Layout/Explore/Gender";
 
 
 const Explore = () => (
     <Routes>
-        <Route path='ai' element={<aiFeature />}></Route>
-        <Route path='gender' element={<binaryToSourceFeature />}></Route>
-        <Route path='binary' element={<eventFeature />}></Route>
-        <Route path='event' element={<genderFeature />}></Route>
+        <Route path='ai' element={<AiFeature />}></Route>
+        <Route path='gender' element={<BinaryToSourceFeature />}></Route>
+        <Route path='binary' element={<EventFeature />}></Route>
+        <Route path='event' element={<GenderFeature />}></Route>
         <Route path='*' element={<Navigate to='' />}></Route>
     </Routes>
 );

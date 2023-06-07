@@ -6,15 +6,8 @@
 
 import React from "react";
 
+const BinaryToSourceFeature = () => (
+    <h2>二进制到源代码的特征迁移分析</h2>
+);
 
-class binaryToSourceFeature {
-    constructor() {
-
-    }
-
-    render() {
-        return (<div>二进制到源代码的特征迁移分析</div>);
-    }
-}
-
-export default new binaryToSourceFeature()
+export default BinaryToSourceFeature

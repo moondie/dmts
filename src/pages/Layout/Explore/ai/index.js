@@ -6,19 +6,8 @@
 
 import './index.scss'
 
-
-// class aiFeature {
-//     constructor() {
-
-//     }
-
-//     render() {
-//         <div>ai 代码特征差异图</div>
-//     }
-// }
-
-const aiFeature = () => (
-    <h2>请求了错误的页面！</h2>
+const AiFeature = () => (
+    <h2>Ai和人类代码风格差异图</h2>
 );
 
-export default aiFeature;
+export default AiFeature;
