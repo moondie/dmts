@@ -5,7 +5,7 @@ import React, { useState } from 'react';
 import { Button, Divider, Form, Input, Select, Radio, Typography, message, Switch, Upload } from "antd";
 import { useNavigate } from "react-router-dom";
 import { BASE_URL } from "@/utils/http";
-import { InboxOutlined, PlusOutlined } from "@ant-design/icons";
+import { InboxOutlined } from "@ant-design/icons";
 import { CheckCard } from '@ant-design/pro-components';
 import { getToken } from "@/utils";
 
