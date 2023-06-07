@@ -72,7 +72,7 @@ const TaskPattern = () => {
                         name="task_context"
                         style={{ marginBottom: 0 }}
                     >
-                        <Input name='task_context' hidden={taskPattern} addonBefore={selectBefore} placeHolder={'请输入待扫描仓库链接，如:https://github.com/charlesSeek/weka-example'} />
+                        <Input name='task_context' addonBefore={selectBefore} placeHolder={'请输入待扫描仓库链接，如:https://github.com/charlesSeek/weka-example'} />
                     </Form.Item>
                 )
             case "file_upload":
@@ -97,7 +97,7 @@ const TaskPattern = () => {
                 onChange={(value) => {
                     onTaskPatternChange(value)
                 }}
-                defaultValue="file_upload"
+                defaultValue="url"
             >
                 <CheckCard title="URL 扫描模式" description="给定 ULR,将自动从该 URL 爬取源代码并分析.目前支持 GitHub, Gitee, Gitlab" value="url" />
                 <CheckCard title="文件上传模式" description="从本地上传源代码文件并分析.目前支持 .zip, .7z, .rar 压缩包" value="file_upload" />
