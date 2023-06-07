@@ -1,16 +1,17 @@
 import React from 'react';
-import { Space, Table, Tag } from 'antd';
-import {Route, Routes} from "react-router-dom";
-import DataURL from "@/pages/Layout/Data/DataURL";
+import { Route, Routes } from "react-router-dom";
 import DataContent from "@/pages/Layout/Data/DataContent";
-import DataVulnerability from "@/pages/Layout/Data/DataVulnerability";
+import DataTrace from "@/pages/Layout/Data/DataTrace";
+import DataIntelligence from "@/pages/Layout/Data/DataIntelligence";
+import Error from "@/pages/Layout/Error"
 
 
 const Data = () => (
     <Routes>
-        <Route path='' element={<DataContent/>}></Route>
-        <Route path='url' element={<DataURL/>}></Route>
-        <Route path='vulnerability' element={<DataVulnerability/>}></Route>
+        <Route path='' element={<DataContent />}></Route>
+        <Route path='trace' element={<DataTrace />}></Route>
+        <Route path='intelligence' element={<DataIntelligence />}></Route>
+        <Route path='*' element={<Error />}></Route>
     </Routes>
 );
 

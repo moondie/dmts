@@ -24,12 +24,6 @@ const EWDSSider = () => {
                 getItem(<Link to='/main'>总体数据概览</Link>, '/main'),
             ]),
 
-            // 分析计划
-            // getItem('分析计划管理', 'plan', <SnippetsOutlined />, [
-            //     getItem(<Link to='/plan'>分析计划总览</Link>, '/plan'),
-            //     getItem(<Link to='/plan/create'>新建分析计划</Link>, '/plan/create'),
-            // ]),
-
             // 分析任务
             getItem('扫描任务管理', 'task', <DiffOutlined />, [
                 getItem(<Link to='/task'>扫描任务总览</Link>, '/task'),
