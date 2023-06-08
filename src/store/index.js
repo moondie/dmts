@@ -4,7 +4,8 @@ import UserStore from "@/store/user.Store";
 import ManagerUserStore from "@/store/managerUser.Store";
 import ChartStore from "@/store/chart.Store";
 import ScanStore from "@/store/scan.Store";
-import taskStore from "./task.Store";
+import TaskStore from "./task.Store";
+import ResultStore from "./result.Store";
 
 class RootStore {
     // 组合模块
@@ -14,7 +15,8 @@ class RootStore {
         this.managerUserStore = new ManagerUserStore();
         this.chartStore = new ChartStore();
         this.scanStore = new ScanStore();
-        this.taskStore = new taskStore();
+        this.taskStore = new TaskStore();
+        this.resultStore = new ResultStore();
     }
 }
 
