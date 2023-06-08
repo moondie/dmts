@@ -11,8 +11,9 @@ class taskStore {
         {
             id: 1,
             name: "测试 1",
-            type: "全量分析",
+            type: "代码溯源分析",
             language: 'Python',
+            is_effective: true,
             task_description: {
                 create_time: '2022-11-29 12:00:00',
                 status: 'success',
@@ -34,6 +35,7 @@ class taskStore {
             name: '测试 2',
             type: "全量扫描",
             language: 'Golang',
+            is_effective: true,
             task_description: {
                 create_time: '2022-11-29 12:00:00',
                 status: 'waiting',
@@ -55,6 +57,7 @@ class taskStore {
             name: '测试 3',
             type: "代码情报分析",
             language: 'C/C++',
+            is_effective: true,
             task_description: {
                 create_time: '2022-11-29 12:00:00',
                 status: 'failed',
@@ -74,7 +77,8 @@ class taskStore {
             id: 4,
             name: '测试 4',
             type: "全量扫描",
-            language: 'Java',
+            language: 'None',
+            is_effective: true,
             task_description: {
                 create_time: '2022-11-29 12:00:00',
                 status: 'running',
@@ -93,18 +97,49 @@ class taskStore {
         },
     ]
 
-    getTaskListInfo = () => {
-        return this.task_list_info
+    getTaskListInfo() {
+        return this.task_list_info.filter((task_info) => {
+            return task_info.is_effective === true
+        })
     }
 
-    getTaskInfo = (url_id) => {
-        // const res = await http.post("/task/")
+    taskPattern = {
+        "traceability": "代码溯源分析",
+        "intelligence": "代码情报分析",
+        "all": "全量扫描"
+    }
+
+    addTask(task_info) {
+        this.task_list_info.push({
+            id: this.getTaskLength() + 1,
+            name: task_info.task_name,
+            type: task_info.task_type,
+            language: "None",
+            is_effective: true,
+            task_description: {
+                create_time: new Date().toLocaleString(),
+                status: 'running',
+                url: task_info.task_context,
+            },
+            repos_info: {
+                languages: []
+            },
+        })
+    }
+
+    getTaskLength() {
+        return this.task_list_info.length
+    }
+
+    // 根据 id 删除任务
+    deleteTask(task_id) {
         for (let i in this.task_list_info) {
-            if (this.task_list_info[i].id === url_id) {
-                return this.task_list_info[i].tasks
+            if (this.task_list_info[i].id !== task_id) {
+                continue
             }
+            this.task_list_info[i].is_effective = false
+            break
         }
-        return []
     }
 
     constructor() {

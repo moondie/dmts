@@ -8,6 +8,7 @@ import { BASE_URL } from "@/utils/http";
 import { InboxOutlined } from "@ant-design/icons";
 import { CheckCard } from '@ant-design/pro-components';
 import { getToken } from "@/utils";
+import { useStore } from '@/store';
 
 const { Title } = Typography;
 const { Option } = Select;
@@ -141,9 +142,11 @@ const TokenPattern = () => {
 }
 
 const TaskCreate = () => {
+    const { taskStore } = useStore()
     const navigate = useNavigate();
     const onFinish = (value) => {
         // TODO: 缺号连接后端操作
+        taskStore.addTask(value)
         navigate('/task');
     }
 
