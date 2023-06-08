@@ -54,11 +54,15 @@ const language_color = {
     },
     "Golang": {
         color: "#b34563"
+    },
+    "None": {
+        color: "#CDAA7D"
     }
 }
 
 
-const TaskContentActionsRender = ({ id }) => {
+const TaskContentActionsRender = observer(({ id }) => {
+    const { taskStore } = useStore()
     const navigate = useNavigate()
     const [isModalOpen, setIsModalOpen] = useState(false);
     const showModal = () => {
@@ -74,6 +78,9 @@ const TaskContentActionsRender = ({ id }) => {
         // navigate("")
         alert("查看数据(测试)")
     }
+    const onDeleteConfirm = (id) => {
+        taskStore.deleteTask(id)
+    }
     const record = id.props.record
     const repos_info = record.repos_info === undefined ? [] : record.repos_info
     return (
@@ -84,6 +91,13 @@ const TaskContentActionsRender = ({ id }) => {
             <Button style={{ margin: 6 }} key="data" type='primary' onClick={onLookData} ghost>
                 查看数据
             </Button>
+            <Popconfirm placement="left" onConfirm={() => { onDeleteConfirm(record.id) }} okType='danger'
+                title="是否确认删除分析任务？" okText="删除" cancelText="取消">
+                <Button style={{ margin: 6 }} key="delete" danger>
+                    删除
+                </Button>
+            </Popconfirm>
+
             <Modal key="info" title={<h2>分析任务详情：</h2>} open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
                 <h3>扫描URL：</h3>
                 <p><a href={record.task_description.url}>{record.task_description.url}</a></p>
@@ -107,14 +121,14 @@ const TaskContentActionsRender = ({ id }) => {
         </>
     )
 }
+)
 
-const ResultContext = () => {
+const TaskContent = observer(() => {
     const { taskStore } = useStore()
     const navigate = useNavigate()
     const onCreateClick = () => {
         navigate('/task/create')
     }
-    const task_list_info = taskStore.getTaskListInfo()
     return (
         <>
             <div style={{
@@ -126,7 +140,7 @@ const ResultContext = () => {
             }}>
                 <ProList
                     rowKey="id"
-                    dataSource={task_list_info}
+                    dataSource={taskStore.getTaskListInfo()}
                     showActions="hover"
                     showExtra="hover"
                     metas={{
@@ -193,5 +207,6 @@ const ResultContext = () => {
         </>
     );
 }
+)
 
-export default observer(ResultContext);
+export default TaskContent;
