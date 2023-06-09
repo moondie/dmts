@@ -38,7 +38,7 @@ class TaskStore {
             is_effective: true,
             task_description: {
                 create_time: '2022-11-29 12:00:00',
-                status: 'waiting',
+                status: 'running',
                 url: "https://github.com/THUDM/VisualGLM-6B",
             },
             repos_info: {
@@ -110,6 +110,16 @@ class TaskStore {
     getTaskListInfo() {
         return this.task_list_info.filter((task_info) => {
             return task_info.is_effective === true
+        })
+    }
+
+    /**
+     * @description 获取成功运行且有效的任务列表
+     * @returns {Array}
+     */
+    getSuccessTaskListInfo() {
+        return this.task_list_info.filter((task_info) => {
+            return task_info.is_effective === true && task_info.task_description.status === "success"
         })
     }
 

@@ -5,9 +5,8 @@ import React from 'react';
 import { Form, Select } from "antd";
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import { useStore } from '@/store';
-import { observer } from "mobx-react-lite";
 
-const TaskHeader = () => {
+const ResultHeader = () => {
     const { taskStore } = useStore()
     const [params] = useSearchParams()
     const { pathname } = useLocation()
@@ -35,16 +34,15 @@ const TaskHeader = () => {
                 <Form.Item label="选择扫描任务：" name="task">
                     <Select onChange={onPlanChange}>
                         {
-                            taskStore.getTaskList().map((task) => (
+                            taskStore.getSuccessTaskListInfo().map((task) => (
                                 <Select.Option key={task.id} value={task.id}>{task.name}</Select.Option>
                             ))
                         }
                     </Select>
                 </Form.Item>
-
             </Form>
         </div>
     )
 }
 
-export default TaskHeader;
+export default ResultHeader;

@@ -5,9 +5,12 @@
  */
 
 import React from "react";
+import ResultHeader from "@/pages/Layout/Result/ResultHeader";
 
 const ResultTrace = () => (
-    <h2>代码归属分类结果</h2>
+    <>
+        <ResultHeader></ResultHeader>
+    </>
 );
 
 export default ResultTrace
