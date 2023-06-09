@@ -109,6 +109,10 @@ class TaskStore {
         "all": "全量扫描"
     }
 
+    /**
+     * @description 增加任务到任务列表
+     * @param {object} task_info 
+     */
     addTask(task_info) {
         this.task_list_info.push({
             id: this.getTaskLength() + 1,
@@ -127,11 +131,18 @@ class TaskStore {
         })
     }
 
+    /**
+     * @description 获取任务列表的总长度
+     * @returns {number}
+     */
     getTaskLength() {
         return this.task_list_info.length
     }
 
-    // 根据 id 删除任务
+    /**
+     * @description 根据 id 删除任务
+     * @param {number} task_id 
+     */
     deleteTask(task_id) {
         for (let i in this.task_list_info) {
             if (this.task_list_info[i].id !== task_id) {
