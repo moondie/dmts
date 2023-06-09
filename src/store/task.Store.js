@@ -97,16 +97,20 @@ class TaskStore {
         },
     ]
 
-    getTaskListInfo() {
-        return this.task_list_info.filter((task_info) => {
-            return task_info.is_effective === true
-        })
-    }
-
     taskPattern = {
         "traceability": "代码溯源分析",
         "intelligence": "代码情报分析",
         "all": "全量扫描"
+    }
+
+    /**
+     * @description 获取有效的任务列表
+     * @returns {Array}
+     */
+    getTaskListInfo() {
+        return this.task_list_info.filter((task_info) => {
+            return task_info.is_effective === true
+        })
     }
 
     /**
