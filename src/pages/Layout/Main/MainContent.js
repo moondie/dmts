@@ -47,7 +47,7 @@ const DataStatistic = () => (
             <StatisticCard
                 statistic={{
                     title: "已扫描仓库",
-                    value: 29392,
+                    value: 761116,
                     suffix: "个",
                     // description: <Statistic title="URL总数" value="500" suffix="个"
                     //     formatter={formatter} />,
@@ -57,15 +57,15 @@ const DataStatistic = () => (
             <StatisticCard
                 statistic={{
                     title: "已发现恶意组织",
-                    value: 2901,
+                    value: 26709,
                     suffix: "个",
                     description:
                         <Space size={[2, 8]} wrap>
-                            <Tag color="red"><Statistic title="高危" value="192" suffix="个"
+                            <Tag color="red"><Statistic title="高危" value="1249" suffix="个"
                                 formatter={formatter} /></Tag>
-                            <Tag color="yellow"><Statistic title="中危" value="793" suffix="个"
+                            <Tag color="yellow"><Statistic title="中危" value="5390" suffix="个"
                                 formatter={formatter} /></Tag>
-                            <Tag color="default"><Statistic title="低危" value="1976" suffix="个"
+                            <Tag color="default"><Statistic title="低危" value="20070" suffix="个"
                                 formatter={formatter} /></Tag>
                         </Space>,
                     formatter,
