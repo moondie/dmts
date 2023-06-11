@@ -7,22 +7,34 @@
 import React, { useState } from "react";
 import ResultHeader from "@/pages/Layout/Result/ResultHeader";
 import { useStore } from "@/store";
-import { Table, Modal, Button } from "antd";
+import { Table, Modal, Button, Divider, Space } from "antd";
 import { useSearchParams } from "react-router-dom/dist";
 
 const { Column } = Table
 
 const ResultTrace = () => {
     const { resultStore } = useStore()
-    const [isModalOpen, setIsModalOpen] = useState(false)
-    const showModal = () => {
-        setIsModalOpen(true);
+    // 关联特征 Modal 控制
+    const [isAsFModalOpen, setIsAsFModalOpen] = useState(false)
+    const showAsFModal = () => {
+        setIsAsFModalOpen(true);
     };
-    const handleOk = () => {
-        setIsModalOpen(false);
+    const handleAsFOk = () => {
+        setIsAsFModalOpen(false);
     };
-    const handleCancel = () => {
-        setIsModalOpen(false);
+    const handleAsFCancel = () => {
+        setIsAsFModalOpen(false);
+    };
+    // 所有特征 Modal 控制
+    const [isAllFModalOpen, setIsAllFModalOpen] = useState(false)
+    const showAllFModal = () => {
+        setIsAllFModalOpen(true);
+    };
+    const handleAllFOk = () => {
+        setIsAllFModalOpen(false);
+    };
+    const handleAllFCancel = () => {
+        setIsAllFModalOpen(false);
     };
     const [params] = useSearchParams()
     let task_id = parseInt(params.get("task"))
@@ -30,53 +42,73 @@ const ResultTrace = () => {
     return (
         <>
             <ResultHeader></ResultHeader>
-            <Table dataSource={resultStore.getSimilarRepository(task_id)}>
-                <Column
-                    dataIndex="url"
-                    title="Url"
-                    key="url"
-                    render={
-                        (url, record) => {
-                            return (<a href={url}>{url.substring(8,)}</a>)
+            <div style={{
+                margin: 8,
+                padding: 8,
+                backgroundColor: '#fff',
+                borderRadius: 16,
+                overflow: "auto",
+            }}>
+                <Divider>代码归属分析结果表</Divider>
+                <Table dataSource={resultStore.getSimilarRepository(task_id)} width="12">
+                    <Column
+                        dataIndex="url"
+                        title="Url"
+                        key="url"
+                        textWrap="word-break"
+                        render={
+                            (url, record) => {
+                                return (<a href={url}>{url.substring(8,)}</a>)
+                            }
                         }
-                    }
-                    sorter={(rowA, rowB) => rowA.url < rowB.url}
-                />
-                <Column
-                    dataIndex="type"
-                    title="类型"
-                    key="type"
-                    sorter={(rowA, rowB) => rowA.type < rowB.type}
-                />
-                <Column
-                    dataIndex="similarity_score"
-                    title="相似度分数"
-                    key="similarity_score"
-                    sorter={(rowA, rowB) => rowA.similarity_score < rowB.similarity_score}
-                />
-                <Column
-                    dataIndex="malicious_level"
-                    title="恶意等级"
-                    key="malicious_level"
-                    sorter={(rowA, rowB) => rowA.malicious_level < rowB.malicious_level}
-                />
-                <Column
-                    dataIndex="features"
-                    title="关联特征"
-                    key="features"
-                    render={(features, record) => {
-                        return (
-                            <Button type="primary" onClick={showModal}>
-                                Open Modal
-                            </Button>
-                        )
-                    }
-                    }
-                />
-            </Table>
-            <Modal title="关联特征" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
-                <Table></Table>
-            </Modal>
+                        sorter={(rowA, rowB) => rowA.url < rowB.url}
+                    />
+                    <Column
+                        dataIndex="type"
+                        title="类型"
+                        key="type"
+                        sorter={(rowA, rowB) => rowA.type < rowB.type}
+                    />
+                    <Column
+                        dataIndex="similarity_score"
+                        title="相似度分数"
+                        key="similarity_score"
+                        sorter={(rowA, rowB) => rowA.similarity_score < rowB.similarity_score}
+                    />
+                    <Column
+                        dataIndex="malicious_level"
+                        title="恶意等级"
+                        key="malicious_level"
+                        sorter={(rowA, rowB) => rowA.malicious_level < rowB.malicious_level}
+                    />
+                    <Column
+                        dataIndex="features"
+                        title="关联特征"
+                        key="associated_features"
+                        render={(features, record) => {
+                            return (
+                                <>
+                                    <Space size="large" wrap>
+                                        <Button type="primary" onClick={showAsFModal}>
+                                            查看关联特征
+                                        </Button>
+                                        <Button type="primary" onClick={showAllFModal}>
+                                            查看所有特征
+                                        </Button>
+                                    </Space>
+                                </>
+                            )
+                        }
+                        }
+                    />
+                </Table>
+                <Modal title="关联特征" open={isAsFModalOpen} onOk={handleAsFOk} onCancel={handleAsFCancel}>
+                    <Table></Table>
+                </Modal>
+                <Modal title="所有特征" open={isAllFModalOpen} onOk={handleAllFCancel} onCancel={handleAllFCancel}>
+                    <Table></Table>
+                </Modal>
+            </div>
         </>
     );
 }
