@@ -177,7 +177,6 @@ const MainContent = () => {
                 title="数据概览"
                 extra={<TimeComponent />}
                 split={responsive ? "horizontal" : "vertical"}
-                // split="horizontal"
                 headerBordered
                 bordered
             >

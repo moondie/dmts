@@ -2087,6 +2087,21 @@ class ChartStore {
         this.tendencyOption = data
     };
 
+    getGraphOriginData = (graphOrigin) => {
+        switch (graphOrigin) {
+            case "star":
+                return this.starTendencyOption
+            case "fork":
+                return this.forkTendencyOption
+            case "watch":
+                return this.watchTendencyOption
+            case "open_issue":
+                return this.openIssueTendencyOption
+            default:
+                return [];
+        }
+    }
+
     constructor() {
         makeAutoObservable(this);
     }

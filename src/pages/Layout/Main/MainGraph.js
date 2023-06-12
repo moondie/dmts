@@ -1,14 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import { observer } from "mobx-react-lite";
 import { useStore } from "@/store";
 import { Line } from '@ant-design/plots';
+import { Radio, Space } from 'antd';
 
 
 const DemoLine = observer(() => {
     const { chartStore } = useStore()
-
+    const [graphOrigin, setGraphOrigin] = useState('star');
     const config = {
-        data: chartStore.tendencyOption,
+        data: chartStore.getGraphOriginData(graphOrigin),
         xField: 'year',
         yField: 'heat',
         seriesField: 'name',
@@ -25,7 +26,19 @@ const DemoLine = observer(() => {
         },
     };
 
-    return <Line {...config} />;
+    return (
+        <>
+            <Line {...config} />
+            <div style={{ textAlign: 'center' }}>
+                <Radio.Group value={graphOrigin} onChange={(e) => setGraphOrigin(e.target.value)} style={{ textAlign: "center" }}>
+                    <Radio.Button value="star">Star</Radio.Button>
+                    <Radio.Button value="fork">Fork</Radio.Button>
+                    <Radio.Button value="watch">Watch</Radio.Button>
+                    <Radio.Button value="open_issue">Open issue</Radio.Button>
+                </Radio.Group>
+            </div>
+        </>
+    )
 }
 )
 
