@@ -12,11 +12,6 @@ const DemoLine = observer(() => {
         xField: 'year',
         yField: 'heat',
         seriesField: 'name',
-        yAxis: {
-            label: {
-                formatter: (v) => `${(v / 10e8).toFixed(1)} B`,
-            },
-        },
         legend: {
             position: 'bottom',
         },
