@@ -14,16 +14,18 @@ const ResultHeader = () => {
     if (isNaN(task_id)) task_id = "请选择扫描任务";
     const navigate = useNavigate()
     const onPlanChange = (id) => {
-        navigate(pathname + '?task=' + id)
+        navigate(pathname + '?task_id=' + id)
     }
     return (
-        <div style={{
-            margin: 8,
-            padding: 24,
-            backgroundColor: '#fff',
-            borderRadius: 16,
-            overflow: "auto",
-        }}>
+        <div
+            style={{
+                margin: 8,
+                padding: 24,
+                backgroundColor: '#fff',
+                borderRadius: 16,
+                overflow: "auto",
+            }}
+        >
             <Form
                 layout="horizontal"
                 initialValues={{

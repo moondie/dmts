@@ -74,8 +74,7 @@ const TaskContentActionsRender = observer(({ id }) => {
         setIsModalOpen(false);
     };
     const onLookData = () => {
-        // navigate("")
-        alert("查看数据(测试)")
+        navigate("/result/trace" + "?task_id=" + id.props.record.id)
     }
     const onDeleteConfirm = (id) => {
         taskStore.deleteTask(id)
