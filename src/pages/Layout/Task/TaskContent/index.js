@@ -74,11 +74,16 @@ const TaskContentActionsRender = observer(({ id }) => {
         setIsModalOpen(false);
     };
     const onLookData = () => {
-        // navigate("")
-        alert("查看数据(测试)")
+        navigate("/result/trace?task_id=" + id.props.record.id)
     }
     const onDeleteConfirm = (id) => {
         taskStore.deleteTask(id)
+    }
+    const isSuccess = (status) => {
+        if (status == "success") {
+            return false
+        }
+        return true
     }
     const record = id.props.record
     const repos_info = record.repos_info === undefined ? [] : record.repos_info
@@ -87,9 +92,9 @@ const TaskContentActionsRender = observer(({ id }) => {
             <Button style={{ margin: 6 }} key="view" onClick={showModal}>
                 查看详情
             </Button>
-            <Button style={{ margin: 6 }} key="data" type='primary' onClick={onLookData} ghost>
+            <Button style={{ margin: 6 }} key="data" type='primary' onClick={onLookData} ghost disabled={isSuccess(record.task_description.status)}>
                 查看数据
-            </Button>
+            </Button >
             <Popconfirm placement="left" onConfirm={() => { onDeleteConfirm(record.id) }} okType='danger'
                 title="是否确认删除分析任务？" okText="删除" cancelText="取消">
                 <Button style={{ margin: 6 }} key="delete" danger>

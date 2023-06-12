@@ -37,7 +37,7 @@ const ResultTrace = () => {
         setIsAllFModalOpen(false);
     };
     const [params] = useSearchParams()
-    let task_id = parseInt(params.get("task"))
+    let task_id = parseInt(params.get("task_id"))
     if (isNaN(task_id)) task_id = "请选择扫描任务";
     return (
         <>

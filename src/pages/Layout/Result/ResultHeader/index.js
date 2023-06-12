@@ -10,11 +10,11 @@ const ResultHeader = () => {
     const { taskStore } = useStore()
     const [params] = useSearchParams()
     const { pathname } = useLocation()
-    let task_id = parseInt(params.get("task"))
+    let task_id = parseInt(params.get("task_id"))
     if (isNaN(task_id)) task_id = "请选择扫描任务";
     const navigate = useNavigate()
     const onPlanChange = (id) => {
-        navigate(pathname + '?task=' + id)
+        navigate(pathname + '?task_id=' + id)
     }
     return (
         <div style={{
