@@ -1,14 +1,13 @@
-import { Layout, Menu, Popconfirm } from 'antd'
+import { Layout, Menu } from 'antd'
 import { Link, useLocation } from "react-router-dom";
-import { useStore } from "@/store";
 import { observer } from 'mobx-react-lite'
-import { DiffOutlined, EditOutlined, HomeOutlined, SnippetsOutlined, UserOutlined } from "@ant-design/icons";
+import { DiffOutlined, EditOutlined, HomeOutlined } from "@ant-design/icons";
 import React from "react";
+
 const { Sider } = Layout
 
 const EWDSSider = () => {
     const { pathname } = useLocation()
-    const { userStore } = useStore()
     const getItem = (label, key, icon, children) => {
         return {
             key,
@@ -17,7 +16,7 @@ const EWDSSider = () => {
             label,
         };
     }
-    const createSidebarItems = (role) => {
+    const createSidebarItems = () => {
         return [
             // 数据概览
             getItem('数据总览', 'main', <HomeOutlined />, [
@@ -44,13 +43,6 @@ const EWDSSider = () => {
                 getItem(<Link to='/explore/binary'>二进制代码风格迁移分析</Link>, '/explore/binary'),
                 getItem(<Link to='/explore/event'>恶意代码事件溯源分析</Link>, '/explore/event'),
             ]),
-
-            // 用户管理
-            getItem('用户管理', 'user', <UserOutlined />, [
-                role === 'admin' ? getItem(<Link to='/user'>用户总览</Link>, '/user') : null,
-                role === 'admin' ? getItem(<Link to='/user/add'>新增用户</Link>, '/user/add') : null,
-                getItem(<Link to='/user/settings'>个人设置</Link>, '/user/settings'),
-            ]),
         ]
     }
     return (
@@ -70,7 +62,7 @@ const EWDSSider = () => {
                     borderRight: 0,
                     overflowY: 'scroll',
                 }}
-                items={createSidebarItems(userStore.userInfo.role)}
+                items={createSidebarItems()}
             >
             </Menu>
         </Sider>

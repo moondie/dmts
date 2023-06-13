@@ -14,7 +14,6 @@ const Main = lazy(() => import('./Main'))
 const Task = lazy(() => import('./Task'))
 const Result = lazy(() => import('./Result'))
 const Explore = lazy(() => import('./Explore'))
-const User = lazy(() => import('./User'))
 
 
 const EWDSLayout = () => {
@@ -31,7 +30,6 @@ const EWDSLayout = () => {
                             <Route path='task/*' element={<Task />} />
                             <Route path='result/*' element={<Result />} />
                             <Route path='Explore/*' element={<Explore />} />
-                            <Route path='user/*' element={<User />} />
                             <Route path='*' element={<Error />} />
                         </Routes>
                     </Content>
