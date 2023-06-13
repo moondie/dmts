@@ -216,7 +216,10 @@ class ResultStore {
                 let src_name = this.trace_result_list[i].repos_name
                 nodes.push({
                     "id": src_name,
-                    "label": src_name
+                    "label": src_name,
+                    "style": {
+                        fill: "#32E0C4",
+                    }
                 })
                 for (let j in this.trace_result_list[i].similar_repository) {
                     edges.push({
@@ -236,6 +239,19 @@ class ResultStore {
             "nodes": nodes,
             "edges": edges
         }
+    }
+
+    /**
+     * @description 根据任务 id 获取仓库名
+     * @param {Number} task_id 
+     */
+    getReposNameById(task_id) {
+        for (let i in this.trace_result_list) {
+            if (this.trace_result_list[i].id == task_id) {
+                return this.trace_result_list[i].repos_name
+            }
+        }
+        return ""
     }
 
     constructor() {

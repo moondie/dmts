@@ -11,159 +11,102 @@ import { useSearchParams } from "react-router-dom";
 import G6 from "@antv/g6";
 import { Divider } from "antd";
 
-import { NodeTooltips, EdgeToolTips, NodeContextMenu } from './component'
-
+import "./index.css"
 
 const ResultIntelligenceGraph = ({ task_id }) => {
+    const { resultStore } = useStore()
     const ref = useRef(null)
     let graph = null
-    const { resultStore } = useStore()
-    // 边tooltip坐标
-    const [showEdgeTooltip, setShowEdgeTooltip] = useState(false)
-    const [edgeTooltipX, setEdgeTooltipX] = useState(0)
-    const [edgeTooltipY, setEdgeTooltipY] = useState(0)
 
-    // 节点tooltip坐标
-    const [showNodeTooltip, setShowNodeTooltip] = useState(false)
-    const [nodeTooltipX, setNodeToolTipX] = useState(0)
-    const [nodeTooltipY, setNodeToolTipY] = useState(0)
-
-    // 节点ContextMenu坐标
-    const [showNodeContextMenu, setShowNodeContextMenu] = useState(false)
-    const [nodeContextMenuX, setNodeContextMenuX] = useState(0)
-    const [nodeContextMenuY, setNodeContextMenuY] = useState(0)
-
-    const bindEvents = () => {
-        // 监听edge上面mouse事件
-        graph.on('edge:click', evt => {
-            const { item, target } = evt
-            const type = target.get('type')
-            if (type !== 'text') {
-                return
-            }
-            const model = item.getModel()
-            const { endPoint } = model
-            const y = endPoint.y - 35
-            const x = endPoint.x - 150 - 10
-            const point = graph.getCanvasByPoint(x, y)
-            setEdgeTooltipX(point.x)
-            setEdgeTooltipY(point.y)
-            setShowEdgeTooltip(true)
-        })
-
-        graph.on('edge:mouseleave', () => {
-            setShowEdgeTooltip(false)
-        })
-
-        // 监听node上面mouse事件
-        graph.on('node:mouseenter', evt => {
-            const { item } = evt
-            const model = item.getModel()
-            const { x, y } = model
-            const point = graph.getCanvasByPoint(x, y)
-            console.log(evt)
-            setNodeToolTipX(point.x - 75)
-            setNodeToolTipY(point.y + 15)
-            setShowNodeTooltip(true)
-        })
-
-        // 节点上面触发mouseleave事件后隐藏tooltip和ContextMenu
-        graph.on('node:mouseleave', () => {
-            setShowNodeTooltip(false)
-            setShowNodeContextMenu(false)
-        })
-
-        // 监听节点上面右键菜单事件
-        graph.on('node:contextmenu', evt => {
-            const { item } = evt
-            const model = item.getModel()
-            const { x, y } = model
-            const point = graph.getCanvasByPoint(x, y)
-            setNodeContextMenuX(point.x)
-            setNodeContextMenuY(point.y)
-            setShowNodeContextMenu(true)
-        })
+    function refreshDragedNodePosition(e) {
+        const model = e.item.get('model');
+        model.fx = e.x;
+        model.fy = e.y;
     }
 
     useEffect(() => {
         if (!graph) {
-            const miniMap = new G6.Minimap()
+            const container = document.getElementById('layout-content');
+            const width = container.clientWidth * 0.8;
+            const height = container.clientHeight * 1.3;
             graph = new G6.Graph({
-                container: ref.current,
-                width: 1000,
-                height: 500,
-                modes: {
-                    default: ['drag-canvas', 'drag-node', 'zoom-canvas']
-                },
-                defaultNode: {
-                    shape: 'node',
-                    size: 15,
-                    // 节点文本样式
-                    labelCfg: {
-                        style: {
-                            fill: '#000000A6',
-                            fontSize: 5
-                        }
-                    },
-                    // 节点默认样式
-                    style: {
-                        stroke: '#72CC4A',
-                        width: 50
-                    }
-                },
-                defaultEdge: {
-                    shape: 'polyline'
-                },
-                // 节点交互状态配置
-                nodeStateStyles: {
-                    hover: {
-                        stroke: 'red',
-                        lineWidth: 3
-                    }
-                },
-                edgeStateStyles: {
-                    hover: {
-                        stroke: 'blue',
-                        lineWidth: 3
-                    }
-                },
+                container: 'container',
+                width,
+                height,
                 layout: {
                     type: 'force',
+                    linkDistance: 150,
                     preventOverlap: true,
                 },
-                plugins: [miniMap]
+                defaultNode: {
+                    size: 15,
+                    style: {
+                        fill: "#5C6470",
+                        stroke: "#FFFFFF",
+                        cursor: "grab",
+                    },
+                    labelCfg: {
+                        position: 'right',
+                        offset: 5,
+                    },
+                },
+                defaultEdge: {
+                    style: {
+                        endArrow: true,
+                    }
+                },
+                modes: {
+                    default: ['drag-canvas', 'drag-node', 'zoom-canvas']
+                }
             })
+            graph.data(resultStore.getIntelligenceResult(task_id))
+            graph.render()
+
+            graph.on('node:dragstart', function (e) {
+                graph.layout();
+                refreshDragedNodePosition(e);
+            });
+            graph.on('node:drag', function (e) {
+                const forceLayout = graph.get('layoutController').layoutMethods[0];
+                forceLayout.execute();
+                refreshDragedNodePosition(e);
+            });
+            graph.on('node:dragend', function (e) {
+                e.item.get('model').fx = null;
+                e.item.get('model').fy = null;
+            });
+
+            if (typeof window !== 'undefined')
+                window.onresize = () => {
+                    if (!graph || graph.get('destroyed')) return;
+                    if (!container || !container.scrollWidth || !container.scrollHeight) return;
+                    graph.changeSize(container.scrollWidth, container.scrollHeight);
+                };
         }
-        graph.data(resultStore.getIntelligenceResult(task_id))
-        graph.render()
-
-        const edges = graph.getEdges()
-        edges.forEach(edge => {
-            const line = edge.getKeyShape()
-            const stroke = line.attr('stroke')
-            const targetNode = edge.getTarget()
-            targetNode.update({
-                style: { stroke }
-            })
-        })
-        graph.paint()
-
-        bindEvents()
     }, [task_id])
 
     return (
-        <div ref={ref}>
-            {showEdgeTooltip && <EdgeToolTips x={edgeTooltipX} y={edgeTooltipY} />}
-            {showNodeTooltip && <NodeTooltips x={nodeTooltipX} y={nodeTooltipY} />}
-            {showNodeContextMenu && <NodeContextMenu x={nodeContextMenuX} y={nodeContextMenuY} />}
-        </div>
-    );
+        <div id="container" ref={ref}></div>
+    )
+
+}
+
+// 懒加载力导向图
+const ResultIntelligenceGraphContainer = ({ task_id }) => {
+    if (task_id == "请选择扫描任务") {
+        return (
+            <></>
+        )
+    } else {
+        return (
+            <ResultIntelligenceGraph task_id={task_id}></ResultIntelligenceGraph>
+        )
+    }
 }
 
 const ResultIntelligence = () => {
-
     const [params] = useSearchParams()
-    let task_id = parseInt(params.get("task"))
+    let task_id = parseInt(params.get("task_id"))
     if (isNaN(task_id)) task_id = "请选择扫描任务";
     return (
         <>
@@ -175,10 +118,9 @@ const ResultIntelligence = () => {
                 borderRadius: 16,
                 overflow: "auto",
             }}
-                id="container"
             >
                 <Divider>代码情报分析结果图</Divider>
-                <ResultIntelligenceGraph task_id={task_id}></ResultIntelligenceGraph>
+                <ResultIntelligenceGraphContainer task_id={task_id}></ResultIntelligenceGraphContainer>
             </div>
         </>
     )
