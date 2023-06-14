@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { observer } from "mobx-react-lite";
 import { useStore } from "@/store";
 import { Line } from '@ant-design/plots';
-import { Radio, Space } from 'antd';
+import { Radio } from 'antd';
 
 
 const DemoLine = observer(() => {

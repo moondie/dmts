@@ -5,22 +5,17 @@ import { useStore } from "@/store";
 
 const AgeChart = observer(() => {
     const { chartStore } = useStore();
-    let chartElement;
+
     return (
-        <div>
-            <EChartsReact option={chartStore.ageOption} ref={(e) => chartElement = e} notMerge={true} />
-        </div>
+        <EChartsReact option={chartStore.ageOption} notMerge={true} />
     )
 }
 )
 
 const LocationChart = observer(() => {
     const { chartStore } = useStore();
-    let chartElement;
     return (
-        <div>
-            <EChartsReact option={chartStore.locationOption} ref={(e) => chartElement = e} notMerge={true} />
-        </div>
+        <EChartsReact option={chartStore.locationOption} notMerge={true} />
     )
 }
 )

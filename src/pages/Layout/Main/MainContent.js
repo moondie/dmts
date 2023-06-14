@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { ProCard, StatisticCard } from "@ant-design/pro-components";
-import { Button, Divider, Progress, Space, Tag } from "antd";
-import RcResizeObserver from "rc-resize-observer";
+import { Divider, Space, Tag } from "antd";
 import CountUp from "react-countup";
 import moment from "moment";
 import { AgeChart, LocationChart } from "@/pages/Layout/Main/MainChart";
 import { DemoLine } from "@/pages/Layout/Main/MainGraph";
-import { useStore } from "@/store";
 
 const { Statistic } = StatisticCard;
 const formatter = (value) => <CountUp end={value} separator="," />;
@@ -165,43 +163,34 @@ const DataStatus = () => (
 
 
 const MainContent = () => {
-    const [responsive, setResponsive] = useState(false);
     return (
-        <RcResizeObserver
-            key="resize-observer"
-            onResize={(offset) => {
-                setResponsive(offset.width < 20000);
-            }}
+        <ProCard
+            title="数据概览"
+            extra={<TimeComponent />}
+            split={"horizontal"}
+            headerBordered
+            bordered
         >
-            <ProCard
-                title="数据概览"
-                extra={<TimeComponent />}
-                split={responsive ? "horizontal" : "vertical"}
-                headerBordered
-                bordered
-            >
-                <ProCard split="vertical">
-                    <ProCard split="horizontal">
-                        <DataStatistic />
-                    </ProCard>
-                    <ProCard split="horizontal">
-                        <DataStatus />
-                    </ProCard>
+            <ProCard split="vertical">
+                <ProCard split="horizontal">
+                    <DataStatistic />
                 </ProCard>
-                <ProCard title="不同语言恶意代码仓库特征随时间的变化趋势图">
-                    <DemoLine />
-                </ProCard>
-                <ProCard split="vertical">
-                    <ProCard title="恶意代码年龄分布表">
-                        <AgeChart />
-                    </ProCard>
-                    <ProCard title="恶意代码地域分布表">
-                        <LocationChart />
-                    </ProCard>
+                <ProCard split="horizontal">
+                    <DataStatus />
                 </ProCard>
             </ProCard>
-        </RcResizeObserver>
-
+            <ProCard title="不同语言恶意代码仓库特征随时间的变化趋势图">
+                <DemoLine />
+            </ProCard>
+            <ProCard split="vertical">
+                <ProCard>
+                    <AgeChart />
+                </ProCard>
+                <ProCard>
+                    <LocationChart />
+                </ProCard>
+            </ProCard>
+        </ProCard>
     );
 };
 
