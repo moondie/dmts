@@ -1,15 +1,13 @@
 import { makeAutoObservable } from "mobx";
-import { http } from "@/utils";
 
 class ChartStore {
     num = 0;
     ageOption = {
-        // title: {
-        //     text: "资源类型分布",
-        //     //subtext: 'Fake Data',
-        //     left: "center"
-        // },
-
+        title: {
+            text: '恶意代码年龄分布表',
+            subtext: '以 20 岁作为基准',
+            x: 'center'
+        },
         tooltip: {
             trigger: "item"
         },
@@ -19,15 +17,25 @@ class ChartStore {
         },
         series: [
             {
-                name: "资源类型分布",
+                name: "年龄",
                 type: "pie",
                 radius: "50%",
                 data: [
-                    { value: 1048, name: "0-2" },
-                    { value: 735, name: "2-4" },
-                    { value: 580, name: "4-6" },
-                    { value: 484, name: "6-8" },
-                    { value: 300, name: ">8" },
+                    { name: 20, value: 556 },
+                    { name: 21, value: 2565 },
+                    { name: 22, value: 3400 },
+                    { name: 23, value: 3006 },
+                    { name: 24, value: 2967 },
+                    { name: 25, value: 2900 },
+                    { name: 26, value: 2588 },
+                    { name: 27, value: 2166 },
+                    { name: 28, value: 1867 },
+                    { name: 29, value: 1593 },
+                    { name: 30, value: 1176 },
+                    { name: 31, value: 871 },
+                    { name: 32, value: 516 },
+                    { name: 33, value: 314 },
+                    { name: 34, value: 186 },
                 ],
                 label: {
                     show: true,
@@ -45,12 +53,11 @@ class ChartStore {
     };
 
     locationOption = {
-        // title: {
-        //     text: "资源类型分布",
-        //     //subtext: 'Fake Data',
-        //     left: "center"
-        // },
-
+        title: {
+            text: '恶意代码地域分布表',
+            subtext: '以国家为单位',
+            x: 'center'
+        },
         tooltip: {
             trigger: "item"
         },
@@ -60,15 +67,19 @@ class ChartStore {
         },
         series: [
             {
-                name: "资源类型分布",
+                name: "国家",
                 type: "pie",
                 radius: "50%",
                 data: [
-                    { value: 1048, name: "亚洲" },
-                    { value: 735, name: "北美洲" },
-                    { value: 580, name: "欧洲" },
-                    { value: 484, name: "南美洲" },
-                    { value: 300, name: "非洲" }
+                    { name: "United States of America", value: 1182 },
+                    { name: "India", value: 299 },
+                    { name: "Brazil", value: 186 },
+                    { name: "United Kingdom (Great Britain)", value: 174 },
+                    { name: "China", value: 128 },
+                    { name: "Germany", value: 100 },
+                    { name: "France", value: 75 },
+                    { name: "Canada", value: 72 },
+                    { name: "Indonesia", value: 59 },
                 ],
                 label: {
                     show: true,
@@ -84,6 +95,171 @@ class ChartStore {
             }
         ]
     };
+
+    // United States of America,1400
+    // India,1222
+    // Brazil,519
+    // United Kingdom (Great Britain),174
+    // China,363
+    // Germany,640
+    // France,510
+    // Canada,387
+    // Indonesia,310
+    // "Korea, Republic of",59
+    // Czech Republic,117
+    // Bangladesh,182
+    // Spain,242
+    // South Africa,82
+    // Russian Federation,41
+    // Italy,330
+    // Pakistan,132
+    // Mexico,138
+    // Sri Lanka,99
+    // Poland,245
+    // Argentina,123
+    // Netherlands,158
+    // Philippines,103
+    // New Zealand,92
+    // "Taiwan, Province of China",30
+    // Turkey,234
+    // Japan,126
+    // Ukraine,161
+    // Sweden,123
+    // Australia,221
+    // Colombia,87
+    // Israel,184
+    // Kenya,54
+    // Romania,103
+    // Finland,81
+    // Islamic Republic of Iran,20
+    // Hong Kong,18
+    // Portugal,91
+    // Denmark,87
+    // Egypt,111
+    // Venezuela,15
+    // Norway,92
+    // Belgium,102
+    // Serbia,38
+    // Greece,95
+    // Thailand,65
+    // Nepal,40
+    // Georgia,47
+    // Uruguay,18
+    // Switzerland,77
+    // Morocco,51
+    // Malaysia,48
+    // Bulgaria,35
+    // Singapore,124
+    // Viet Nam,9
+    // Saudi Arabia,21
+    // Ethiopia,23
+    // Croatia,29
+    // Belarus,23
+    // Nicaragua,8
+    // United Arab Emirates,30
+    // Azerbaijan,20
+    // Algeria,46
+    // Lebanon,21
+    // Hungary,44
+    // Ireland,59
+    // Tunisia,49
+    // Puerto Rico,8
+    // Austria,58
+    // Uzbekistan,5
+    // Guatemala,14
+    // Ghana,20
+    // Angola,5
+    // Lithuania,30
+    // Sudan,6
+    // Estonia,6
+    // Paraguay,7
+    // Ecuador,9
+    // Dominican Republic,7
+    // Latvia,13
+    // Rwanda,10
+    // Slovakia,29
+    // El Salvador,4
+    // Cyprus,9
+    // Armenia,8
+    // Kazakhstan,12
+    // "Tanzania, United Republic of",3
+    // Bosnia and Herzegovina,6
+    // Cambodia,4
+    // Jersey,2
+    // Uganda,5
+    // Myanmar,10
+    // Sierra Leone,2
+    // Yemen,2
+    // Bolivia,9
+    // Nigeria,16
+    // Maldives,3
+    // C?te D'ivoire (Ivory Coast),2
+    // Chile,42
+    // Costa Rica,9
+    // Zambia,3
+    // Cameroon,4
+    // Panama,4
+    // Jordan,4
+    // Iceland,14
+    // "Moldova, Republic of",1
+    // Luxembourg,17
+    // Albania,7
+    // Bahama,1
+    // Peru,22
+    // Kyrgyzstan,5
+    // Antarctica,1
+    // Zimbabwe,7
+    // Mali,1
+    // Congo-Kinshasa,1
+    // Sao Tome & Principe,1
+    // Iraq,4
+    // Xtra Klean,1
+    // Libyan Arab Jamahiriya,1
+    // Macau,1
+    // Macedonia,1
+    // United Kingdom,402
+    // People's Republic of China,75
+    // Russia,212
+    // Vietnam,100
+    // Taiwan,108
+    // Iran,114
+    // South Korea,149
+    // Slovenia,11
+    // Jamaica,10
+    // Honduras,3
+    // Mozambique,3
+    // Seychelles,3
+    // Moldova,7
+    // Tanzania,9
+    // Syria,2
+    // Madagascar,4
+    // Eswatini,2
+    // Malta,2
+    // Afghanistan,4
+    // Somalia,2
+    // Kuwait,1
+    // Monaco,1
+    // Bahrain,2
+    // Oman,2
+    // Vatican City,1
+    // Laos,1
+    // Gabon,1
+    // Togo,1
+    // Mauritius,1
+    // Greenland,1
+    // Senegal,1
+    // Andorra,2
+    // The Bahamas,1
+    // North Korea,2
+    // United States,445
+    // Palestine,6
+    // Benin,3
+    // Saint Kitts and Nevis,1
+    // Ivory Coast,1
+    // Kosovo,1
+    // Republic of Congo,1
+    // Montenegro,1
+
 
     tendencyOption = [
         {
