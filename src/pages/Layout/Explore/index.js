@@ -10,9 +10,9 @@ import GenderFeature from "@/pages/Layout/Explore/Gender";
 const Explore = () => (
     <Routes>
         <Route path='ai' element={<AiFeature />}></Route>
-        <Route path='gender' element={<BinaryToSourceFeature />}></Route>
-        <Route path='binary' element={<EventFeature />}></Route>
-        <Route path='event' element={<GenderFeature />}></Route>
+        <Route path='gender' element={<GenderFeature />}></Route>
+        <Route path='binary' element={<BinaryToSourceFeature />}></Route>
+        <Route path='event' element={<EventFeature />}></Route>
         <Route path='*' element={<Navigate to='' />}></Route>
     </Routes>
 );
