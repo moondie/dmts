@@ -23,7 +23,7 @@ const EWDSLayout = () => {
             <Layout>
                 <EWDSSider />
                 <Layout style={{ padding: '0', }}>
-                    <Content style={{ padding: 24, margin: 0, overflowY: 'auto', }}>
+                    <Content style={{ padding: 24, margin: 0, overflowY: 'auto', }} id="layout-content">
                         <Routes>
                             {/* 子页面路由 */}
                             <Route path='main/*' element={<Main />} />

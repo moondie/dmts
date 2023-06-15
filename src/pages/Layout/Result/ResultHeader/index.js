@@ -17,13 +17,15 @@ const ResultHeader = () => {
         navigate(pathname + '?task_id=' + id)
     }
     return (
-        <div style={{
-            margin: 8,
-            padding: 24,
-            backgroundColor: '#fff',
-            borderRadius: 16,
-            overflow: "auto",
-        }}>
+        <div
+            style={{
+                margin: 8,
+                padding: 24,
+                backgroundColor: '#fff',
+                borderRadius: 16,
+                overflow: "auto",
+            }}
+        >
             <Form
                 layout="horizontal"
                 initialValues={{
