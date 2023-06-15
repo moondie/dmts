@@ -56,8 +56,20 @@ const ResultIntelligenceGraph = ({ task_id }) => {
                     }
                 },
                 modes: {
-                    default: ['drag-canvas', 'drag-node', 'zoom-canvas']
-                }
+                    default: [
+                        'drag-canvas',
+                        'drag-node',
+                        'zoom-canvas',
+                        {
+                            type: 'tooltip', // 提示框
+                            formatText(model) {
+                                // 提示框文本内容
+                                const text = 'label: ' + model.label + '<br/> class: ' + model.class;
+                                return text
+                            },
+                        },
+                    ]
+                },
             })
             graph.data(resultStore.getIntelligenceResult(task_id))
             graph.render()
