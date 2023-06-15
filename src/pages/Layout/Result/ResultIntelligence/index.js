@@ -4,7 +4,7 @@
  * 以力导向图的形式展示代码归属结果和情报分析结果
  */
 
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import ResultHeader from "../ResultHeader";
 import { useStore } from "@/store";
 import { useSearchParams } from "react-router-dom";
