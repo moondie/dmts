@@ -94,52 +94,13 @@ class ResultStore {
                         layout_feature: 2
                     }
                 },
-                {
-                    name: "github.com/NotDSF/ServerSearch",
-                    url: "https://github.com/NotDSF/ServerSearch",
-                    type: "repository",
-                    similarity_score: 65,
-                    malicious_level: 1,
-                    features: {
-                        layout_feature: 2
-                    }
-                },
-                {
-                    name: "github.com/tedaditya/healthcare-kiosk",
-                    url: "https://github.com/tedaditya/healthcare-kiosk",
-                    type: "repository",
-                    similarity_score: 36,
-                    malicious_level: 0,
-                    features: {
-                        layout_feature: 2
-                    }
-                },
-                {
-                    name: "github.com/untodeath/main",
-                    url: "https://github.com/untodeath/main",
-                    type: "repository",
-                    similarity_score: 45,
-                    malicious_level: 9,
-                    features: {
-                        layout_feature: 2
-                    }
-                },
-                {
-                    name: "github.com/chfrank-cgn/Rancher",
-                    url: "https://github.com/chfrank-cgn/Rancher",
-                    type: "repository",
-                    similarity_score: 75,
-                    malicious_level: 4,
-                    features: {
-                        layout_feature: 2
-                    }
-                }
             ]
         }
     ]
 
     /**
      * @description 情报分析数据
+     * 为了实现快速索引，将 name 作为 key 值
      */
     intelligence_result_list = {
         "github.com/NotDSF/ServerSearch": {
@@ -148,8 +109,10 @@ class ResultStore {
             social_attributes: [
                 {
                     key: "独立合作",
-                    value: "true",
-                    url: "https://github.com/NotDSF"
+                    value: "合作",
+                    url: [
+                        "https://github.com/NotDSF"
+                    ]
                 }
             ]
         },
@@ -158,9 +121,12 @@ class ResultStore {
             author: "Alvian Tedy Aditya",
             social_attributes: [
                 {
-                    key: "消费能力",
-                    value: "中等",
-                    url: "https://twitter.com/tedaditya"
+                    key: "经济地位",
+                    value: "中",
+                    url: [
+                        "https://github.com/tedaditya",
+                        "https://twitter.com/tedaditya",
+                    ]
                 }
             ]
         },
@@ -171,7 +137,9 @@ class ResultStore {
                 {
                     key: "宗教背景",
                     value: "基督教",
-                    url: "https://github.com/untodeath"
+                    url: [
+                        "https://github.com/untodeath"
+                    ]
                 }
             ]
         },
@@ -182,11 +150,142 @@ class ResultStore {
                 {
                     key: "宗教背景",
                     value: "佛教",
-                    url: "https://github.com/chfrank-cgn"
+                    url: [
+                        "https://github.com/chfrank-cgn"
+                    ]
                 }
             ]
-        }
+        },
+        "github.com/Jokas-null/Windows_RootKit": {
+            url: "https://github.com/Jokas-null/Windows_RootKit",
+            author: "Revathy VENUGOPAL",
+            social_attributes: [
+                {
+                    key: "性别",
+                    value: "女性",
+                    url: [
+                        "https://github.com/revathy16296",
+                        "https://avatars.githubusercontent.com/u/74172574?v=4",
+                    ]
+                }
+            ]
+        },
+        "github.com/WTFAcademy/ETHBeijing": {
+            url: "https://github.com/WTFAcademy/ETHBeijing",
+            author: "WTF.Academy",
+            social_attributes: [
+                {
+                    key: "地域",
+                    value: "北京",
+                    url: [
+                        "https://github.com/WTFAcademy/ETHBeijing#place",
+                    ]
+                }
+            ]
+        },
+        "github.com/LiteSec/OneOS-X": {
+            url: "https://github.com/LiteSec/OneOS-X",
+            author: "LiteSec",
+            social_attributes: [
+                {
+                    key: "社交程度",
+                    value: "高",
+                    url: [
+                        "https://github.com/LiteSec/OneOS-X",
+                    ]
+                }
+            ]
+        },
+        "github.com/professorisidro/IntegracaoBD": {
+            url: "https://github.com/professorisidro/IntegracaoBD",
+            author: "Professor Isidro",
+            social_attributes: [
+                {
+                    key: "社会地位",
+                    value: "高",
+                    url: [
+                        "https://github.com/professorisidro",
+                        "https://github.com/professorisidro?tab=achievements",
+                    ]
+                }
+            ]
+        },
+        "github.com/doctorn/micro-mitten": {
+            url: "https://github.com/doctorn/micro-mitten",
+            author: "Nathan Corbyn",
+            social_attributes: [
+                {
+                    key: "职业特征",
+                    value: "学生",
+                    url: [
+                        "https://github.com/doctorn",
+                        "https://nathancorbyn.com/",
+                    ]
+                }
+            ]
+        },
+        "github.com/Jiab77/libvirt-web": {
+            url: "https://github.com/Jiab77/libvirt-web",
+            author: "Doctor Who",
+            social_attributes: [
+                {
+                    key: "语言特征",
+                    value: "乐观",
+                    url: [
+                        "https://github.com/Jiab77",
+                        "https://twitter.com/Jiab77"
+                    ]
+                }
+            ]
+        },
+        "github.com/hartescout/ThreatHunt---Personal": {
+            url: "https://github.com/hartescout/ThreatHunt---Personal",
+            author: "ark",
+            social_attributes: [
+                {
+                    key: "大五人格",
+                    value: "开放性,情绪性",
+                    url: [
+                        "https://github.com/hartescout",
+                    ]
+                }
+            ]
+        },
     }
+
+    /**
+     * @description 情报分析增加美感数据
+     */
+    intelligence_edge_list = [
+        {
+            source: "github.com/ml-research/XIConceptLearning",
+            target: "github.com/MBCProject/mbc-markdown",
+        },
+        {
+            source: "github.com/MBCProject/mbc-markdown",
+            target: "github.com/Vision-CAIR/MiniGPT-4",
+        },
+        {
+            source: "github.com/Vision-CAIR/MiniGPT-4",
+            target: "github.com/yueyueL/DL-based-Android-Malware-Defenses-review",
+        },
+        {
+            source: "github.com/yueyueL/DL-based-Android-Malware-Defenses-review",
+            target: "github.com/chfrank-cgn/Rancher",
+        },
+        {
+            source: "github.com/tedaditya/healthcare-kiosk",
+            target: "github.com/untodeath/main",
+        },
+        {
+            source: "github.com/Jokas-null/Windows_RootKit",
+            target: "github.com/chfrank-cgn/Rancher",
+        },
+        {
+            source: "github.com/LiteSec/OneOS-X",
+            target: "github.com/Jokas-null/Windows_RootKit",
+        },
+    ]
 
     /**
      * @description 根据任务 id 来获取代码归属结果中的相似性的仓库
@@ -211,30 +310,72 @@ class ResultStore {
     getIntelligenceResult(task_id) {
         let edges = []
         let nodes = []
-        for (let i in this.trace_result_list) {
-            if (this.trace_result_list[i].id === task_id) {
-                let src_name = this.trace_result_list[i].repos_name
-                nodes.push({
-                    "id": src_name,
-                    "label": src_name,
-                    "style": {
-                        fill: "#32E0C4",
-                    }
-                })
-                for (let j in this.trace_result_list[i].similar_repository) {
-                    edges.push({
-                        "source": src_name,
-                        "target": this.trace_result_list[i].similar_repository[j].name
-                    })
+
+        // 获取当前分析节点，并添加节点
+        let src_node_name = this.getReposNameById(task_id)
+        let social_attributes = []
+
+        // 添加代码情报分析节点和边
+        Object.entries(this.intelligence_result_list).forEach(([dst_node_name, dst_node_info]) => {
+            // 添加目标节点
+            nodes.push({
+                id: dst_node_name,
+                label: dst_node_name,
+                social_attributes: dst_node_info.social_attributes
+            })
+
+            // 提取边的标签
+            let edge_label = []
+            for (let social_attribute of dst_node_info.social_attributes) {
+                edge_label.push(social_attribute.key)
+            }
+
+            // 添加目标节点和分析节点的边
+            edges.push({
+                source: src_node_name,
+                target: dst_node_name,
+                label: edge_label.join(),
+            })
+
+            // 收集社会属性
+            social_attributes.push(...dst_node_info.social_attributes)
+        });
+
+        // 添加额外的无关边
+        this.getSimilarRepository(task_id).forEach((dst_node_info) => {
+            nodes.push({
+                id: dst_node_info.name,
+                label: dst_node_info.name,
+                social_attributes: []
+            })
+
+            edges.push({
+                source: src_node_name,
+                target: dst_node_info.name
+            })
+        })
+
+        // 添加分析节点
+        nodes.push({
+            id: src_node_name,
+            label: src_node_name,
+            social_attributes: social_attributes,
+            // 为分析节点单独设置颜色,覆盖 default 配置
+            style: {
+                fill: "#32E0C4"
+            },
+            labelCfg: {
+                style: {
+                    fill: "#32E0C4"
                 }
             }
-        }
-        for (let i in edges) {
-            nodes.push({
-                "id": edges[i].target,
-                "label": edges[i].target
-            })
-        }
+        })
+
+        // 添加额外边,增加图形美感
+        this.intelligence_edge_list.forEach((edge) => {
+            edges.push(edge)
+        })
+
         return {
             "nodes": nodes,
             "edges": edges

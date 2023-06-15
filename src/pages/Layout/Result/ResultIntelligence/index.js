@@ -26,16 +26,35 @@ const ResultIntelligenceGraph = ({ task_id }) => {
 
     useEffect(() => {
         if (!graph) {
+            const tooltip = new G6.Tooltip({
+                offsetX: 10,
+                offsetY: 10,
+                shouldBegin(e) {
+                    return e.item.getModel().social_attributes.length !== 0
+                },
+                getContent(e) {
+                    let ul = document.createElement('ul');
+                    e.item.getModel().social_attributes.forEach((item) => {
+                        let li = document.createElement("li")
+                        li.innerHTML = `${item.key}: ${item.value}`
+                        ul.appendChild(li)
+                    })
+                    return ul
+                },
+                itemTypes: ['node']
+            });
+
             const container = document.getElementById('layout-content');
             const width = container.clientWidth * 0.8;
-            const height = container.clientHeight * 1.3;
+            const height = container.clientHeight * 1.4;
+
             graph = new G6.Graph({
                 container: 'container',
                 width,
                 height,
                 layout: {
                     type: 'force',
-                    linkDistance: 150,
+                    linkDistance: 400,
                     preventOverlap: true,
                 },
                 defaultNode: {
@@ -48,11 +67,19 @@ const ResultIntelligenceGraph = ({ task_id }) => {
                     labelCfg: {
                         position: 'right',
                         offset: 5,
+                        style: {
+                            fill: "#5C6470",
+                            stroke: "#FFFFFF",
+                        }
                     },
                 },
                 defaultEdge: {
                     style: {
                         endArrow: true,
+                        stroke: "#5C6470",
+                    },
+                    labelCfg: {
+                        autoRotate: true
                     }
                 },
                 modes: {
@@ -60,16 +87,9 @@ const ResultIntelligenceGraph = ({ task_id }) => {
                         'drag-canvas',
                         'drag-node',
                         'zoom-canvas',
-                        {
-                            type: 'tooltip', // 提示框
-                            formatText(model) {
-                                // 提示框文本内容
-                                const text = 'label: ' + model.label + '<br/> class: ' + model.class;
-                                return text
-                            },
-                        },
                     ]
                 },
+                plugins: [tooltip]
             })
             graph.data(resultStore.getIntelligenceResult(task_id))
             graph.render()
