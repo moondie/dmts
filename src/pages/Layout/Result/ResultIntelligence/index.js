@@ -26,7 +26,7 @@ const ResultIntelligenceGraph = ({ task_id }) => {
 
     useEffect(() => {
         if (!graph) {
-            const tooltip = new G6.Tooltip({
+            const menu = new G6.Menu({
                 offsetX: 10,
                 offsetY: 10,
                 shouldBegin(e) {
@@ -36,13 +36,18 @@ const ResultIntelligenceGraph = ({ task_id }) => {
                     let ul = document.createElement('ul');
                     e.item.getModel().social_attributes.forEach((item) => {
                         let li = document.createElement("li")
-                        li.innerHTML = `${item.key}: ${item.value}`
+                        let a = document.createElement("a")
+                        a.setAttribute("href", item.url)
+                        a.setAttribute("target", "_blank")
+                        a.innerHTML = `${item.key}: ${item.value}`
+                        li.appendChild(a)
                         ul.appendChild(li)
                     })
                     return ul
                 },
-                itemTypes: ['node']
-            });
+                itemTypes: ['node'],
+                trigger: "click",
+            })
 
             const container = document.getElementById('layout-content');
             const width = container.clientWidth * 0.8;
@@ -89,7 +94,7 @@ const ResultIntelligenceGraph = ({ task_id }) => {
                         'zoom-canvas',
                     ]
                 },
-                plugins: [tooltip]
+                plugins: [menu]
             })
             graph.data(resultStore.getIntelligenceResult(task_id))
             graph.render()

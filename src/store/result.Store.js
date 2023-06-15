@@ -124,7 +124,6 @@ class ResultStore {
                     key: "经济地位",
                     value: "中",
                     url: [
-                        "https://github.com/tedaditya",
                         "https://twitter.com/tedaditya",
                     ]
                 }
@@ -164,7 +163,6 @@ class ResultStore {
                     key: "性别",
                     value: "女性",
                     url: [
-                        "https://github.com/revathy16296",
                         "https://avatars.githubusercontent.com/u/74172574?v=4",
                     ]
                 }
@@ -204,7 +202,6 @@ class ResultStore {
                     key: "社会地位",
                     value: "高",
                     url: [
-                        "https://github.com/professorisidro",
                         "https://github.com/professorisidro?tab=achievements",
                     ]
                 }
@@ -218,7 +215,6 @@ class ResultStore {
                     key: "职业特征",
                     value: "学生",
                     url: [
-                        "https://github.com/doctorn",
                         "https://nathancorbyn.com/",
                     ]
                 }
@@ -232,7 +228,6 @@ class ResultStore {
                     key: "语言特征",
                     value: "乐观",
                     url: [
-                        "https://github.com/Jiab77",
                         "https://twitter.com/Jiab77"
                     ]
                 }
