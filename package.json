@@ -9,6 +9,7 @@
     "@ant-design/pro-components": "^2.3.35",
     "@antv/g6": "^4.8.15",
     "@craco/craco": "^7.1.0",
+    "@cyntler/react-doc-viewer": "^1.13.0",
     "@react-navigation/core": "^6.4.8",
     "@react-navigation/native": "^6.1.6",
     "@testing-library/jest-dom": "^5.16.5",

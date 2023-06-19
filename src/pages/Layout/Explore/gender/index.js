@@ -5,9 +5,24 @@
  */
 
 import React from "react";
+import DocViewer from "@cyntler/react-doc-viewer";
+import { DocViewerRenderers } from "@cyntler/react-doc-viewer";
 
-const GenderFeature = () => (
-    <h2>不同性别代码特征差异图</h2>
-);
+const GenderFeature = () => {
+    const docs = [
+        { uri: require("@/assets/gender.pdf") }, // Local File
+    ]
+    return (
+        < DocViewer documents={docs} pluginRenderers={DocViewerRenderers} theme={{
+            primary: "#5296d8",
+            secondary: "#ffffff",
+            tertiary: "#5296d899",
+            textPrimary: "#ffffff",
+            textSecondary: "#5296d8",
+            textTertiary: "#00000099",
+            disableThemeScrollbar: false,
+        }}></DocViewer >
+    )
+}
 
 export default GenderFeature

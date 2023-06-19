@@ -33,7 +33,7 @@ const EWDSLayout = () => {
                             <Route path='*' element={<Error />} />
                         </Routes>
                     </Content>
-                    <Footer style={{ textAlign: 'center' }}>华中科技大学 网络空间安全学院 信息安全实验室 代码透视组 2023</Footer>
+                    {/* <Footer style={{ textAlign: 'center' }}>华中科技大学 网络空间安全学院 信息安全实验室 代码透视组 2023</Footer> */}
                 </Layout>
             </Layout>
         </Layout>
