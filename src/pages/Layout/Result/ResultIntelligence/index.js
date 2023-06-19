@@ -33,17 +33,17 @@ const ResultIntelligenceGraph = ({ task_id }) => {
                     return e.item.getModel().social_attributes.length !== 0
                 },
                 getContent(e) {
-                    let ul = document.createElement('ul');
+                    let div = document.createElement('div');
                     e.item.getModel().social_attributes.forEach((item) => {
-                        let li = document.createElement("li")
+                        let p = document.createElement("p")
                         let a = document.createElement("a")
                         a.setAttribute("href", item.url)
                         a.setAttribute("target", "_blank")
                         a.innerHTML = `${item.key}: ${item.value}`
-                        li.appendChild(a)
-                        ul.appendChild(li)
+                        p.appendChild(a)
+                        div.appendChild(p)
                     })
-                    return ul
+                    return div
                 },
                 itemTypes: ['node'],
                 trigger: "click",
