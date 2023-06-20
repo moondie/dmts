@@ -105,7 +105,7 @@ const ResultTrace = () => {
                 <Modal title="关联特征" open={isAsFModalOpen} onOk={handleAsFOk} onCancel={handleAsFCancel}>
                     <Table></Table>
                 </Modal>
-                <Modal title="所有特征" open={isAllFModalOpen} onOk={handleAllFCancel} onCancel={handleAllFCancel}>
+                <Modal title="所有特征" open={isAllFModalOpen} onOk={handleAllFOk} onCancel={handleAllFCancel}>
                     <Table></Table>
                 </Modal>
             </div>

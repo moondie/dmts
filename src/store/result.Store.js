@@ -4,7 +4,6 @@
 
 
 import { makeAutoObservable } from "mobx";
-import { http } from "@/utils";
 
 class ResultStore {
 
@@ -383,7 +382,7 @@ class ResultStore {
      */
     getReposNameById(task_id) {
         for (let i in this.trace_result_list) {
-            if (this.trace_result_list[i].id == task_id) {
+            if (this.trace_result_list[i].id === task_id) {
                 return this.trace_result_list[i].repos_name
             }
         }

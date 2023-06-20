@@ -1,8 +1,6 @@
 import './index.scss'
 import { Routes, Route } from 'react-router-dom'
-import { observer } from 'mobx-react-lite'
-import React, { lazy, useEffect } from 'react'
-import { Footer } from "antd/es/layout/layout";
+import React, { lazy } from 'react'
 import EWDSHeader from "@/pages/Layout/EWDSHeader";
 import EWDSSider from "@/pages/Layout/EWDSSider";
 import { Layout } from 'antd'
@@ -33,7 +31,6 @@ const EWDSLayout = () => {
                             <Route path='*' element={<Error />} />
                         </Routes>
                     </Content>
-                    {/* <Footer style={{ textAlign: 'center' }}>华中科技大学 网络空间安全学院 信息安全实验室 代码透视组 2023</Footer> */}
                 </Layout>
             </Layout>
         </Layout>

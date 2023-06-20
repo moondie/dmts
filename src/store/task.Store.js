@@ -4,7 +4,6 @@
 
 
 import { makeAutoObservable } from "mobx";
-import { http } from "@/utils";
 
 class TaskStore {
     task_list_info = [

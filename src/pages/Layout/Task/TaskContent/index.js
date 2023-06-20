@@ -8,9 +8,9 @@
  */
 
 import React, { useState } from 'react';
-import { Button, List, Modal, Popconfirm, Tag } from 'antd';
+import { Button, Modal, Popconfirm, Tag } from 'antd';
 import { ProList } from '@ant-design/pro-components';
-import { Link, useLocation, useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { observer } from "mobx-react-lite";
 
 import { PlusOutlined } from "@ant-design/icons";
@@ -79,7 +79,7 @@ const TaskContentActionsRender = observer(({ id }) => {
         taskStore.deleteTask(id)
     }
     const isSuccess = (status) => {
-        if (status == "success") {
+        if (status === "success") {
             return false
         }
         return true

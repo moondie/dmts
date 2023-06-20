@@ -5,6 +5,7 @@
  */
 
 import React, { useEffect, useRef } from "react";
+import ReactDOM from 'react-dom';
 import ResultHeader from "../ResultHeader";
 import { useStore } from "@/store";
 import { useSearchParams } from "react-router-dom";
@@ -54,7 +55,7 @@ const ResultIntelligenceGraph = ({ task_id }) => {
             const height = container.clientHeight * 1.4;
 
             graph = new G6.Graph({
-                container: 'container',
+                container: ReactDOM.findDOMNode(ref.current),
                 width,
                 height,
                 layout: {
@@ -123,14 +124,14 @@ const ResultIntelligenceGraph = ({ task_id }) => {
     }, [task_id])
 
     return (
-        <div id="container" ref={ref}></div>
+        <div ref={ref}></div>
     )
 
 }
 
 // 懒加载力导向图
 const ResultIntelligenceGraphContainer = ({ task_id }) => {
-    if (task_id == "请选择扫描任务") {
+    if (task_id === "请选择扫描任务") {
         return (
             <></>
         )
