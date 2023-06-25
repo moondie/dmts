@@ -3,18 +3,20 @@
  */
 import React, { useEffect } from 'react';
 import { Form, Select } from "antd";
-import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import { useStore } from '@/store';
+import { useNavigate } from 'react-router-dom/dist';
+import { useLocation } from 'react-router-dom/dist';
 
 const ResultHeader = () => {
     const { taskStore } = useStore()
-    const [params, setParams] = useSearchParams()
-    let task_id = parseInt(params.get("task_id"))
-    if (isNaN(task_id)) task_id = "请选择扫描任务";
+    const [params] = useSearchParams()
+    let task_id = params.get("task_id")
+    if (!task_id) task_id = "请选择扫描任务";
+    const navigate = useNavigate()
+    const { pathname } = useLocation()
     const onPlanChange = (id) => {
-        setParams({
-            task_id: id
-        })
+        navigate(pathname + '?task_id=' + id)
     }
     useEffect(() => {
         taskStore.getTaskList()

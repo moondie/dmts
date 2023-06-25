@@ -4,7 +4,7 @@
  * 以力导向图的形式展示代码归属结果和情报分析结果
  */
 
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import ReactDOM from 'react-dom';
 import ResultHeader from "../ResultHeader";
 import { useStore } from "@/store";
@@ -52,7 +52,7 @@ const ResultIntelligenceGraph = ({ task_id }) => {
 
             const container = document.getElementById('layout-content');
             const width = container.clientWidth * 0.8;
-            const height = container.clientHeight * 1.4;
+            const height = container.clientHeight;
 
             graph = new G6.Graph({
                 container: ReactDOM.findDOMNode(ref.current),
@@ -60,7 +60,7 @@ const ResultIntelligenceGraph = ({ task_id }) => {
                 height,
                 layout: {
                     type: 'force',
-                    linkDistance: 400,
+                    linkDistance: height / 3,
                     preventOverlap: true,
                 },
                 defaultNode: {
@@ -143,9 +143,13 @@ const ResultIntelligenceGraphContainer = ({ task_id }) => {
 }
 
 const ResultIntelligence = () => {
+    const { taskStore } = useStore()
     const [params] = useSearchParams()
-    let task_id = parseInt(params.get("task_id"))
-    if (isNaN(task_id)) task_id = "请选择扫描任务";
+    let task_id = params.get("task_id")
+    if (!task_id) task_id = "请选择扫描任务";
+    useEffect(() => {
+        taskStore.setPageType("intelligence")
+    }, [])
     return (
         <>
             <ResultHeader></ResultHeader>

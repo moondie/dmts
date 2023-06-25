@@ -13,10 +13,11 @@ import { useSearchParams } from "react-router-dom/dist";
 const { Column } = Table
 
 const ResultTrace = () => {
-    const { resultStore } = useStore()
+    const { resultStore, taskStore } = useStore()
     const [traceResult, setTraceResult] = useState([])
     const [params] = useSearchParams()
     useEffect(() => {
+        taskStore.setPageType("trace")
         let task_id = params.get("task_id")
         if (!task_id) {
             return
