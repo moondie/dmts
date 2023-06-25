@@ -1,21 +1,24 @@
 /**
  * 创建分析计划页面。
  */
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Form, Select } from "antd";
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import { useStore } from '@/store';
 
 const ResultHeader = () => {
     const { taskStore } = useStore()
-    const [params] = useSearchParams()
-    const { pathname } = useLocation()
+    const [params, setParams] = useSearchParams()
     let task_id = parseInt(params.get("task_id"))
     if (isNaN(task_id)) task_id = "请选择扫描任务";
-    const navigate = useNavigate()
     const onPlanChange = (id) => {
-        navigate(pathname + '?task_id=' + id)
+        setParams({
+            task_id: id
+        })
     }
+    useEffect(() => {
+        taskStore.getTaskList()
+    }, [])
     return (
         <div
             style={{

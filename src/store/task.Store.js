@@ -3,6 +3,7 @@
  */
 
 
+import { http } from "@/utils";
 import { makeAutoObservable } from "mobx";
 
 class TaskStore {
@@ -126,22 +127,8 @@ class TaskStore {
      * @description 增加任务到任务列表
      * @param {object} task_info 
      */
-    addTask(task_info) {
-        this.task_list_info.push({
-            id: this.getTaskLength() + 1,
-            name: task_info.task_name,
-            type: task_info.task_type,
-            language: "None",
-            is_effective: true,
-            task_description: {
-                create_time: new Date().toLocaleString(),
-                status: 'running',
-                url: task_info.task_context,
-            },
-            repos_info: {
-                languages: []
-            },
-        })
+    addTask = async (task_info) => {
+        return await http.post("/taskmanage/create", task_info)
     }
 
     /**
@@ -164,6 +151,36 @@ class TaskStore {
             this.task_list_info[i].is_effective = false
             break
         }
+    }
+
+    getTaskList = () => {
+        http.get("/taskmanage/getTaskList").then((res) => {
+            if (res.status === 200) {
+                this.task_list_info = []
+                res.data.forEach(data => {
+                    this.task_list_info.push({
+                        id: data.taskId,
+                        name: data.taskName,
+                        type: this.taskPattern[data.taskMode],
+                        language: data.language,
+                        is_effective: data.is_effective,
+                        task_description: {
+                            create_time: data.startTime,
+                            status: data.status,
+                            url: data.taskURL,
+                        },
+                        repos_info: {
+                            languages: [data.language],
+                            size: data.size,
+                            time: `${data.startTime} - ${data.updateTime}`,
+                        }
+                    })
+                });
+            }
+        }).catch((err => {
+            alert("获取任务列表失败")
+            console.log(err)
+        }))
     }
 
     constructor() {

@@ -3,6 +3,7 @@
  */
 
 
+import { http } from "@/utils";
 import { makeAutoObservable } from "mobx";
 
 class ResultStore {
@@ -282,18 +283,13 @@ class ResultStore {
     ]
 
     /**
-     * @description 根据任务 id 来获取代码归属结果中的相似性的仓库
+     * @description 根据任务ID获得代码归属的结果
      * @param {Number} task_id 
-     * @returns {Array}
+     * @returns 
      */
-    getSimilarRepository(task_id) {
-        for (let i in this.trace_result_list) {
-            if (this.trace_result_list[i].id !== task_id) {
-                continue
-            }
-            return this.trace_result_list[i].similar_repository
-        }
-        return []
+    getTaskResultByTaskID = async (task_id) => {
+        console.log(task_id)
+        return await http.post("/taskmanage/getDetail", { taskId: task_id })
     }
 
     /**

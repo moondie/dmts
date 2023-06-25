@@ -145,8 +145,13 @@ const TaskCreate = () => {
     const { taskStore } = useStore()
     const navigate = useNavigate();
     const onFinish = (value) => {
-        // TODO: 缺号连接后端操作
-        taskStore.addTask(value)
+        console.log(value)
+        taskStore.addTask({
+            taskName: value.task_name,
+            taskType: "url",
+            taskURL: `https://${value.task_context}`,
+            taskMode: value.task_type
+        })
         navigate('/task');
     }
 

@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { ProCard, StatisticCard } from "@ant-design/pro-components";
-import { Divider, Space, Tag } from "antd";
+import { Space, Tag } from "antd";
 import CountUp from "react-countup";
 import moment from "moment";
 import { AgeChart, LocationChart } from "@/pages/Layout/Main/MainChart";
 import { DemoLine } from "@/pages/Layout/Main/MainGraph";
+import { useStore } from "@/store";
 
 const { Statistic } = StatisticCard;
 const formatter = (value) => <CountUp end={value} separator="," />;
@@ -38,67 +39,61 @@ const TimeComponent = () => {
 
 };
 
-const DataStatistic = () => (
-    <ProCard split="horizontal" title="扫描结果">
+const DataStatistic = () => {
+    const { taskStore } = useStore()
 
-        <ProCard split="vertical">
-            <StatisticCard
-                statistic={{
-                    title: "已扫描仓库",
-                    value: 761116,
-                    suffix: "个",
-                    // description: <Statistic title="URL总数" value="500" suffix="个"
-                    //     formatter={formatter} />,
-                    formatter,
-                }}
-            />
-            <StatisticCard
-                statistic={{
-                    title: "已发现恶意组织",
-                    value: 26709,
-                    suffix: "个",
-                    description:
-                        <Space size={[2, 8]} wrap>
-                            <Tag color="red"><Statistic title="高危" value="1249" suffix="个"
-                                formatter={formatter} /></Tag>
-                            <Tag color="yellow"><Statistic title="中危" value="5390" suffix="个"
-                                formatter={formatter} /></Tag>
-                            <Tag color="default"><Statistic title="低危" value="20070" suffix="个"
-                                formatter={formatter} /></Tag>
-                        </Space>,
-                    formatter,
-                }}
-            />
+    useEffect(() => {
+        taskStore.getTaskList()
+    }, [])
+    return (
+        <ProCard split="horizontal" title="扫描结果">
+
+            <ProCard split="vertical">
+                <StatisticCard
+                    statistic={{
+                        title: "已扫描仓库",
+                        value: 761116,
+                        suffix: "个",
+                        formatter,
+                    }}
+                />
+                <StatisticCard
+                    statistic={{
+                        title: "已发现恶意组织",
+                        value: 26709,
+                        suffix: "个",
+                        description:
+                            <Space size={[2, 8]} wrap>
+                                <Tag color="red"><Statistic title="高危" value="1249" suffix="个"
+                                    formatter={formatter} /></Tag>
+                                <Tag color="yellow"><Statistic title="中危" value="5390" suffix="个"
+                                    formatter={formatter} /></Tag>
+                                <Tag color="default"><Statistic title="低危" value="20070" suffix="个"
+                                    formatter={formatter} /></Tag>
+                            </Space>,
+                        formatter,
+                    }}
+                />
+            </ProCard>
+            <ProCard split="vertical">
+                <StatisticCard
+                    statistic={{
+                        title: "运行中扫描任务数量",
+                        value: "无",
+                    }}
+                />
+                <StatisticCard
+                    statistic={{
+                        title: "历史扫描任务总数",
+                        value: taskStore.getTaskLength(),
+                        suffix: "个",
+                        formatter,
+                    }}
+                />
+            </ProCard>
         </ProCard>
-        <ProCard split="vertical">
-            <StatisticCard
-                statistic={{
-                    title: "运行中扫描任务数量",
-                    value: "无",
-                }}
-            />
-            <StatisticCard
-                statistic={{
-                    title: "历史扫描任务总数",
-                    value: "10",
-                    suffix: "个",
-                    description:
-                        <>
-                            <Statistic title="代码归属分析" value="3" suffix="个"
-                                style={{ display: "inline-block" }} formatter={formatter} />
-                            <Divider type="vertical" />
-                            <Statistic title="代码情报分析" value="5" suffix="个"
-                                style={{ display: "inline-block" }} formatter={formatter} />
-                            <Divider type="vertical" />
-                            <Statistic title="全量分析" value="2" suffix="个"
-                                style={{ display: "inline-block" }} formatter={formatter} />
-                        </>,
-                    formatter,
-                }}
-            />
-        </ProCard>
-    </ProCard>
-);
+    )
+}
 
 const DataStatus = () => (
     <ProCard split="horizontal" title="系统状态">

@@ -7,7 +7,7 @@
  *
  */
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, Modal, Popconfirm, Tag } from 'antd';
 import { ProList } from '@ant-design/pro-components';
 import { useNavigate } from "react-router-dom";
@@ -112,14 +112,14 @@ const TaskContentActionsRender = observer(({ id }) => {
                         <p>{language}</p>
                     ))
                 }
-                <h3>文件数量：</h3>
-                <p>{repos_info.file_number}</p>
+                {/* <h3>文件数量：</h3>
+                <p>{repos_info.file_number}</p> */}
                 <h3>文件大小</h3>
                 <p>{repos_info.size}</p>
                 <h3>运行时间：</h3>
                 <p>{repos_info.time}</p>
-                <h3>文件Hash值：</h3>
-                <p>{repos_info.hash}</p>
+                {/* <h3>文件Hash值：</h3>
+                <p>{repos_info.hash}</p> */}
             </Modal>
         </>
     )
@@ -132,6 +132,9 @@ const TaskContent = observer(() => {
     const onCreateClick = () => {
         navigate('/task/create')
     }
+    useEffect(() => {
+        taskStore.getTaskList()
+    }, [])
     return (
         <>
             <div style={{
@@ -191,7 +194,8 @@ const TaskContent = observer(() => {
 
                             )
                         },
-                    }}
+                    }
+                    }
                     toolbar={{
                         actions: [
                             <Button type="primary" key="primary" onClick={onCreateClick} >
