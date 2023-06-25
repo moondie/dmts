@@ -183,10 +183,10 @@ const MainContent = () => {
                 <DemoLine />
             </ProCard>
             <ProCard split="vertical">
-                <ProCard>
+                <ProCard colSpan="50%">
                     <AgeChart />
                 </ProCard>
-                <ProCard>
+                <ProCard colSpan="50%">
                     <LocationChart />
                 </ProCard>
             </ProCard>
