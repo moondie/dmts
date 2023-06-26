@@ -10,13 +10,16 @@ import { useLocation } from 'react-router-dom/dist';
 
 const ResultHeader = () => {
     const { taskStore } = useStore()
-    const [params] = useSearchParams()
+    const [params, setParams] = useSearchParams()
     let task_id = params.get("task_id")
     if (!task_id) task_id = "请选择扫描任务";
-    const navigate = useNavigate()
-    const { pathname } = useLocation()
+    // const navigate = useNavigate()
+    // const { pathname } = useLocation()
     const onPlanChange = (id) => {
-        navigate(pathname + '?task_id=' + id)
+        // navigate(pathname + '?task_id=' + id)
+        setParams({
+            task_id: id
+        })
     }
     useEffect(() => {
         taskStore.getTaskList()

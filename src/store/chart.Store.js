@@ -71,10 +71,10 @@ class ChartStore {
                 type: "pie",
                 radius: "50%",
                 data: [
-                    { name: "United States of America", value: 1182 },
+                    { name: "USA", value: 1182 },
                     { name: "India", value: 299 },
                     { name: "Brazil", value: 186 },
-                    { name: "United Kingdom (Great Britain)", value: 174 },
+                    { name: "UK", value: 174 },
                     { name: "China", value: 128 },
                     { name: "Germany", value: 100 },
                     { name: "France", value: 75 },
@@ -96,10 +96,10 @@ class ChartStore {
         ]
     };
 
-    // United States of America,1400
+    // USA,1400
     // India,1222
     // Brazil,519
-    // United Kingdom (Great Britain),174
+    // UK,174
     // China,363
     // Germany,640
     // France,510

@@ -41,7 +41,7 @@ const EWDSSider = () => {
                 getItem(<Link to='/explore/ai'>AI代码特征分析</Link>, '/explore/ai'),
                 getItem(<Link to='/explore/gender'>代码作者性别分析</Link>, '/explore/gender'),
                 getItem(<Link to='/explore/binary'>二进制代码风格迁移分析</Link>, '/explore/binary'),
-                getItem(<Link to='/explore/event'>恶意代码事件溯源分析</Link>, '/explore/event'),
+                // getItem(<Link to='/explore/event'>恶意代码事件溯源分析</Link>, '/explore/event'),
             ]),
         ]
     }

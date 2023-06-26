@@ -17,6 +17,21 @@ const AiFeature = () => {
             bordered
         >
             <ProCard
+                title="AI和人类代码区分实验结果图"
+                split="vertical"
+            >
+                <ProCard colSpan="50%">
+                    <Image
+                        src={require("@/assets/Ai/Cpp消融实验新.png")}
+                    />
+                </ProCard>
+                <ProCard colSpan="50%">
+                    <Image
+                        src={require("@/assets/Ai/Java消融实验新.png")}
+                    />
+                </ProCard>
+            </ProCard>
+            <ProCard
                 title="注释使用差异图"
                 split="vertical"
             >
@@ -73,21 +88,6 @@ const AiFeature = () => {
                 <ProCard colSpan="50%">
                     <Image
                         src={require("@/assets/Ai/Java_name_50_jx.png")}
-                    />
-                </ProCard>
-            </ProCard>
-            <ProCard
-                title="消融实验图"
-                split="vertical"
-            >
-                <ProCard colSpan="50%">
-                    <Image
-                        src={require("@/assets/Ai/Cpp消融实验新.png")}
-                    />
-                </ProCard>
-                <ProCard colSpan="50%">
-                    <Image
-                        src={require("@/assets/Ai/Java消融实验新.png")}
                     />
                 </ProCard>
             </ProCard>

@@ -129,7 +129,6 @@ class TaskStore {
      * @returns {Array}
      */
     getSuccessTaskListInfo() {
-        console.log(this.page_type)
         if (this.page_type === "trace") {
             return this.task_list_info.filter((task_info) => {
                 return task_info.is_effective === true && task_info.task_description.status === "success"
