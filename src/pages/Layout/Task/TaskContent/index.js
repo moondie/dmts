@@ -53,11 +53,17 @@ const language_color = {
     "Golang": {
         color: "#b34563"
     },
-    "None": {
-        color: "#CDAA7D"
-    }
+    // "Shell": {
+    //     color: "#b99014"
+    // },
 }
 
+const getLanguageColor = (language) => {
+    if (language in language_color) {
+        return language_color[language].color
+    }
+    return "#CDAA7D"
+}
 
 const TaskContentActionsRender = observer(({ id }) => {
     const { taskStore } = useStore()
@@ -156,7 +162,7 @@ const TaskContent = observer(() => {
                         subTitle: {
                             dataIndex: 'language',
                             render: (language) => (
-                                <Tag color={language_color[language].color}>
+                                <Tag color={getLanguageColor(language)}>
                                     {language}
                                 </Tag>
                             )
