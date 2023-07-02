@@ -9,6 +9,9 @@ import ResultHeader from "@/pages/Layout/Result/ResultHeader";
 import { useStore } from "@/store";
 import { Table, Divider } from "antd";
 import { useSearchParams } from "react-router-dom/dist";
+import { QuestionCircleOutlined } from "@ant-design/icons"
+import { Tooltip } from "antd";
+import { Space } from "antd";
 
 const { Column } = Table
 
@@ -43,6 +46,7 @@ const ResultTrace = () => {
                 <Table
                     dataSource={traceResult}
                     width="12"
+                    showSorterTooltip={false}
                 >
                     <Column
                         dataIndex="url"
@@ -70,19 +74,40 @@ const ResultTrace = () => {
                     />
                     <Column
                         dataIndex="product_layout"
-                        title="布局特征关联性"
+                        title={
+                            <Space>
+                                布局特征关联性
+                                <Tooltip title="布局特征是代码的视觉特征,布局风格是代码呈现给人的第一观感，诸如代码中的缩进、换行、注释等因素都会影响代码的布局特征">
+                                    <QuestionCircleOutlined />
+                                </Tooltip>
+                            </Space>
+                        }
                         key="product_layout"
                         sorter={(rowA, rowB) => rowA.product_layout < rowB.product_layout}
                     />
                     <Column
                         dataIndex="product_lexical"
-                        title="词法特征关联性"
+                        title={
+                            <Space>
+                                词法特征关联性
+                                <Tooltip title="词法特征是代码的语言特征,良好的命名规则能够让代码读起来像自然语言一样通顺.诸如标识符、关键字、操作符等因素都会影响代码的词法特征">
+                                    <QuestionCircleOutlined />
+                                </Tooltip>
+                            </Space>
+                        }
                         key="product_lexical"
                         sorter={(rowA, rowB) => rowA.product_lexical < rowB.product_lexical}
                     />
                     <Column
                         dataIndex="product_syntactic"
-                        title="语法特征关联性"
+                        title={
+                            <Space>
+                                语法特征关联性
+                                <Tooltip title="句法特征是代码的逻辑特征，它对应编程者对于问题的拆解过程，抽象语法树中的节点、边以及属性等因素都会影响代码的句法特征">
+                                    <QuestionCircleOutlined />
+                                </Tooltip>
+                            </Space>
+                        }
                         key="product_syntactic"
                         sorter={(rowA, rowB) => rowA.product_syntactic < rowB.product_syntactic}
                     />
