@@ -7,32 +7,81 @@
 import { Image } from 'antd';
 import './index.scss'
 import { ProCard } from "@ant-design/pro-components"
+import SyntaxHighlighter from 'react-syntax-highlighter';
+import { docco } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 
 const AiFeature = () => {
+    const codeStringForComment = `class Solution {
+public:
+    double myPow(double x, int n) {
+        // 由于n的取值范围为-2^31到2^31-1，当n=-2^31时，-n将会溢出
+        // 因此我们将n和x同时转化为long long类型，避免溢出
+        long long N = n;
+        if(N < 0) {
+            x = 1 / x;
+            N = -N;
+        }
+        double ans = 1;
+        double current_product = x;
+        for(long long i = N; i ; i /= 2) {
+            if((i % 2) == 1){
+                ans = ans * current_product;
+            }
+            current_product = current_product * current_product;
+        }
+        return ans;
+    }
+};`
     return (
         <ProCard
-            title="AI和人类代码特征差异展示"
+            title="AI 和人类代码特征差异展示"
             split="horizontal"
             headerBordered
             bordered
         >
             <ProCard
-                title="注释使用差异图"
+                title="消融实验图"
+                subTitle="单独使用任何一个特征集达到的准确率都不理想，而所有特征集的组合产生了最高的分类精度"
                 split="vertical"
+                wrap
             >
                 <ProCard colSpan="50%">
                     <Image
-                        src={require("@/assets/Ai/c++_comment_50_jx.png")}
+                        src={require("@/assets/Ai/Cpp消融实验新.png")}
                     />
                 </ProCard>
                 <ProCard colSpan="50%">
                     <Image
-                        src={require("@/assets/Ai/Java_comment_50_jx.png")}
+                        src={require("@/assets/Ai/Java消融实验新.png")}
                     />
                 </ProCard>
             </ProCard>
             <ProCard
+                title="注释使用差异图"
+                subTitle="ChatGPT 生成的代码有时类似于样本或模板代码，其注释往往提示需要自定义实现的区域，而人类的代码注释用于解释代码的作用"
+                split="horizontal"
+            >
+                <ProCard split="vertical">
+                    <ProCard colSpan="50%">
+                        <Image
+                            src={require("@/assets/Ai/c++_comment_50_jx.png")}
+                        />
+                    </ProCard>
+                    <ProCard colSpan="50%">
+                        <Image
+                            src={require("@/assets/Ai/Java_comment_50_jx.png")}
+                        />
+                    </ProCard>
+                </ProCard>
+                <ProCard>
+                    <SyntaxHighlighter language="cpp" style={docco} showLineNumbers>
+                        {codeStringForComment}
+                    </SyntaxHighlighter>
+                </ProCard>
+            </ProCard>
+            <ProCard
                 title="第三方库使用差异图"
+                subTitle="ChatGPT 生成的代码通常不会表现出文件间的依赖性，这与人类编写的代码不同，后者通常在多个文件间有高度的耦合性"
                 split="vertical"
             >
                 <ProCard colSpan="50%">
@@ -48,6 +97,7 @@ const AiFeature = () => {
             </ProCard>
             <ProCard
                 title="关键字使用差异图"
+                subTitle={`ChatGPT 更有可能利用较新的语言特性。例如，在 Java 中，它偏爱 foreach 循环，在 C/C++ 中，它经常使用 auto 关键字进行类型推理`}
                 split="vertical"
             >
                 <ProCard colSpan="50%">
@@ -63,6 +113,7 @@ const AiFeature = () => {
             </ProCard>
             <ProCard
                 title="命名习惯差异图"
+                subTitle="ChatGPT 强调可读性，使用有意义的单词作为标识符，而人类可能使用缩写或含义模糊的字母"
                 split="vertical"
             >
                 <ProCard colSpan="50%">
@@ -73,21 +124,6 @@ const AiFeature = () => {
                 <ProCard colSpan="50%">
                     <Image
                         src={require("@/assets/Ai/Java_name_50_jx.png")}
-                    />
-                </ProCard>
-            </ProCard>
-            <ProCard
-                title="消融实验图"
-                split="vertical"
-            >
-                <ProCard colSpan="50%">
-                    <Image
-                        src={require("@/assets/Ai/Cpp消融实验新.png")}
-                    />
-                </ProCard>
-                <ProCard colSpan="50%">
-                    <Image
-                        src={require("@/assets/Ai/Java消融实验新.png")}
                     />
                 </ProCard>
             </ProCard>
