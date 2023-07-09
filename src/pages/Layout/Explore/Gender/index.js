@@ -40,6 +40,31 @@ const GenderFeature = () => {
                     <Table.Column title="女性特征" dataIndex="female" key="female"></Table.Column>
                 </Table>
             </ProCard>
+            <ProCard
+                title="单词使用分布图"
+                layout="center"
+            >
+                <Image
+                    src={require("@/assets/Gender/wordRate.jpg")}
+                />
+            </ProCard>
+            <ProCard
+                title="词法特征分布图"
+                layout="center"
+            >
+                <Image
+                    src={require("@/assets/Gender/lexicalFeature.jpg")}
+                />
+            </ProCard>
+            <ProCard
+                title="布局特征分布图"
+                layout="center"
+            >
+                <Image
+                    src={require("@/assets/Gender/layoutFeature.jpg")}
+                />
+            </ProCard>
+
         </ProCard>
     )
 }
