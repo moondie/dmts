@@ -12,6 +12,7 @@ import { useSearchParams } from "react-router-dom/dist";
 import { QuestionCircleOutlined } from "@ant-design/icons"
 import { Tooltip } from "antd";
 import { Space } from "antd";
+import { observer } from "mobx-react-lite";
 
 const { Column } = Table
 
@@ -117,4 +118,4 @@ const ResultTrace = () => {
     );
 }
 
-export default ResultTrace
+export default observer(ResultTrace)

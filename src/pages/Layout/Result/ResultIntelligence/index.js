@@ -13,6 +13,7 @@ import G6 from "@antv/g6";
 import { Divider } from "antd";
 
 import "./index.css"
+import { observer } from "mobx-react-lite";
 
 const ResultIntelligenceGraph = ({ task_id }) => {
     const { resultStore } = useStore()
@@ -168,4 +169,4 @@ const ResultIntelligence = () => {
     )
 }
 
-export default ResultIntelligence
+export default observer(ResultIntelligence)
