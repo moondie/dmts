@@ -2,6 +2,7 @@ import React from "react";
 import ChartStore from "@/store/chart.Store";
 import TaskStore from "./task.Store";
 import ResultStore from "./result.Store";
+import ExploreStore from "./explore.Store";
 
 class RootStore {
     // 组合模块
@@ -9,6 +10,7 @@ class RootStore {
         this.chartStore = new ChartStore();
         this.taskStore = new TaskStore();
         this.resultStore = new ResultStore();
+        this.exploreStore = new ExploreStore()
     }
 }
 
