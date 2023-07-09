@@ -4,24 +4,143 @@
  * 毕业论文实验图
  */
 
-import DocViewer from "@cyntler/react-doc-viewer";
-import { DocViewerRenderers } from "@cyntler/react-doc-viewer";
 import React from "react";
+import { ProCard } from "@ant-design/pro-components"
+import { Image } from 'antd';
 
 const BinaryToSourceFeature = () => {
-    const docs = [
-        { uri: require("@/assets/binary.pdf") }, // Local File
-    ]
     return (
-        < DocViewer documents={docs} pluginRenderers={DocViewerRenderers} theme={{
-            primary: "#5296d8",
-            secondary: "#ffffff",
-            tertiary: "#5296d899",
-            textPrimary: "#ffffff",
-            textSecondary: "#5296d8",
-            textTertiary: "#00000099",
-            disableThemeScrollbar: false,
-        }}></DocViewer >
+        <ProCard
+            split="horizontal"
+            headerBordered
+            bordered
+        >
+            <ProCard layout="center">
+                <Image
+                    src={require("@/assets/Binary/1.png")}
+                />
+            </ProCard>
+            <ProCard layout="center">
+                <Image
+                    src={require("@/assets/Binary/2.png")}
+                />
+            </ProCard>
+            <ProCard layout="center">
+                <Image
+                    src={require("@/assets/Binary/3.png")}
+                />
+            </ProCard>
+            <ProCard layout="center">
+                <Image
+                    src={require("@/assets/Binary/4.png")}
+                />
+            </ProCard>
+            <ProCard layout="center">
+                <Image
+                    src={require("@/assets/Binary/5.png")}
+                />
+            </ProCard>
+            <ProCard layout="center">
+                <Image
+                    src={require("@/assets/Binary/6.png")}
+                />
+            </ProCard>
+            <ProCard layout="center">
+                <Image
+                    src={require("@/assets/Binary/7.png")}
+                />
+            </ProCard>
+            <ProCard layout="center">
+                <Image
+                    src={require("@/assets/Binary/8.png")}
+                />
+            </ProCard>
+            <ProCard layout="center">
+                <Image
+                    src={require("@/assets/Binary/9.png")}
+                />
+            </ProCard>
+            <ProCard layout="center">
+                <Image
+                    src={require("@/assets/Binary/10.png")}
+                />
+            </ProCard>
+            <ProCard layout="center">
+                <Image
+                    src={require("@/assets/Binary/11.png")}
+                />
+            </ProCard>
+            <ProCard layout="center">
+                <Image
+                    src={require("@/assets/Binary/12.png")}
+                />
+            </ProCard>
+            <ProCard layout="center">
+                <Image
+                    src={require("@/assets/Binary/13.png")}
+                />
+            </ProCard>
+            <ProCard layout="center">
+                <Image
+                    src={require("@/assets/Binary/14.png")}
+                />
+            </ProCard>
+            <ProCard layout="center">
+                <Image
+                    src={require("@/assets/Binary/15.png")}
+                />
+            </ProCard>
+            <ProCard layout="center">
+                <Image
+                    src={require("@/assets/Binary/16.png")}
+                />
+            </ProCard>
+            <ProCard layout="center">
+                <Image
+                    src={require("@/assets/Binary/17.png")}
+                />
+            </ProCard>
+            <ProCard layout="center">
+                <Image
+                    src={require("@/assets/Binary/18.png")}
+                />
+            </ProCard>
+            <ProCard layout="center">
+                <Image
+                    src={require("@/assets/Binary/19.png")}
+                />
+            </ProCard>
+            <ProCard layout="center">
+                <Image
+                    src={require("@/assets/Binary/20.png")}
+                />
+            </ProCard>
+            <ProCard layout="center">
+                <Image
+                    src={require("@/assets/Binary/21.png")}
+                />
+            </ProCard>
+            <ProCard layout="center">
+                <Image
+                    src={require("@/assets/Binary/22.png")}
+                />
+            </ProCard>
+            <ProCard layout="center">
+                <Image
+                    src={require("@/assets/Binary/23.png")}
+                />
+            </ProCard>
+            <ProCard layout="center">
+                <Image
+                    src={require("@/assets/Binary/24.png")}
+                />
+            </ProCard>
+            <ProCard layout="center">
+                <Image
+                    src={require("@/assets/Binary/25.png")}
+                />
+            </ProCard>
+        </ProCard>
     )
 }
 
