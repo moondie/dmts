@@ -65,6 +65,17 @@ const getLanguageColor = (language) => {
     return "#CDAA7D"
 }
 
+const getStatusInfo = (status) => {
+    if (status in status_style) {
+        return status_style[status]
+    }
+    return {
+        color: '#808080',
+        description: '未知',
+        action: '未知',
+    }
+}
+
 const TaskContentActionsRender = observer(({ id }) => {
     const { taskStore } = useStore()
     const navigate = useNavigate()
@@ -182,11 +193,11 @@ const TaskContent = observer(() => {
                                             width: 8,
                                             height: 8,
                                             borderRadius: '50%',
-                                            backgroundColor: status_style[description.status].color,
+                                            backgroundColor: getStatusInfo[description.status].color,
                                             marginInlineEnd: 8,
                                         }}
                                     />
-                                        {status_style[description.status].description}
+                                        {getStatusInfo[description.status].description}
                                     </div>
                                 </div>
                             ),
