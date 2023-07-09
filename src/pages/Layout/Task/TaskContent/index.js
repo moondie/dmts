@@ -193,11 +193,11 @@ const TaskContent = observer(() => {
                                             width: 8,
                                             height: 8,
                                             borderRadius: '50%',
-                                            backgroundColor: getStatusInfo[description.status].color,
+                                            backgroundColor: getStatusInfo(description.status).color,
                                             marginInlineEnd: 8,
                                         }}
                                     />
-                                        {getStatusInfo[description.status].description}
+                                        {getStatusInfo(description.status).description}
                                     </div>
                                 </div>
                             ),
