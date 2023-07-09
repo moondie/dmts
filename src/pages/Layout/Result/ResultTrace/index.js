@@ -13,6 +13,7 @@ import { QuestionCircleOutlined } from "@ant-design/icons"
 import { Tooltip } from "antd";
 import { Space } from "antd";
 import { observer } from "mobx-react-lite";
+import "./index.scss"
 
 const { Column } = Table
 
@@ -47,6 +48,7 @@ const ResultTrace = () => {
                 <Table
                     dataSource={traceResult}
                     width="12"
+                    rowClassName={(record, index) => (index % 2 === 1 ? "even" : "odd")}
                     showSorterTooltip={false}
                 >
                     <Column
