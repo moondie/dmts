@@ -128,12 +128,12 @@ class TaskStore {
      * @description 获取成功运行且有效的任务列表
      * @returns {Array}
      */
-    getSuccessTaskListInfo() {
-        if (this.page_type === "trace") {
+    getSuccessTaskListInfo(pageType) {
+        if (pageType === "trace") {
             return this.task_list_info.filter((task_info) => {
                 return task_info.is_effective === true && task_info.task_description.status === "success"
             })
-        } else if (this.page_type === "intelligence") {
+        } else if (pageType === "intelligence") {
             return this.intelligence_task_list
         } else {
             return []
@@ -202,12 +202,6 @@ class TaskStore {
 
     getIntelligenceTaskListInfo = () => {
         return this.intelligence_task_list
-    }
-
-    page_type = "trace"
-
-    setPageType = (page_type) => {
-        this.page_type = page_type
     }
 
     constructor() {

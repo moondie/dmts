@@ -5,18 +5,13 @@ import React, { useEffect } from 'react';
 import { Form, Select } from "antd";
 import { useSearchParams } from "react-router-dom";
 import { useStore } from '@/store';
-import { useNavigate } from 'react-router-dom/dist';
-import { useLocation } from 'react-router-dom/dist';
 
-const ResultHeader = () => {
+const ResultHeader = ({ pageType }) => {
     const { taskStore } = useStore()
     const [params, setParams] = useSearchParams()
     let task_id = params.get("task_id")
     if (!task_id) task_id = "请选择扫描任务";
-    // const navigate = useNavigate()
-    // const { pathname } = useLocation()
     const onPlanChange = (id) => {
-        // navigate(pathname + '?task_id=' + id)
         setParams({
             task_id: id
         })
@@ -44,7 +39,7 @@ const ResultHeader = () => {
                 <Form.Item label="选择扫描任务：" name="task">
                     <Select onChange={onPlanChange}>
                         {
-                            taskStore.getSuccessTaskListInfo().map((task) => (
+                            taskStore.getSuccessTaskListInfo(pageType).map((task) => (
                                 <Select.Option key={task.id} value={task.id}>{task.name}</Select.Option>
                             ))
                         }

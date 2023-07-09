@@ -18,11 +18,10 @@ import "./index.scss"
 const { Column } = Table
 
 const ResultTrace = () => {
-    const { resultStore, taskStore } = useStore()
+    const { resultStore } = useStore()
     const [traceResult, setTraceResult] = useState([])
     const [params] = useSearchParams()
     useEffect(() => {
-        taskStore.setPageType("trace")
         let task_id = params.get("task_id")
         if (!task_id) {
             return
@@ -36,7 +35,7 @@ const ResultTrace = () => {
     }, [params])
     return (
         <>
-            <ResultHeader></ResultHeader>
+            <ResultHeader pageType={"trace"}></ResultHeader>
             <div style={{
                 margin: 8,
                 padding: 8,

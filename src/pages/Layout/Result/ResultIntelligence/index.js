@@ -4,7 +4,7 @@
  * 以力导向图的形式展示代码归属结果和情报分析结果
  */
 
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import ReactDOM from 'react-dom';
 import ResultHeader from "../ResultHeader";
 import { useStore } from "@/store";
@@ -144,16 +144,12 @@ const ResultIntelligenceGraphContainer = ({ task_id }) => {
 }
 
 const ResultIntelligence = () => {
-    const { taskStore } = useStore()
     const [params] = useSearchParams()
     let task_id = params.get("task_id")
     if (!task_id) task_id = "请选择扫描任务";
-    useEffect(() => {
-        taskStore.setPageType("intelligence")
-    }, [])
     return (
         <>
-            <ResultHeader></ResultHeader>
+            <ResultHeader pageType={"intelligence"}></ResultHeader>
             <div style={{
                 margin: 8,
                 padding: 8,
