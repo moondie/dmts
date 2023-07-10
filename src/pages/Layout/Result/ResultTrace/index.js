@@ -14,11 +14,12 @@ import { Tooltip } from "antd";
 import { Space } from "antd";
 import { observer } from "mobx-react-lite";
 import "./index.scss"
+import TaskContentList from "@/pages/Layout/Task/TaskContent/TaskContentList";
 
 const { Column } = Table
 
 const ResultTrace = () => {
-    const { resultStore } = useStore()
+    const { resultStore, taskStore } = useStore()
     const [traceResult, setTraceResult] = useState([])
     const [params] = useSearchParams()
     useEffect(() => {
@@ -35,6 +36,7 @@ const ResultTrace = () => {
     }, [params])
     return (
         <>
+
             <ResultHeader pageType={"trace"}></ResultHeader>
             <div style={{
                 margin: 8,
@@ -43,6 +45,7 @@ const ResultTrace = () => {
                 borderRadius: 16,
                 overflow: "auto",
             }}>
+                <TaskContentList data={taskStore.getTaskListInfo().filter((taskInfo) => (taskInfo.id === params.get("task_id")))}></TaskContentList>
                 <Divider>代码归属分析结果表</Divider>
                 <Table
                     dataSource={traceResult}
