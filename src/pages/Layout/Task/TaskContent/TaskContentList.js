@@ -83,7 +83,11 @@ const TaskContentActionsRender = ({ id }) => {
         navigate("/result/trace?task_id=" + id.props.record.id)
     }
     const onDeleteConfirm = (id) => {
-        taskStore.deleteTask(id)
+        taskStore.deleteTask({
+            taskId: id
+        })
+        // 刷新网页
+        window.location.reload();
     }
     const isSuccess = (status) => {
         if (status === "success") {

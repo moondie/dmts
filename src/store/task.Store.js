@@ -158,16 +158,10 @@ class TaskStore {
 
     /**
      * @description 根据 id 删除任务
-     * @param {number} task_id 
+     * @param {object} task_info 
      */
-    deleteTask(task_id) {
-        for (let i in this.task_list_info) {
-            if (this.task_list_info[i].id !== task_id) {
-                continue
-            }
-            this.task_list_info[i].is_effective = false
-            break
-        }
+    deleteTask = async (task_info) => {
+        return await http.post("taskmanage/delete", task_info)
     }
 
     getTaskList = async () => {
