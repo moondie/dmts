@@ -4,7 +4,7 @@ import { Space, Tag } from "antd";
 import CountUp from "react-countup";
 import moment from "moment";
 import { AgeChart, LocationChart } from "@/pages/Layout/Main/MainChart";
-import { DemoLine } from "@/pages/Layout/Main/MainGraph";
+import { TendencyGraph } from "@/pages/Layout/Main/MainGraph";
 import { useStore } from "@/store";
 
 const { Statistic } = StatisticCard;
@@ -175,7 +175,7 @@ const MainContent = () => {
                 </ProCard>
             </ProCard>
             <ProCard title="不同语言恶意代码仓库特征随时间的变化趋势图">
-                <DemoLine />
+                <TendencyGraph />
             </ProCard>
             <ProCard split="vertical">
                 <ProCard colSpan="50%">

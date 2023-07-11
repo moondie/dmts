@@ -29,7 +29,7 @@ const TaskPattern = () => {
 
     const UploadFile = () => {
         const props = {
-            name: "task_context",
+            name: "taskContent",
             multiple: true,
             action: `${BASE_URL}/cgi/upload_cgi`,
             // withCredentials: true,
@@ -70,17 +70,17 @@ const TaskPattern = () => {
                 return (
                     <Form.Item
                         label=""
-                        name="task_context"
+                        name="taskContent"
                         style={{ marginBottom: 0 }}
                     >
-                        <Input name='task_context' addonBefore={selectBefore} placeHolder={'请输入待扫描仓库链接，如:https://github.com/charlesSeek/weka-example'} />
+                        <Input name='taskContent' addonBefore={selectBefore} placeHolder={'请输入待扫描仓库链接，如:https://github.com/charlesSeek/weka-example'} />
                     </Form.Item>
                 )
             case "file_upload":
                 return (
                     <Form.Item
                         label=""
-                        name="task_context"
+                        name="taskContent"
                         style={{ marginBottom: 0 }}
                     >
                         <UploadFile></UploadFile>
@@ -103,7 +103,7 @@ const TaskPattern = () => {
                 <CheckCard title="URL 扫描模式" description="给定 ULR,将自动从该 URL 爬取源代码并分析.目前支持 GitHub, Gitee, Gitlab" value="url" />
                 <CheckCard title="文件上传模式" description="从本地上传源代码文件并分析.目前支持 .zip, .7z, .rar 压缩包" value="file_upload" />
             </CheckCard.Group>
-            <InputContext taskPattern={taskPattern} name="task_context"></InputContext>
+            <InputContext taskPattern={taskPattern} name="taskContent"></InputContext>
         </>
     )
 }
@@ -145,12 +145,11 @@ const TaskCreate = () => {
     const { taskStore } = useStore()
     const navigate = useNavigate();
     const onFinish = (value) => {
-        console.log(value)
         taskStore.addTask({
-            taskName: value.task_name,
+            taskName: value.taskName,
             taskType: "url",
-            taskURL: `https://${value.task_context}`,
-            taskMode: value.task_type
+            taskURL: `https://${value.taskContent}`,
+            taskMode: value.taskType
         })
         navigate('/task');
     }
@@ -184,7 +183,7 @@ const TaskCreate = () => {
 
                     <Form.Item
                         label="扫描任务名称："
-                        name="task_name"
+                        name="taskName"
                         rules={[
                             {
                                 required: true,
@@ -198,7 +197,7 @@ const TaskCreate = () => {
                     {/* 虚假的校验 */}
                     <Form.Item
                         label="扫描模式："
-                        name="task_pattern"
+                        name="taskPattern"
                         valuePropName="taskPattern"
                         required
                     >
@@ -213,7 +212,7 @@ const TaskCreate = () => {
                         <TokenPattern></TokenPattern>
                     </Form.Item>
 
-                    <Form.Item label="任务模式：" name="task_type">
+                    <Form.Item label="任务模式：" name="taskType">
                         <Radio.Group>
                             <Radio.Button value="traceability">代码溯源分析</Radio.Button>
                             <Radio.Button value="intelligence">代码情报分析</Radio.Button>

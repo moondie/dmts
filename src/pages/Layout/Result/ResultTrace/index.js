@@ -23,11 +23,11 @@ const ResultTrace = () => {
     const [traceResult, setTraceResult] = useState([])
     const [params] = useSearchParams()
     useEffect(() => {
-        let task_id = params.get("task_id")
-        if (!task_id) {
+        let taskID = params.get("task_id")
+        if (!taskID) {
             return
         }
-        resultStore.getTaskResultByTaskID(task_id).then((res) => {
+        resultStore.getTaskResultByTaskID(taskID).then((res) => {
             setTraceResult(res.data.associated_repo_objs)
         }).catch((err) => {
             alert("获取结果失败")

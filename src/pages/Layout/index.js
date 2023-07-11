@@ -1,8 +1,8 @@
 import './index.scss'
 import { Routes, Route } from 'react-router-dom'
 import React, { lazy } from 'react'
-import EWDSHeader from "@/pages/Layout/EWDSHeader";
-import EWDSSider from "@/pages/Layout/EWDSSider";
+import DMTSHeader from "@/pages/Layout/DMTSHeader";
+import DMTSSider from "@/pages/Layout/DMTSSider";
 import { Layout } from 'antd'
 
 const { Content } = Layout
@@ -14,12 +14,12 @@ const Result = lazy(() => import('./Result'))
 const Explore = lazy(() => import('./Explore'))
 
 
-const EWDSLayout = () => {
+const DMTSLayout = () => {
     return (
         <Layout>
-            <EWDSHeader />
+            <DMTSHeader />
             <Layout>
-                <EWDSSider />
+                <DMTSSider />
                 <Layout style={{ padding: '0', }}>
                     <Content style={{ padding: 24, margin: 0, overflowY: 'auto', }} id="layout-content">
                         <Routes>
@@ -36,5 +36,5 @@ const EWDSLayout = () => {
         </Layout>
     )
 }
-export default EWDSLayout
+export default DMTSLayout
 

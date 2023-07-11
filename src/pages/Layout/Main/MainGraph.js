@@ -5,7 +5,7 @@ import { Line } from '@ant-design/plots';
 import { Radio } from 'antd';
 
 
-const DemoLine = observer(() => {
+const TendencyGraph = observer(() => {
     const { chartStore } = useStore()
     const [graphOrigin, setGraphOrigin] = useState('star');
     const config = {
@@ -42,4 +42,4 @@ const DemoLine = observer(() => {
 }
 )
 
-export { DemoLine }
+export { TendencyGraph }

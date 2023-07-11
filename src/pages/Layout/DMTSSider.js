@@ -6,7 +6,7 @@ import React from "react";
 
 const { Sider } = Layout
 
-const EWDSSider = () => {
+const DMTSSider = () => {
     const { pathname } = useLocation()
     const getItem = (label, key, icon, children) => {
         return {
@@ -68,4 +68,4 @@ const EWDSSider = () => {
         </Sider>
     )
 }
-export default observer(EWDSSider)
+export default observer(DMTSSider)

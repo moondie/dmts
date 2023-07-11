@@ -15,7 +15,7 @@ import { Divider } from "antd";
 import "./index.css"
 import { observer } from "mobx-react-lite";
 
-const ResultIntelligenceGraph = ({ task_id }) => {
+const ResultIntelligenceGraph = ({ taskID }) => {
     const { resultStore } = useStore()
     const ref = useRef(null)
     let graph = null
@@ -32,11 +32,11 @@ const ResultIntelligenceGraph = ({ task_id }) => {
                 offsetX: 10,
                 offsetY: 10,
                 shouldBegin(e) {
-                    return e.item.getModel().social_attributes.length !== 0
+                    return e.item.getModel().socialAttributes.length !== 0
                 },
                 getContent(e) {
                     let div = document.createElement('div');
-                    e.item.getModel().social_attributes.forEach((item) => {
+                    e.item.getModel().socialAttributes.forEach((item) => {
                         let p = document.createElement("p")
                         let a = document.createElement("a")
                         a.setAttribute("href", item.url)
@@ -98,7 +98,7 @@ const ResultIntelligenceGraph = ({ task_id }) => {
                 },
                 plugins: [menu]
             })
-            graph.data(resultStore.getIntelligenceResult(task_id))
+            graph.data(resultStore.getIntelligenceResult(taskID))
             graph.render()
 
             graph.on('node:dragstart', function (e) {
@@ -122,7 +122,7 @@ const ResultIntelligenceGraph = ({ task_id }) => {
                     graph.changeSize(container.scrollWidth, container.scrollHeight);
                 };
         }
-    }, [task_id])
+    }, [taskID])
 
     return (
         <div ref={ref}></div>
@@ -131,22 +131,22 @@ const ResultIntelligenceGraph = ({ task_id }) => {
 }
 
 // 懒加载力导向图
-const ResultIntelligenceGraphContainer = ({ task_id }) => {
-    if (task_id === "请选择扫描任务") {
+const ResultIntelligenceGraphContainer = ({ taskID }) => {
+    if (taskID === "请选择扫描任务") {
         return (
             <></>
         )
     } else {
         return (
-            <ResultIntelligenceGraph task_id={task_id}></ResultIntelligenceGraph>
+            <ResultIntelligenceGraph taskID={taskID}></ResultIntelligenceGraph>
         )
     }
 }
 
 const ResultIntelligence = () => {
     const [params] = useSearchParams()
-    let task_id = params.get("task_id")
-    if (!task_id) task_id = "请选择扫描任务";
+    let taskID = params.get("task_id")
+    if (!taskID) taskID = "请选择扫描任务";
     return (
         <>
             <ResultHeader pageType={"intelligence"}></ResultHeader>
@@ -159,7 +159,7 @@ const ResultIntelligence = () => {
             }}
             >
                 <Divider>代码情报分析结果图</Divider>
-                <ResultIntelligenceGraphContainer task_id={task_id}></ResultIntelligenceGraphContainer>
+                <ResultIntelligenceGraphContainer taskID={taskID}></ResultIntelligenceGraphContainer>
             </div>
         </>
     )

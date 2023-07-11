@@ -5,8 +5,11 @@
 ## 实现技术
 
 前端框架：React
+
 状态管理：Mobx
+
 图标设计：Echart, Antd 和 Antv G6
+
 
 ## 开发环境配置
 

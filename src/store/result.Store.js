@@ -11,7 +11,7 @@ class ResultStore {
     /**
      * @description 代码归属测试数据
      */
-    trace_result_list = [
+    traceResultList = [
         {
             id: 1,
             name: "测试 1",
@@ -99,156 +99,9 @@ class ResultStore {
     ]
 
     /**
-     * @description 情报分析数据
-     * 为了实现快速索引，将 name 作为 key 值
+     * @description 代码情报分析测试数据
      */
-    // intelligence_result_list = {
-    //     "github.com/NotDSF/ServerSearch": {
-    //         url: "https://github.com/NotDSF/ServerSearch",
-    //         author: "dsf",
-    //         social_attributes: [
-    //             {
-    //                 key: "独立合作",
-    //                 value: "合作",
-    //                 url: [
-    //                     "https://github.com/NotDSF"
-    //                 ]
-    //             }
-    //         ]
-    //     },
-    //     "github.com/tedaditya/healthcare-kiosk": {
-    //         url: "https://github.com/tedaditya/healthcare-kiosk",
-    //         author: "Alvian Tedy Aditya",
-    //         social_attributes: [
-    //             {
-    //                 key: "经济地位",
-    //                 value: "中",
-    //                 url: [
-    //                     "https://twitter.com/tedaditya",
-    //                 ]
-    //             }
-    //         ]
-    //     },
-    //     "github.com/untodeath/main": {
-    //         url: "https://github.com/untodeath/main",
-    //         author: "Unto Death",
-    //         social_attributes: [
-    //             {
-    //                 key: "宗教背景",
-    //                 value: "基督教",
-    //                 url: [
-    //                     "https://github.com/untodeath"
-    //                 ]
-    //             }
-    //         ]
-    //     },
-    //     "github.com/chfrank-cgn/Rancher": {
-    //         url: "https://github.com/chfrank-cgn/Rancher",
-    //         author: "Christian Frank",
-    //         social_attributes: [
-    //             {
-    //                 key: "宗教背景",
-    //                 value: "佛教",
-    //                 url: [
-    //                     "https://github.com/chfrank-cgn"
-    //                 ]
-    //             }
-    //         ]
-    //     },
-    //     "github.com/Jokas-null/Windows_RootKit": {
-    //         url: "https://github.com/Jokas-null/Windows_RootKit",
-    //         author: "Revathy VENUGOPAL",
-    //         social_attributes: [
-    //             {
-    //                 key: "性别",
-    //                 value: "女性",
-    //                 url: [
-    //                     "https://avatars.githubusercontent.com/u/74172574?v=4",
-    //                 ]
-    //             }
-    //         ]
-    //     },
-    //     "github.com/WTFAcademy/ETHBeijing": {
-    //         url: "https://github.com/WTFAcademy/ETHBeijing",
-    //         author: "WTF.Academy",
-    //         social_attributes: [
-    //             {
-    //                 key: "地域",
-    //                 value: "北京",
-    //                 url: [
-    //                     "https://github.com/WTFAcademy/ETHBeijing#place",
-    //                 ]
-    //             }
-    //         ]
-    //     },
-    //     "github.com/LiteSec/OneOS-X": {
-    //         url: "https://github.com/LiteSec/OneOS-X",
-    //         author: "LiteSec",
-    //         social_attributes: [
-    //             {
-    //                 key: "社交程度",
-    //                 value: "高",
-    //                 url: [
-    //                     "https://github.com/LiteSec/OneOS-X",
-    //                 ]
-    //             }
-    //         ]
-    //     },
-    //     "github.com/professorisidro/IntegracaoBD": {
-    //         url: "https://github.com/professorisidro/IntegracaoBD",
-    //         author: "Professor Isidro",
-    //         social_attributes: [
-    //             {
-    //                 key: "社会地位",
-    //                 value: "高",
-    //                 url: [
-    //                     "https://github.com/professorisidro?tab=achievements",
-    //                 ]
-    //             }
-    //         ]
-    //     },
-    //     "github.com/doctorn/micro-mitten": {
-    //         url: "https://github.com/doctorn/micro-mitten",
-    //         author: "Nathan Corbyn",
-    //         social_attributes: [
-    //             {
-    //                 key: "职业特征",
-    //                 value: "学生",
-    //                 url: [
-    //                     "https://nathancorbyn.com/",
-    //                 ]
-    //             }
-    //         ]
-    //     },
-    //     "github.com/Jiab77/libvirt-web": {
-    //         url: "https://github.com/Jiab77/libvirt-web",
-    //         author: "Doctor Who",
-    //         social_attributes: [
-    //             {
-    //                 key: "语言特征",
-    //                 value: "乐观",
-    //                 url: [
-    //                     "https://twitter.com/Jiab77"
-    //                 ]
-    //             }
-    //         ]
-    //     },
-    //     "github.com/hartescout/ThreatHunt---Personal": {
-    //         url: "https://github.com/hartescout/ThreatHunt---Personal",
-    //         author: "ark",
-    //         social_attributes: [
-    //             {
-    //                 key: "大五人格",
-    //                 value: "开放性,情绪性",
-    //                 url: [
-    //                     "https://github.com/hartescout",
-    //                 ]
-    //             }
-    //         ]
-    //     },
-    // }
-
-    intelligence_result_list = [
+    intelligenceResultList = [
         {
             id: "1",
             name: "身份追溯 1",
@@ -256,7 +109,7 @@ class ResultStore {
                 {
                     id: "github.com/0x00-0x00/ctf_tools",
                     label: "github.com/0x00-0x00/ctf_tools",
-                    social_attributes: [
+                    socialAttributes: [
                         {
                             key: "性别",
                             value: "男",
@@ -281,7 +134,7 @@ class ResultStore {
                 {
                     id: "github.com/nurupo/ProjectTox-Qt-GUI",
                     label: "github.com/nurupo/ProjectTox-Qt-GUI",
-                    social_attributes: [
+                    socialAttributes: [
                         {
                             key: "地域",
                             value: "努鲁波",
@@ -292,7 +145,7 @@ class ResultStore {
                 {
                     id: "github.com/samyk/frisky",
                     label: "github.com/samyk/frisky",
-                    social_attributes: [
+                    socialAttributes: [
                         {
                             key: "地域",
                             value: "意大利",
@@ -303,7 +156,7 @@ class ResultStore {
                 {
                     id: "github.com/nurupo/nfk-lobby",
                     label: "github.com/nurupo/nfk-lobby",
-                    social_attributes: [
+                    socialAttributes: [
                         {
                             key: "地域",
                             value: "努鲁波",
@@ -341,7 +194,7 @@ class ResultStore {
                 {
                     id: "github.com/Rapptz/Gears",
                     label: "github.com/Rapptz/Gears",
-                    social_attributes: [
+                    socialAttributes: [
                         {
                             key: "兴趣爱好",
                             value: "游戏和安全",
@@ -371,7 +224,7 @@ class ResultStore {
                 {
                     id: "github.com/W4RH4WK/Raygun",
                     label: "github.com/W4RH4WK/Raygun",
-                    social_attributes: [
+                    socialAttributes: [
                         {
                             key: "兴趣爱好",
                             value: "游戏和安全",
@@ -382,7 +235,7 @@ class ResultStore {
                 {
                     id: "github.com/moloch--/Unzpaq-g",
                     label: "github.com/moloch--/Unzpaq-g",
-                    social_attributes: [
+                    socialAttributes: [
                         {
                             key: "职业特征",
                             value: "红客",
@@ -393,7 +246,7 @@ class ResultStore {
                 {
                     id: "github.com/jmhobbs/libvcvideo",
                     label: "github.com/jmhobbs/libvcvideo",
-                    social_attributes: [
+                    socialAttributes: [
                         {
                             key: "社交程度",
                             value: "高",
@@ -404,17 +257,17 @@ class ResultStore {
                 {
                     id: "github.com/5l1v3r1/ESP01_DHT11_MQTT_Publisher",
                     label: "github.com/5l1v3r1/ESP01_DHT11_MQTT_Publisher",
-                    social_attributes: []
+                    socialAttributes: []
                 },
                 {
                     id: "github.com/nurupo/nfk-lobby",
                     label: "github.com/nurupo/nfk-lobby",
-                    social_attributes: []
+                    socialAttributes: []
                 },
                 {
                     id: "github.com/Rapptz/jsonpp",
                     label: "github.com/Rapptz/jsonpp",
-                    social_attributes: []
+                    socialAttributes: []
                 }
             ],
             edges: [
@@ -454,43 +307,38 @@ class ResultStore {
      * @param {Number} task_id 
      * @returns 
      */
-    getTaskResultByTaskID = async (task_id) => {
-        console.log(task_id)
-        return await http.post("/taskmanage/getDetail", { taskId: task_id })
+    getTaskResultByTaskID = async (taskID) => {
+        return await http.post("/taskmanage/getDetail", { taskId: taskID })
     }
 
     /**
      * @description 根据任务 id 来获取情报分析结果, 目前结果写死
-     * @param {Number} task_id 
+     * @param {Number} taskID 
      * @returns {Object}
      */
-    getIntelligenceResult = (task_id) => {
-        console.log(task_id)
+    getIntelligenceResult = (taskID) => {
         let rtn = {
             nodes: [],
             edges: []
         }
-        for (let i in this.intelligence_result_list) {
-            console.log("s ", this.intelligence_result_list[i].id)
-            if (this.intelligence_result_list[i].id === task_id) {
-                console.log(this.intelligence_result_list[i].edges)
-                rtn.edges = this.intelligence_result_list[i].edges
-                rtn.nodes = this.intelligence_result_list[i].nodes
+        for (let i in this.intelligenceResultList) {
+            if (this.intelligenceResultList[i].id === taskID) {
+                rtn.edges = this.intelligenceResultList[i].edges
+                rtn.nodes = this.intelligenceResultList[i].nodes
                 break
             }
         }
-        console.log(rtn)
         return rtn
     }
 
     /**
      * @description 根据任务 id 获取仓库名
-     * @param {Number} task_id 
+     * @param {Number} taskID 
      */
-    getReposNameById(task_id) {
-        for (let i in this.trace_result_list) {
-            if (this.trace_result_list[i].id === task_id) {
-                return this.trace_result_list[i].repos_name
+    getReposNameById(taskID) {
+        for (let i in this.traceResultList) {
+            if (this.traceResultList[i].id === taskID) {
+                return this.traceResultList[i].repos_name
             }
         }
         return ""

@@ -7,7 +7,7 @@ import { observer } from "mobx-react-lite";
 import { PlusOutlined } from "@ant-design/icons";
 import { useStore } from '@/store';
 
-const status_style = {
+const statusStyle = {
     'success': {
         color: '#52c41a',
         description: '成功',
@@ -30,7 +30,7 @@ const status_style = {
     },
 }
 
-const language_color = {
+const languageColor = {
     "Python": {
         color: "#12aa9c"
     },
@@ -43,21 +43,21 @@ const language_color = {
     "Golang": {
         color: "#b34563"
     },
-    // "Shell": {
-    //     color: "#b99014"
-    // },
+    "Shell": {
+        color: "#b99014"
+    },
 }
 
 const getLanguageColor = (language) => {
-    if (language in language_color) {
-        return language_color[language].color
+    if (language in languageColor) {
+        return languageColor[language].color
     }
     return "#CDAA7D"
 }
 
 const getStatusInfo = (status) => {
-    if (status in status_style) {
-        return status_style[status]
+    if (status in statusStyle) {
+        return statusStyle[status]
     }
     return {
         color: '#808080',
@@ -96,13 +96,13 @@ const TaskContentActionsRender = ({ id }) => {
         return true
     }
     const record = id.props.record
-    const repos_info = record.repos_info === undefined ? [] : record.repos_info
+    const reposInfo = record.reposInfo === undefined ? [] : record.reposInfo
     return (
         <>
             <Button style={{ margin: 6 }} key="view" onClick={showModal}>
                 查看详情
             </Button>
-            <Button style={{ margin: 6 }} key="data" type='primary' onClick={onLookData} ghost disabled={isSuccess(record.task_description.status)}>
+            <Button style={{ margin: 6 }} key="data" type='primary' onClick={onLookData} ghost disabled={isSuccess(record.taskDescription.status)}>
                 查看数据
             </Button >
             <Popconfirm placement="left" onConfirm={() => { onDeleteConfirm(record.id) }} okType='danger'
@@ -114,23 +114,19 @@ const TaskContentActionsRender = ({ id }) => {
 
             <Modal key="info" title={<h2>分析任务详情：</h2>} open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
                 <h3>扫描URL：</h3>
-                <p><a href={record.task_description.url}>{record.task_description.url}</a></p>
+                <p><a href={record.taskDescription.url}>{record.taskDescription.url}</a></p>
                 <h3>扫描类别：</h3>
                 <p>{record.name}</p>
                 <h3>代码语言种类：</h3>
                 {
-                    repos_info.languages.map((language) => (
+                    reposInfo.languages.map((language) => (
                         <p>{language}</p>
                     ))
                 }
-                {/* <h3>文件数量：</h3>
-                <p>{repos_info.file_number}</p> */}
                 <h3>文件大小</h3>
-                <p>{repos_info.size}</p>
+                <p>{reposInfo.size}</p>
                 <h3>运行时间：</h3>
-                <p>{repos_info.time}</p>
-                {/* <h3>文件Hash值：</h3>
-                <p>{repos_info.hash}</p> */}
+                <p>{reposInfo.time}</p>
             </Modal>
         </>
     )
@@ -160,7 +156,7 @@ const TaskContentList = ({ data }) => {
                     )
                 },
                 description: {
-                    dataIndex: 'task_description',
+                    dataIndex: 'taskDescription',
                     render: (description) => (
                         <div key="label" style={{ display: 'flex', justifyContent: 'flex-start' }}>
                             <div style={{ color: '#00000073', margin: 6 }}>创建时间：</div>
@@ -189,7 +185,6 @@ const TaskContentList = ({ data }) => {
                         <>
                             <TaskContentActionsRender id={id} />
                         </>
-
                     )
                 },
             }

@@ -9,8 +9,8 @@ import { useStore } from '@/store';
 const ResultHeader = ({ pageType }) => {
     const { taskStore } = useStore()
     const [params, setParams] = useSearchParams()
-    let task_id = params.get("task_id")
-    if (!task_id) task_id = "请选择扫描任务";
+    let taskID = params.get("task_id")
+    if (!taskID) taskID = "请选择扫描任务";
     const onPlanChange = (id) => {
         setParams({
             task_id: id
@@ -32,7 +32,7 @@ const ResultHeader = ({ pageType }) => {
             <Form
                 layout="horizontal"
                 initialValues={{
-                    task: task_id
+                    task: taskID
                 }}
                 colon={false}
             >
