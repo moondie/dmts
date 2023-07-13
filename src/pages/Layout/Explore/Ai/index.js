@@ -59,7 +59,7 @@ const AiFeature = () => {
                         <SyntaxHighlighter language="cpp" style={docco} showLineNumbers>
                             {exploreStore.aiData.codeStringForCommentAi}
                         </SyntaxHighlighter>
-                    </ProCard><ProCard title="人类">
+                    </ProCard><ProCard title="人类" subTitle={<a href='https://leetcode.cn/problems/powx-n/solution/powx-n-by-leetcode-solution/' target='_blank'>查看来源</a>}>
                         <SyntaxHighlighter language="cpp" style={docco} showLineNumbers>
                             {exploreStore.aiData.codeStringForCommentHuman}
                         </SyntaxHighlighter>
@@ -105,7 +105,7 @@ const AiFeature = () => {
                             {exploreStore.aiData.codeStringForNameAi}
                         </SyntaxHighlighter>
                     </ProCard>
-                    <ProCard title="人类">
+                    <ProCard title="人类" subTitle={<a href='https://leetcode.cn/problems/find-all-good-indices/solution/zhao-dao-suo-you-hao-xia-biao-by-leetcod-w5ar/' target='_blank'>查看来源</a>}>
                         <SyntaxHighlighter language="cpp" style={docco} showLineNumbers>
                             {exploreStore.aiData.codeStringForNameHuman}
                         </SyntaxHighlighter>
