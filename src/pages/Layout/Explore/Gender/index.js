@@ -75,19 +75,6 @@ const GenderFeature = () => {
                 </ProCard>
             </ProCard>
             <ProCard
-                title="关键字使用分布表"
-                subTitle="男性对于关键字的使用较多，女性相对较少"
-            >
-                <Table
-                    dataSource={exploreStore.genderData.keywordGenderData}
-                    rowClassName={(record, index) => (index % 2 === 1 ? "even" : "odd")}
-                >
-                    <Table.Column title="属性" dataIndex="property" key="property"></Table.Column>
-                    <Table.Column title="男性特征" dataIndex="male" key="male"></Table.Column>
-                    <Table.Column title="女性特征" dataIndex="female" key="female"></Table.Column>
-                </Table>
-            </ProCard>
-            <ProCard
                 title="各种代码特征分布表"
                 subTitle=""
             >
