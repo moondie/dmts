@@ -4,202 +4,181 @@ import { makeAutoObservable } from "mobx";
 class ExploreStore {
 
     genderData = {
-        keywordGenderData: [
+        ksData: [
             {
-                key: "number",
-                property: "数字",
-                male: "7(10进制)+2(16进制)",
-                female: "11(10进制)+1(16进制)"
-            },
-            {
-                key: "keyword",
-                property: "关键字",
-                male: "30",
-                female: "24"
-            },
-            {
-                key: "singleVariable",
-                property: "单字符变量",
-                male: "16",
-                female: "17"
-            },
-            {
-                key: "multiVariable",
-                property: "多字符变量",
-                male: "7",
-                female: "13"
-            },
-            {
-                key: "bool",
-                property: "布尔变量",
-                male: "2",
-                female: "2"
+                key: "data",
+                property: "数值",
+                statistics: "0.277",
+                freedom: "104",
+                significant: "0.001"
             }
         ],
-        allFeatureData: [
+        accuracyCPPData: [
             {
-                key: "localVariableRateAvg",
-                property: "局部变量频率平均值",
-                male: "0.0912",
-                female: "0.12"
+                key: "RandomForest",
+                model: "RandomForest",
+                male: "95",
+                female: "100",
+                total: "98"
             },
             {
-                key: "localVariableRateStd",
-                property: "局部变量标准差",
-                male: "0.0536",
-                female: "0.0525"
+                key: "KNN",
+                model: "KNN",
+                male: "76",
+                female: "90",
+                total: "83"
             },
             {
-                key: "keywordRateAvg",
-                property: "关键词频率平均值",
-                male: "0.17956",
-                female: "0.178"
+                key: "LogisticRegression",
+                model: "LogisticRegression",
+                male: "92",
+                female: "94",
+                total: "93"
             },
             {
-                key: "keywordRateStd",
-                property: "关键词频率标准差",
-                male: "0.07756",
-                female: "0.06"
+                key: "Kmeans",
+                model: "Kmeans",
+                male: "68",
+                female: "88",
+                total: "78"
             },
             {
-                key: "functionLengthAvg",
-                property: "函数长度平均值",
-                male: "0.027",
-                female: "0.03"
-            },
-            {
-                key: "functionLengthStd",
-                property: "函数长度标准差",
-                male: "0.024",
-                female: "0.025"
-            },
-            {
-                key: "controlCharRateAvg",
-                property: "控制字符平均值",
-                male: "20.105",
-                female: "20.8"
-            },
-            {
-                key: "controlCharRateStd",
-                property: "控制字符标准差",
-                male: "77.1303",
-                female: "17.756"
-            },
-            {
-                key: "englishLevelAvg",
-                property: "英语水平",
-                male: "4.6",
-                female: "5.0"
-            },
-            {
-                key: "ternaryRateAvg",
-                property: "三元运算符数量平均值",
-                male: "0.88",
-                female: "0.594"
-            },
-            {
-                key: "ternaryRateStd",
-                property: "三元运算符数量标准差",
-                male: "5.700",
-                female: "3.248"
-            },
-            {
-                key: "whiteSpaceRateAvg",
-                property: "空白字符数量平均值",
-                male: "0.184",
-                female: "0.193"
-            },
-            {
-                key: "whiteSpaceRateStd",
-                property: "空白字符数量标准差",
-                male: "0.089",
-                female: "0.103"
-            },
-            {
-                key: "OnLineBeforeOpenBranceNumberAvg",
-                property: "大括号换行数量平均值",
-                male: "0.168",
-                female: "0.095"
-            },
-            {
-                key: "OnLineBeforeOpenBranceNumberStd",
-                property: "大括号换行数量标准差",
-                male: "4.758",
-                female: "0.081"
-            },
-            {
-                key: "functionParamNumberAvg",
-                property: "参数数量平均值",
-                male: "0.168",
-                female: "0.096"
-            },
-            {
-                key: "functionParamNumberStd",
-                property: "参数数量标准差",
-                male: "4.758",
-                female: "0.081"
-            },
-            {
-                key: "blankLineNumberAvg",
-                property: "空白行数量平均值",
-                male: "0.152",
-                female: "0.144"
-            },
-            {
-                key: "blankLineNumberStd",
-                property: "空白行数量标准差",
-                male: "0.065",
-                female: "0.068"
-            },
-            {
-                key: "commentNumberAvg",
-                property: "注释频率平均值",
-                male: "28.375",
-                female: "25.158"
+                key: "AdaBoost",
+                model: "AdaBoost",
+                male: "90",
+                female: "98",
+                total: "95"
             }
         ],
-        codeStringForLayoutFeatureMale: `void check_access_denied(DWORD processID)
+        accuracyJavaData: [
+            {
+                key: "RandomForest",
+                model: "RandomForest",
+                male: "92",
+                female: "92",
+                total: "92"
+            },
+            {
+                key: "KNN",
+                model: "KNN",
+                male: "68",
+                female: "68",
+                total: "66"
+            },
+            {
+                key: "LogisticRegression",
+                model: "LogisticRegression",
+                male: "70",
+                female: "67",
+                total: "70"
+            },
+            {
+                key: "Kmeans",
+                model: "Kmeans",
+                male: "75",
+                female: "42",
+                total: "59"
+            },
+            {
+                key: "AdaBoost",
+                model: "AdaBoost",
+                male: "93",
+                female: "94",
+                total: "94"
+            }
+        ],
+        accuracyDifferentFeatureData: [
+            {
+                key: "C/C++",
+                data: "C/C++",
+                noLayout: "79.9",
+                noLexical: "78.6",
+                noSyntax: "81.2",
+            },
+            {
+                key: "Java",
+                data: "Java",
+                noLayout: "82.9",
+                noLexical: "84.2",
+                noSyntax: "86.2",
+            }
+        ],
+        codeStringForNestingDepthMale: `if (choice == '3')
+{
+    system("cls");
+    FILE *fp2 = fopen(".\\data\\log.txt", "a"); /* 写入操作日志 */
+    printf("/---补卡---/");
+    printf("请输入学号:");
+    scanf("%s", input_user);
+    if (inquire(input_user))
+    {
+        num = search(input_user); /* 学号位置 */
+        printf("是否补卡？ [Y/N]");
+        choice = _getch();
+        if (choice == 'y')
         {
-            HANDLE hProcess = OpenProcess(PROCESS_QUERY_LIMITED_INFORMATION, FALSE, processID);
-            if (!hProcess) {
-                std::cerr << "-> Access denied. Try to run the scanner as Administrator." << std::endl;
-                return;
-            }
-            process_integrity_t level = get_integrity_level(hProcess);
-            switch (level) {
-            case INTEGRITY_UNKNOWN:
-                std::cerr << "-> Access denied. Could not query the process token." << std::endl;
-                break;
-            case INTEGRITY_SYSTEM:
-                std::cerr << "-> Access denied. Could not access the system process." << std::endl;
-                break;
-            default:
-                break;
-            }
-            CloseHandle(hProcess);
-            hProcess = NULL;
-        }`,
-        codeStringForLayoutFeatureFemale: `int main() {
-            int t;cin>>t;
-            while(t--)
+            if (num == -1)
             {
-                ll a,b,k=3;
-                cin>>a>>b;
-                if(a%3==0)
-                    cout<<(b/k)-(a/k)+1>>endl;
-                else
-                    cout<<(b/k)-(a/k)>>endl;
+                printf("学号无效!");
+                break;
             }
-            return 0;
+            sup_card(input_user);
+            printf("补卡成功！");
+            ca = max_stu[num].first;
+            while (ca->next != NULL)
+                ca = ca->next;
+            fprintf(fp2, "学号:%s 姓名:%s 操作:补卡成功 卡号:3%d%d", 
+                input_user, max_stu[num].name, ca->se_num, ca->check_num);
         }
-        
-        
-        
-        
-        
-        
-        
-        `,
+        else
+        {
+            fprintf(fp2, "学号:%s 姓名:%s 操作:补卡失败", input_user, 
+                max_stu[num].name);
+            break;
+        }
+    }
+    fclose(fp2);
+    choice = getchar();
+    choice = getchar();
+}`,
+        codeStringForNestingDepthFemale: `void fk(int i, int c, int *c1, kh &data)
+/* 发卡，i:开户人数,c:总补卡次数，c1:下一次发卡的起始位置，data:学生基本信息数组 */
+{
+    int b1, b2, b3, b4, b5, j, k, b;
+    FILE *fp;
+    fp = fopen("D:\\fk.txt", "a");
+    for (j = (*c1); j <= i - 1; j++)
+    {
+        b = c + j;
+        b1 = 312346 + b;
+        b2 = b1;
+        b3 = 100000;
+        b5 = 0; /* 校验码 */
+        for (k = 0; k < 6; k++)
+        {
+            b4 = b2 / b3;
+            data[j].cnum[k] = b4 + '0';
+            b2 = b2 - b3 * b4;
+            b3 = b3 / 10;
+            b5 += b4;
+        }
+        b5 = b5 % 10;
+        b5 = 9 - b5;
+        data[j].cnum[6] = b5 + '0'; /*  */
+        printf("学号%s，姓名%s，发卡成功，卡号为%s！", data[j].snum, 
+            data[j].name, data[j].cnum);
+        fprintf(fp, "学号%s，姓名%s，发卡成功，卡号为%s！", 
+            data[j].snum, data[j].name, data[j].cnum);
+    }
+    (*c1) = j;
+}
+
+
+
+
+
+
+`,
     }
 
     aiData = {
