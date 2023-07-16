@@ -40,30 +40,32 @@ const AiFeature = () => {
             <ProCard
                 title="注释使用差异图"
                 subTitle="ChatGPT 生成的代码有时类似于样本或模板代码，其注释往往提示需要自定义实现的区域，而人类的代码注释用于解释代码的作用"
-                split="horizontal"
+                split="vertical"
             >
-                <ProCard split="vertical">
-                    <ProCard colSpan="50%">
-                        <Image
-                            src={require("@/assets/Ai/c++_comment_50_jx.png")}
-                        />
-                    </ProCard>
-                    <ProCard colSpan="50%">
-                        <Image
-                            src={require("@/assets/Ai/Java_comment_50_jx.png")}
-                        />
-                    </ProCard>
+                <ProCard colSpan="50%">
+                    <Image
+                        src={require("@/assets/Ai/c++_comment_50_jx.png")}
+                    />
                 </ProCard>
-                <ProCard split="vertical">
-                    <ProCard title="ChatGPT">
-                        <SyntaxHighlighter language="cpp" style={docco} showLineNumbers>
-                            {exploreStore.aiData.codeStringForCommentAi}
-                        </SyntaxHighlighter>
-                    </ProCard><ProCard title="人类" subTitle={<a href='https://leetcode.cn/problems/powx-n/solution/powx-n-by-leetcode-solution/' target='_blank'>查看来源</a>}>
-                        <SyntaxHighlighter language="cpp" style={docco} showLineNumbers>
-                            {exploreStore.aiData.codeStringForCommentHuman}
-                        </SyntaxHighlighter>
-                    </ProCard>
+                <ProCard colSpan="50%">
+                    <Image
+                        src={require("@/assets/Ai/Java_comment_50_jx.png")}
+                    />
+                </ProCard>
+            </ProCard>
+            <ProCard
+                title="注释使用差异代码示例"
+                subTitle="ChatGPT 生成注释集中分布，而人类编写的注释分散"
+                split="vertical"
+            >
+                <ProCard title="ChatGPT">
+                    <SyntaxHighlighter language="cpp" style={docco} showLineNumbers>
+                        {exploreStore.aiData.codeStringForCommentAi}
+                    </SyntaxHighlighter>
+                </ProCard><ProCard title="人类" subTitle={<a href='https://leetcode.cn/problems/powx-n/solution/powx-n-by-leetcode-solution/' target='_blank'>查看来源</a>}>
+                    <SyntaxHighlighter language="cpp" style={docco} showLineNumbers>
+                        {exploreStore.aiData.codeStringForCommentHuman}
+                    </SyntaxHighlighter>
                 </ProCard>
             </ProCard>
             <ProCard
@@ -83,33 +85,51 @@ const AiFeature = () => {
                 </ProCard>
             </ProCard>
             <ProCard
+                title="第三方库使用差异代码示例"
+                subTitle="ChatGPT 只引用关联第三方库，而人类编写的代码引用第三方库之间具有强关联性"
+                split="vertical"
+            >
+                <ProCard title="ChatGPT">
+                    <SyntaxHighlighter language="cpp" style={docco} showLineNumbers>
+                        {exploreStore.aiData.codeStringForTPLAi}
+                    </SyntaxHighlighter>
+                </ProCard>
+                <ProCard title="人类" >
+                    <SyntaxHighlighter language="cpp" style={docco} showLineNumbers>
+                        {exploreStore.aiData.codeStringForTPLHuman}
+                    </SyntaxHighlighter>
+                </ProCard>
+            </ProCard>
+            <ProCard
                 title="命名习惯差异图"
                 subTitle="ChatGPT 强调可读性，使用有意义的单词作为标识符，而人类可能使用缩写或含义模糊的字母"
-                split="horizontal"
+                split="vertical"
             >
-                <ProCard split="vertical">
-                    <ProCard colSpan="50%">
-                        <Image
-                            src={require("@/assets/Ai/c++_name_50_jx.png")}
-                        />
-                    </ProCard>
-                    <ProCard colSpan="50%">
-                        <Image
-                            src={require("@/assets/Ai/Java_name_50_jx.png")}
-                        />
-                    </ProCard>
+                <ProCard colSpan="50%">
+                    <Image
+                        src={require("@/assets/Ai/c++_name_50_jx.png")}
+                    />
                 </ProCard>
-                <ProCard split="vertical">
-                    <ProCard title="ChatGPT">
-                        <SyntaxHighlighter language="cpp" style={docco} showLineNumbers>
-                            {exploreStore.aiData.codeStringForNameAi}
-                        </SyntaxHighlighter>
-                    </ProCard>
-                    <ProCard title="人类" subTitle={<a href='https://leetcode.cn/problems/find-all-good-indices/solution/zhao-dao-suo-you-hao-xia-biao-by-leetcod-w5ar/' target='_blank'>查看来源</a>}>
-                        <SyntaxHighlighter language="cpp" style={docco} showLineNumbers>
-                            {exploreStore.aiData.codeStringForNameHuman}
-                        </SyntaxHighlighter>
-                    </ProCard>
+                <ProCard colSpan="50%">
+                    <Image
+                        src={require("@/assets/Ai/Java_name_50_jx.png")}
+                    />
+                </ProCard>
+            </ProCard>
+            <ProCard
+                title="命名习惯差异代码示例"
+                subTitle="ChatGPT 命名更富含语义，具备可读性，而人类编写代码命名简略"
+                split="vertical"
+            >
+                <ProCard title="ChatGPT">
+                    <SyntaxHighlighter language="cpp" style={docco} showLineNumbers>
+                        {exploreStore.aiData.codeStringForNameAi}
+                    </SyntaxHighlighter>
+                </ProCard>
+                <ProCard title="人类" subTitle={<a href='https://leetcode.cn/problems/find-all-good-indices/solution/zhao-dao-suo-you-hao-xia-biao-by-leetcod-w5ar/' target='_blank'>查看来源</a>}>
+                    <SyntaxHighlighter language="cpp" style={docco} showLineNumbers>
+                        {exploreStore.aiData.codeStringForNameHuman}
+                    </SyntaxHighlighter>
                 </ProCard>
             </ProCard>
             <ProCard

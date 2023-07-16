@@ -302,6 +302,72 @@ class ExploreStore {
     
     
     `,
+        codeStringForTPLAi: `#include <ESP8266WiFi.h>
+#include <ESP8266WiFiAP.h>
+#include <DNSServer.h>
+
+#include "LogUtility.h"
+#include "WatchdogUtility.h"
+#include "NetUtility.h"
+
+static DNSServer* dns = nullptr;
+auto log = LogUtility::getInstance();
+auto watchdog = WatchdogUtility::getInstance();
+auto net = NetUtility::getInstance();
+
+void handleWifiEvent(WiFiEvent_t event);
+
+bool scanWifi();
+
+// Example functions
+bool scanWifi() {
+    log->print("WIFI: scanning for accesspoints ...");
+
+    int n = net->scanWifi();
+
+    if (n < 0) {
+        log->print("WIFI: error while scanning for accesspoints");
+
+        return false;
+    }
+
+  // More code goes here...
+
+    return true;
+}`,
+        codeStringForTPLHuman: `#include <ESP8266WiFi.h>
+#include <ESP8266WiFiAP.h>
+#include <DNSServer.h>
+
+extern "C" {
+#include <user_interface.h>
+#include <ping.h>
+
+#include <lwip/err.h>
+#include <lwip/dns.h>
+}
+
+extern "C" void esp_schedule();
+extern "C" void esp_yield();
+
+#include "system.h"
+#include "module.h"
+#include "config.h"
+#include "log.h"
+
+#include "net.h"
+
+static String wifi_list;
+
+static bool wifi_is_connected = false;
+static bool wifi_is_enabled   = false;
+
+static uint16_t ping_count = 0, ping_time = 0;
+
+static bool    watchdog_enabled    = false;
+static uint8_t watchdog_timeout    = 0;
+static uint8_t watchdog_lost_pings = 0;
+static DNSServer *dns = NULL;`
     }
 
     constructor() {
