@@ -322,7 +322,7 @@ class ResultStore {
             edges: []
         }
         for (let i in this.intelligenceResultList) {
-            if (this.intelligenceResultList[i].id === taskID) {
+            if (this.intelligenceResultList[i].id == taskID) {
                 rtn.edges = this.intelligenceResultList[i].edges
                 rtn.nodes = this.intelligenceResultList[i].nodes
                 break

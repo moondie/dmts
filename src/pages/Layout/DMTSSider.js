@@ -34,7 +34,11 @@ const DMTSSider = () => {
             getItem('分析数据查看', 'result', <EditOutlined />, [
                 getItem(<Link to='/result'>分析数据总览</Link>, '/result'),
                 getItem(<Link to='/result/trace'>代码归属模块</Link>, '/result/trace'),
-                getItem(<Link to='/result/intelligence'>情报分析模块</Link>, '/result/intelligence'),
+                getItem(<Link to='/result/intelligence'>情报分析模块</Link>, '/result/intelligence', <></>, [
+                    getItem(<Link to='/result/intelligence/feature'>代码行为的高维特征提取算法隐式特征</Link>, '/result/intelligence/feature'),
+                    getItem(<Link to='/result/intelligence/psychological'>代码作者全场景心理特征融合算法案例分析</Link>, '/result/intelligence/psychological'),
+                    getItem(<Link to='/result/intelligence/behavior'>代码特征与作者心理特征动态映射案例分析</Link>, '/result/intelligence/behavior'),
+                ]),
             ]),
 
             // 前瞻性课题

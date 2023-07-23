@@ -10,7 +10,7 @@ const Result = () => (
     <Routes>
         <Route path='' element={<ResultContent />}></Route>
         <Route path='trace' element={<ResultTrace />}></Route>
-        <Route path='intelligence' element={<ResultIntelligence />}></Route>
+        <Route path='intelligence/*' element={<ResultIntelligence />}></Route>
         <Route path='*' element={<Error />}></Route>
     </Routes>
 );
