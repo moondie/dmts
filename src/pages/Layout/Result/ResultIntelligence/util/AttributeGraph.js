@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import G6 from '@antv/g6';
-import "./index.css"
+import "./index.scss"
+
 function refreshDragedNodePosition(e) {
     const model = e.item.get('model');
     model.fx = e.x;
@@ -25,10 +26,19 @@ function AttributeGraph({ data }) {
                 let div = document.createElement('div');
                 e.item.getModel().socialAttributes.forEach((item) => {
                     let p = document.createElement("p")
-                    let a = document.createElement("a")
-                    a.setAttribute("href", item.url)
-                    a.setAttribute("target", "_blank")
-                    a.innerHTML = `${item.key}: ${item.value}`
+                    let a
+                    if (item.key === "" && item.value === "") {
+                        a = document.createElement("p")
+                        a.innerHTML = `......`
+                    } else if (item.url === undefined) {
+                        a = document.createElement("p")
+                        a.innerHTML = `${item.key}: ${item.value}`
+                    } else {
+                        a = document.createElement("a")
+                        a.setAttribute("href", item.url)
+                        a.setAttribute("target", "_blank")
+                        a.innerHTML = `${item.key}: ${item.value}`
+                    }
                     p.appendChild(a)
                     div.appendChild(p)
                 })
