@@ -2251,6 +2251,905 @@ class ChartStore {
         }
     ]
 
+    datasetInfo = [
+        {
+            name: "恶意代码仓库数据集",
+            dataName: ["malicious"],
+            description: {
+                usage: "用于探索恶意代码的语义特征，为后期的恶意代码识别工作做准备",
+                origin: "自建"
+            },
+            source: [
+                `1.识别Github恶意仓库: 
+                通过分析仓库的介绍信息，文件名等字段信息，采用了5种文本表示方法、6个非集中模型、5个集中模型和10折交叉验证进行对比实验，获得了37805个恶意软件仓库，通过进一步筛选，最终获得33609个恶意软件源代码仓库。（/MaliciousCode/test.jsonl）
+                `,
+                `2.反推恶意仓库作者: 
+                对上述33609个恶意软件源代码仓库进行作者溯源，由于同一个作者可能有多个仓库被统计到，最终获得约25000个的GitHub账号的信息，包括账号作者的个人注册信息，所有仓库以及仓库中所有文件的信息；
+                初步清洗过滤，在仓库维度，首先去除所有“fork”类型的仓库，这些都是直接从其他人账号下的仓库复制过来的；然后通过文件名和文件内容等信息，去除重复的仓库和源代码文件。 
+                多进程爬取，下载清洗后的所有仓库到本地，方便后续进行源代码提取和数据清洗。
+                `,
+                `3.构造标签数据集: 
+                根据一定的标签规则，进一步过滤精选出一部分作者及其源代码。
+                为了避免同一作者由于自身学习成长导致的不同时间段内创建的代码的特征差异带来误干扰，首先根据账号创建时间对所有个人账号进行分类，从2008年到2022年，共计15个类别；
+                然后根据仓库的创建时间和最后更新时间等信息，挑选出作者近一年内创建的所有源代码文件，如果存在相同文件名，则加上其储存路径。这样不仅提取出的代码能代表其作者一定时间内的编程特征，还具有时间标签的特性。因为根据统计分析，大多数程序员会在22岁左右创建Github账号，如此根据账号创建年份即可大致推断出账号作者的年龄，即使存在一定的偏差，也能侧面反映出作者从业时间的长短和技术水平的高低。
+                为了保证同一作者源代码的纯洁性，遵循已公开发表论文中数据集的清洗规则，剔除由系统自动生成的模板代码文件、第三方库中的源代码文件以及各种测试用例源代码文件。为了保证有效性，对代码的数量进行了筛选，只挑选源代码文件大于1K和总数不少于100个文件的作者作为研究对象。
+                通过社会工程学等策略，从Github个人账号主页介绍、关联个人博客、Twitter、Linkedin等多个平台上为作者的进行个人画像，目前统计信息主要包括性别、年龄、国籍、职业、教育经历、工作经历、社会地位、成长地域等，通过这些信息，即可大致判断出账号主人的人格特征，再通过与其在Github上的创建的源代码进行关联，即可生成研究所需的特征丰富、标签明确的高质量数据集
+                `,
+            ],
+            scheme: [
+                {
+                    title: "代码作者视图",
+                    column: [
+                        {
+                            key: "property",
+                            dataIndex: "property",
+                            title: "字段名称"
+                        },
+                        {
+                            key: "description",
+                            dataIndex: "description",
+                            title: "字段描述"
+                        }
+                    ],
+                    data: [
+                        {
+                            key: "author",
+                            property: "作者",
+                            description: "代码作者账号注册名"
+                        },
+                        {
+                            key: "year",
+                            property: "年份",
+                            description: "代码作者GitHub账号注册年份"
+                        },
+                        {
+                            key: "nationality",
+                            property: "国籍",
+                            description: "代码作者国籍"
+                        },
+                        {
+                            key: "gender",
+                            property: "性别",
+                            description: "代码作者性别"
+                        },
+                        {
+                            key: "occupation",
+                            property: "职业",
+                            description: "代码作者职业"
+                        },
+                        {
+                            key: "education",
+                            property: "教育经历",
+                            description: "代码作者教育经历"
+                        },
+                        {
+                            key: "socialStatus",
+                            property: "社会地位",
+                            description: "代码作者社会地位"
+                        },
+                        {
+                            key: "region",
+                            property: "地域",
+                            description: "代码作者成长区域"
+                        },
+                        {
+                            key: "htmlURL",
+                            property: "主页",
+                            description: "代码作者账号首页地址"
+                        },
+                        {
+                            key: "type",
+                            property: "类型",
+                            description: "代码作者账号类型"
+                        },
+                        {
+                            key: "infoPath",
+                            property: "路径",
+                            description: "代码作者详细信息文件存储路径"
+                        },
+                    ]
+                },
+                {
+                    title: "恶意代码仓库试图",
+                    column: [
+                        {
+                            key: "property",
+                            dataIndex: "property",
+                            title: "字段名称"
+                        },
+                        {
+                            key: "description",
+                            dataIndex: "description",
+                            title: "字段描述"
+                        }
+                    ],
+                    data: [
+                        {
+                            key: "repoName",
+                            property: "仓库名",
+                            description: "恶意源代码仓库名"
+                        },
+                        {
+                            key: "author",
+                            property: "作者",
+                            description: "恶意代码仓库隶属的作者名"
+                        },
+                        {
+                            key: "description",
+                            property: "描述信息",
+                            description: "恶意代码仓库的简要介绍"
+                        },
+                        {
+                            key: "htmlURL",
+                            property: "主页",
+                            description: "恶意代码仓库的主页"
+                        },
+                        {
+                            key: "contributors",
+                            property: "贡献者",
+                            description: "恶意代码仓库所有贡献者账号姓名"
+                        },
+                        {
+                            key: "createAt",
+                            property: "创建时间",
+                            description: "恶意代码仓库创建时间"
+                        },
+                        {
+                            key: "updatedAt",
+                            property: "更新时间",
+                            description: "恶意代码仓库最后更新时间"
+                        },
+                        {
+                            key: "pushAt",
+                            property: "上传时间",
+                            description: "恶意代码仓库最后上传时间"
+                        },
+                        {
+                            key: "size",
+                            property: "大小",
+                            description: "恶意代码仓库占存储字节数"
+                        },
+                        {
+                            key: "star",
+                            property: "标星数量",
+                            description: "恶意代码仓库被标星数量"
+                        },
+                        {
+                            key: "fork",
+                            property: "分叉数量",
+                            description: "恶意仓库被分叉数量"
+                        },
+                        {
+                            key: "topic",
+                            property: "话题",
+                            description: "恶意代码仓库创建的话题"
+                        },
+                        {
+                            key: "path",
+                            property: "路径",
+                            description: "仓库详细信息存储路径"
+                        },
+                    ]
+                },
+                {
+                    title: "恶意源代码文件视图",
+                    column: [
+                        {
+                            key: "property",
+                            dataIndex: "property",
+                            title: "字段名称"
+                        },
+                        {
+                            key: "description",
+                            dataIndex: "description",
+                            title: "字段描述"
+                        }
+                    ],
+                    data: [
+                        {
+                            key: "fileName",
+                            property: "文件名",
+                            description: "恶意代码文件名"
+                        },
+                        {
+                            key: "author",
+                            property: "作者",
+                            description: "恶意代码文件作者名"
+                        },
+                        {
+                            key: "repo",
+                            property: "仓库",
+                            description: "恶意代码文件隶属的仓库名"
+                        },
+                        {
+                            key: "description",
+                            property: "介绍",
+                            description: "恶意代码文件简要介绍"
+                        },
+                        {
+                            key: "htmlURL",
+                            property: "主页",
+                            description: "恶意代码文件主页地址"
+                        },
+                        {
+                            key: "createAt",
+                            property: "创建时间",
+                            description: "恶意代码文件创建时间"
+                        },
+                        {
+                            key: "updatedAt",
+                            property: "更新时间",
+                            description: "恶意代码文件最后更新时间"
+                        },
+                        {
+                            key: "pushedAt",
+                            property: "上传时间",
+                            description: "恶意代码文件最后上传时间"
+                        },
+                        {
+                            key: "size",
+                            property: "大小",
+                            description: "恶意代码文件占存储字节数"
+                        },
+                        {
+                            key: "language",
+                            property: "语言",
+                            description: "恶意代码文件使用的编程语言类型"
+                        },
+                        {
+                            key: "path",
+                            property: "路径",
+                            description: "恶意代码文件详细信息存储的路径"
+                        },
+                    ]
+                }
+            ],
+            count: {
+                column: [
+                    {
+                        key: "property",
+                        dataIndex: "property",
+                        title: "属性"
+                    },
+                    {
+                        key: "number",
+                        dataIndex: "number",
+                        title: "数量分布"
+                    }
+                ],
+                data: [
+                    {
+                        key: "author",
+                        property: "恶意代码作者数量",
+                        number: "26709",
+                    },
+                    {
+                        key: "repos",
+                        property: "恶意代码仓库数量",
+                        number: "33609"
+                    },
+                    {
+                        key: "allRepos",
+                        property: "恶意代码作者所有仓库数量",
+                        number: "761116"
+                    },
+                    {
+                        key: "size",
+                        property: "恶意代码文件数据容量",
+                        number: "7T"
+                    },
+                    {
+                        key: "languages",
+                        property: "恶意代码仓库语言分布",
+                        number: `'python': 103059, 'java': 35672, 'c/c++': 72675, 'javascript': 63427, 'go': 20306`,
+                    }
+                ]
+            }
+        },
+        {
+            name: "代码心理属性数据集",
+            dataName: ["Psychological Attributes Dataset"],
+            description: {
+                usage: "统计代码以及作者心理属性信息，用于验证分析方案可行性",
+                origin: "自建",
+            },
+            source: [
+                `1. 在华中科技大学网安学院2020级，共计270余名学生中开展心理属性调研工作；`,
+                `2. 与华中科技大学《软件安全》课设老师进行合作，共收集到270余名同学的课程实验代码。课程实验代码能够保证作者与代码的对应关系。与此同时，将心理调研结果交由华中师范大学心理学院分析，最终归纳出被试者的人格属性、情感属性和认知属性；`,
+                `3. 通过编号属性建立心理属性调研结果和课程实验代码的映射关系，具体可以表示为（编号，代码，心理属性）的三元组，由此完成心理特征标签数据集的初步制作；`,
+                `4. 由于课程实验代码中可能存在过于重复的代码信息，因此使用函数粒度的代码查重和去重分析。首先对所有的代码文件，提取其中的函数，之后根据函数来建立数据库，进行函数级别的查重分析，查重的标准设置为Type2，即允许存在变量名、函数名等变化和空格、换行和空白字符等变化，根据查重结果，对于不同作者的克隆对，进行去重操作，移除该数据，而对于同一个作者的克隆对，则进行保留。`
+            ],
+            scheme: [
+                {
+                    title: "源代码文件视图",
+                    column: [
+                        {
+                            key: "property",
+                            dataIndex: "property",
+                            title: "字段名称"
+                        },
+                        {
+                            key: "description",
+                            dataIndex: "description",
+                            title: "字段描述"
+                        }
+                    ],
+                    data: [
+                        {
+                            key: "file",
+                            property: "文件名",
+                            description: "源代码文件路径"
+                        },
+                        {
+                            key: "author",
+                            property: "作者",
+                            description: "源代码文件作者"
+                        },
+                        {
+                            key: "size",
+                            property: "大小",
+                            description: "源代码文件占存储字节数"
+                        }
+                    ]
+                },
+                {
+                    title: "心理属性视图",
+                    column: [
+                        {
+                            key: "property",
+                            dataIndex: "property",
+                            title: "字段名称"
+                        },
+                        {
+                            key: "description",
+                            dataIndex: "description",
+                            title: "字段描述"
+                        }
+                    ],
+                    data: [
+                        {
+                            key: "zongjiao",
+                            property: "宗教信仰",
+                            description: "是否有宗教信仰",
+                        },
+                        {
+                            key: "gender",
+                            property: "性别",
+                            description: "代码作者性别",
+                        },
+                        {
+                            key: "zhuanye",
+                            property: "专业",
+                            description: "代码作者大学专业",
+                        },
+                        {
+                            key: "rank",
+                            property: "成绩排名",
+                            description: "代码作者上学期年纪排名比例",
+                        },
+                        {
+                            key: "lianai",
+                            property: "恋爱情况",
+                            description: "代码作者校园阶段谈过几次恋爱",
+                        },
+                        {
+                            key: "shengfen",
+                            property: "省份",
+                            description: "代码作者出生在中国的省份",
+                        },
+                        {
+                            key: "cet6",
+                            property: "英语水平",
+                            description: "代码作者的英语六级分数",
+                        },
+                        {
+                            key: "language",
+                            property: "编程语言",
+                            description: "代码作者擅长的编程语言",
+                        },
+                        {
+                            key: "language-",
+                            property: "倾向编程语言",
+                            description: "代码作者还能够擅长哪些编程语言",
+                        },
+                        {
+                            key: "changzhu",
+                            property: "长居地域",
+                            description: "除了出生所在省份以外，在哪一个省份度过最长的时间",
+                        },
+                        {
+                            key: "naming",
+                            property: "命名变量规范",
+                            description: "习惯使用哪种格式命名变量",
+                        },
+                        {
+                            key: "naming-",
+                            property: "命名变量习惯",
+                            description: "习惯使用哪种方式命名变量？拼音、英文缩写、英文全称",
+                        },
+                        {
+                            key: "timing",
+                            property: "工作时间",
+                            description: "哪个时间段编写代码效率最高",
+                        },
+                        {
+                            key: "fuyong",
+                            property: "代码复用方式",
+                            description: "编写程序出现曾经编写过的代码，会使用什么处理方式？复制粘贴、重构、直接编写",
+                        },
+                        {
+                            key: "paiban",
+                            property: "排版格式习惯",
+                            description: "是否关注编码过程中代码的排版格式",
+                        },
+                        {
+                            key: "moshi",
+                            property: "编码习惯",
+                            description: "编写代码之前是否愿意将所有步骤想清楚",
+                        },
+                        {
+                            key: "biaoshi",
+                            property: "个人信息残留",
+                            description: "是否会在代码中残留个人信息",
+                        },
+                        {
+                            key: "cankao",
+                            property: "编码学习方式",
+                            description: "面对编程的基础问题时，是否习惯参考网上的代码",
+                        },
+                        {
+                            key: "yichang",
+                            property: "异常处理习惯",
+                            description: "编码时是否使用异常处理来增强代码的健壮性",
+                        },
+                        {
+                            key: "new",
+                            property: "编码新特性了解习惯",
+                            description: "是否主动了解编程语言的新特性",
+                        },
+                        {
+                            key: "new-",
+                            property: "编码新特性使用习惯",
+                            description: "是否主动使用编程语言的新特性",
+                        },
+                        {
+                            key: "beifen",
+                            property: "协作习惯",
+                            description: "是否会周期性将日常编写的代码上传到云端",
+                        },
+                        {
+                            key: "zixin",
+                            property: "编程学习情况",
+                            description: "是否在本学年编程能力得到大幅提升",
+                        },
+                        {
+                            key: "friend",
+                            property: "社交程度",
+                            description: "平时有多少个知心朋友",
+                        },
+                        {
+                            key: "yilai",
+                            property: "独立合作",
+                            description: "平常遇到困难，是否依赖个人独立思考解决问题",
+                        },
+                        {
+                            key: "shejiao",
+                            property: "开放程度",
+                            description: "是否主动的结交朋友",
+                        },
+                        {
+                            key: "zhiye",
+                            property: "职业情况",
+                            description: "未来的理想职业",
+                        },
+                        {
+                            key: "xinxian",
+                            property: "新鲜感",
+                            description: "是否喜欢追求新鲜感",
+                        },
+                        {
+                            key: "zeren",
+                            property: "责任心",
+                            description: "是否觉得自己是有责任心的人",
+                        },
+                        {
+                            key: "kailang",
+                            property: "开朗乐观",
+                            description: "是否觉得自己是开朗乐观的人",
+                        },
+                        {
+                            key: "shanliang",
+                            property: "善良",
+                            description: "是否觉得自己是善良的人",
+                        },
+                        {
+                            key: "qingxuhua",
+                            property: "情绪化",
+                            description: "是否觉得自己是情绪化的人",
+                        }
+                    ]
+                }
+            ],
+            count: {
+                column: [
+                    {
+                        key: "property",
+                        dataIndex: "property",
+                        title: "属性"
+                    },
+                    {
+                        key: "description",
+                        dataIndex: "number",
+                        title: "数量"
+                    }
+                ],
+                data: [
+                    {
+                        key: "author",
+                        property: "作者数量",
+                        number: "62",
+                    },
+                    {
+                        key: "function",
+                        property: "函数个数",
+                        number: "1366",
+                    },
+                    {
+                        key: "line",
+                        property: "代码总行数",
+                        number: "45086",
+                    },
+                    {
+                        key: "avgFunction",
+                        property: "作者平均函数数量",
+                        number: "22",
+                    },
+                    {
+                        key: "avgLine",
+                        property: "作者平均代码行数",
+                        number: "727",
+                    },
+                ]
+            }
+        },
+        {
+            name: "AI代码数据集",
+            dataName: ["Codes Generated From ChatGPT"],
+            description: {
+                usage: "区分ChatGPT和人类写的代码",
+                origin: "自建"
+            },
+            source: [
+                "由ChatGPT的gpt3.5-turbo模型和gpt4模型生成,共有三种生成方式:代码翻译/功能重现/功能定制",
+            ],
+            scheme: [
+                {
+                    title: "",
+                    column: [
+                        {
+                            key: "property",
+                            dataIndex: "property",
+                            title: "字段名称"
+                        },
+                        {
+                            key: "description",
+                            dataIndex: "description",
+                            title: "字段描述"
+                        }
+                    ],
+                    data: [
+                        {
+                            key: "path",
+                            property: "文件路径",
+                            description: "文件存储的路径"
+                        },
+                        {
+                            key: "model",
+                            property: "生成模型",
+                            description: "生成文件使用的大语言模型"
+                        },
+                        {
+                            key: "language",
+                            property: "生成语言",
+                            description: "该文件使用的编程语言类型"
+                        },
+                        {
+                            key: "pattern",
+                            property: "生成方式",
+                            description: "对大语言模型使用的提示性话语"
+                        },
+                    ]
+                }
+            ],
+            count: {
+                column: [
+                    {
+                        key: "model",
+                        title: "生成模型",
+                        dataIndex: "model"
+                    },
+                    {
+                        key: "language",
+                        title: "编程语言",
+                        dataIndex: "language"
+                    },
+                    {
+                        key: "pattern",
+                        title: "生成模式",
+                        dataIndex: "pattern"
+                    },
+                    {
+                        key: "number",
+                        title: "数量",
+                        dataIndex: "number"
+                    }
+                ],
+                data: [
+                    {
+                        key: "java_gpt3.5-turbo_代码翻译",
+                        language: "Java",
+                        model: "ChatGPT 3.5-turbo",
+                        pattern: "代码翻译",
+                        number: 261
+                    },
+                    {
+                        key: "java_gpt4_代码翻译",
+                        language: "Java",
+                        model: "ChatGPT 4",
+                        pattern: "代码翻译",
+                        number: 282
+                    },
+                    {
+                        key: "c++_gpt3.5-turbo_功能重现",
+                        language: "C/C++",
+                        model: "ChatGPT 3.5-turbo",
+                        pattern: "功能重现",
+                        number: 233
+                    },
+                    {
+                        key: "c++_gpt4_功能重现",
+                        language: "C/C++",
+                        model: "ChatGPT 4",
+                        pattern: "功能重现",
+                        number: 200
+                    },
+                    {
+                        key: "c++_gpt4_功能定制",
+                        language: "C/C++",
+                        model: "ChatGPT 4",
+                        pattern: "功能定制",
+                        number: 36
+                    },
+                    {
+                        key: "c++_gpt4_代码翻译",
+                        language: "C/C++",
+                        model: "ChatGPT 4",
+                        pattern: "代码翻译",
+                        number: 130
+                    },
+                ]
+            }
+        },
+        {
+            name: "性别区分数据集",
+            dataName: ["GitHub-gender-Java", "GitHub-gender-C/C++"],
+            description: {
+                usage: "用于分析作者源代码特征和性别的关系",
+                origin: "自建"
+            },
+            source: [
+                "GitHub-gender-Java数据集：通过抓取2008-2022年期间GitHub网站的Java开源代码,通过人为社工分析的方式,例如社交账号、头像照片等信息,选取了其中可以明确确定源代码作者性别信息的源代码文件",
+                "GitHub-gender-C/C++数据集：同样抓取了与GitHub-gender-Java数据集同年间GitHub网站的C/C++开源代码,通过人为社工分析的方式明确源代码作者的性别,构建准确的性别标签"
+            ],
+            scheme: [
+                {
+                    title: "",
+                    column: [
+                        {
+                            key: "property",
+                            dataIndex: "property",
+                            title: "字段名称"
+                        },
+                        {
+                            key: "description",
+                            dataIndex: "description",
+                            title: "字段描述"
+                        }
+                    ],
+                    data: [
+                        {
+                            key: "id",
+                            property: "id",
+                            description: "文件序号"
+                        },
+                        {
+                            key: "name",
+                            property: "姓名",
+                            description: "作者姓名"
+                        },
+                        {
+                            key: "sex",
+                            property: "性别",
+                            description: "作者性别"
+                        },
+                        {
+                            key: "number",
+                            property: "代码数量",
+                            description: "该文件代码字符长度"
+                        },
+                    ]
+                }
+            ],
+            count: {
+                column: [
+                    {
+                        key: "dataset",
+                        dataIndex: "dataset",
+                        title: "数据集"
+                    },
+                    {
+                        key: "gender",
+                        dataIndex: "gender",
+                        title: "性别"
+                    },
+                    {
+                        key: "authorNumber",
+                        dataIndex: "authorNumber",
+                        title: "作者数量"
+                    },
+                    {
+                        key: "fileNumber",
+                        dataIndex: "fileNumber",
+                        title: "文件数量"
+                    },
+                ],
+                data: [
+                    {
+                        key: "1",
+                        dataset: "GitHub-gender-Java",
+                        gender: "男性",
+                        authorNumber: "248",
+                        fileNumber: "174748",
+                    },
+                    {
+                        key: "2",
+                        dataset: "GitHub-gender-Java",
+                        gender: "女性",
+                        authorNumber: "152",
+                        fileNumber: "57279",
+                    },
+                    {
+                        key: "3",
+                        dataset: "GitHub-gender-C/C++",
+                        gender: "男性",
+                        authorNumber: "85",
+                        fileNumber: "47513",
+                    },
+                    {
+                        key: "4",
+                        dataset: "GitHub-gender-C/C++",
+                        gender: "女性",
+                        authorNumber: "101",
+                        fileNumber: "11431",
+                    },
+                ]
+            }
+        },
+        {
+            name: "代码归属数据集",
+            dataName: ["GitHub-C", "GitHub-Java", "GCJ-C++"],
+            description: {
+                usage: "用于代码作者归属实验测试模型性能效果",
+                origin: "论文"
+            },
+            source: [
+                `GitHub-C数据集源自论文 Z. Li, Q. G. Chen, C. Chen, Y. Zou, and S. Xu, “Ropgen:Towards robust code authorship attribution via automatic coding style transformation,” in 44th IEEE/ACM 44th International Conference on Software Engineering, ICSE 2022, Pittsburgh, PA, USA, May 25-27, 2022. ACM, 2022, pp. 1906–1918.`,
+                `GitHub-Java数据集源自论文 X. Yang, G. Xu, L. Qi, Y. Guo, and Z. Miao, “Authorship attribution of
+                source code by using back propagation neural network based on particle
+                swarm optimization,” Plos One, vol. 12, no. 11, p. e0187204, 2017
+                `,
+                `GCJ-C++数据集源自论文E. Quiring, A. Maier, and K. Rieck, “Misleading authorship
+                attribution of source code using adversarial learning,” in 28th
+                USENIX Security Symposium, USENIX Security 2019, Santa Clara,
+                CA, USA, August 14-16, 2019, N. Heninger and P. Traynor, Eds.
+                USENIX Association, 2019, pp. 479–496
+                `,
+            ],
+            scheme: [
+                {
+                    title: "",
+                    column: [
+                        {
+                            key: "property",
+                            dataIndex: "property",
+                            title: "字段名称",
+                        },
+                        {
+                            key: "description",
+                            dataIndex: "description",
+                            title: "字段描述",
+                        }
+                    ],
+                    data: [
+                        {
+                            key: "path",
+                            property: "路径",
+                            description: "文件存储路径",
+                        },
+                        {
+                            path: "length",
+                            property: "长度",
+                            description: "文件所拥有的字符长度"
+                        },
+                        {
+                            path: "lineNumber",
+                            property: "行数量",
+                            description: "文件所拥有的行数"
+                        },
+                        {
+                            path: "datasetName",
+                            property: "数据集名",
+                            description: "文件归属的数据集名称"
+                        },
+                        {
+                            path: "author",
+                            property: "作者",
+                            description: "文件归属的作者名称"
+                        },
+                    ]
+                }
+            ],
+            count: {
+                column: [
+                    {
+                        key: "dataset",
+                        dataIndex: "dataset",
+                        title: "数据集"
+                    },
+                    {
+                        key: "authorNumber",
+                        dataIndex: "authorNumber",
+                        title: "作者数量"
+                    },
+                    {
+                        key: "fileNumber",
+                        dataIndex: "fileNumber",
+                        title: "文件数量"
+                    },
+                    {
+                        key: "avgLineNumber",
+                        dataIndex: "avgLineNumber",
+                        title: "平均代码行数"
+                    },
+                ],
+                data: [
+                    {
+                        key: "1",
+                        dataset: "GitHub-C",
+                        authorNumber: "67",
+                        fileNumber: "2072",
+                        avgLineNumber: "88"
+                    },
+                    {
+                        key: "2",
+                        dataset: "GitHub-Java",
+                        authorNumber: "40",
+                        fileNumber: "2827",
+                        avgLineNumber: "76"
+                    },
+                    {
+                        key: "3",
+                        dataset: "GCJ-C++",
+                        authorNumber: "204",
+                        fileNumber: "1632",
+                        avgLineNumber: "74"
+                    },
+                ]
+            }
+        },
+
+    ]
+
     setAgeOptionData = (data) => {
         this.ageOption.series[0].data = data;
     };

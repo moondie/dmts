@@ -21,6 +21,7 @@ const DMTSSider = () => {
             // 数据概览
             getItem('数据总览', 'main', <HomeOutlined />, [
                 getItem(<Link to='/main'>总体数据概览</Link>, '/main'),
+                getItem(<Link to='/main/dataset'>数据集展示</Link>, '/main/dataset'),
             ]),
 
             // 分析任务
