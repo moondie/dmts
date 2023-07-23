@@ -323,7 +323,7 @@ const FeatureSyntaxPage = () => {
                 socialAttributes: [
                     {
                         key: "深度",
-                        value: "",
+                        value: "33",
                     },
                 ]
             },
@@ -332,16 +332,16 @@ const FeatureSyntaxPage = () => {
                 label: "规则节点分布",
                 socialAttributes: [
                     {
-                        key: "",
-                        value: "",
+                        key: "形式化参数规则结点相对频率",
+                        value: "0.55%",
                     },
                     {
-                        key: "",
-                        value: "",
+                        key: "形式化参数列表规则结点相对频率",
+                        value: "0.40%",
                     },
                     {
-                        key: "",
-                        value: "",
+                        key: "new 规则结点相对频率",
+                        value: "0.48%",
                     },
                     {
                         key: "",
@@ -372,16 +372,16 @@ const FeatureSyntaxPage = () => {
                 label: "词汇节点分布",
                 socialAttributes: [
                     {
-                        key: "",
-                        value: "",
+                        key: "primary相对频率",
+                        value: "0.17%",
                     },
                     {
-                        key: "",
-                        value: "",
+                        key: "total_cost相对频率",
+                        value: "0.51%",
                     },
                     {
-                        key: "",
-                        value: "",
+                        key: "Vector<>();相对频率",
+                        value: "0.17%",
                     },
                     {
                         key: "",
@@ -394,9 +394,13 @@ const FeatureSyntaxPage = () => {
                 label: "控制结构深度分布",
                 socialAttributes: [
                     {
-                        key: "",
-                        value: "",
+                        key: "类型节点平均深度",
+                        value: "16.18",
                     },
+                    {
+                        key: "叶子结点平均深度",
+                        value: "17.42"
+                    }
                 ]
             },
             {
@@ -404,8 +408,8 @@ const FeatureSyntaxPage = () => {
                 label: "缩写结构分布",
                 socialAttributes: [
                     {
-                        key: "",
-                        value: "",
+                        key: "缩写结构数量",
+                        value: "0",
                     },
                 ]
             },
