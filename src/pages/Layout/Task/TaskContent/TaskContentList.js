@@ -116,7 +116,7 @@ const TaskContentActionsRender = ({ id }) => {
                 <h3>扫描URL：</h3>
                 <p><a href={record.taskDescription.url}>{record.taskDescription.url}</a></p>
                 <h3>扫描类别：</h3>
-                <p>{record.name}</p>
+                <p>{record.type}</p>
                 <h3>代码语言种类：</h3>
                 {
                     reposInfo.languages.map((language) => (
@@ -160,7 +160,7 @@ const TaskContentList = ({ data }) => {
                     render: (description) => (
                         <div key="label" style={{ display: 'flex', justifyContent: 'flex-start' }}>
                             <div style={{ color: '#00000073', margin: 6 }}>创建时间：</div>
-                            <div style={{ color: '#000000D9', margin: 6 }}>{description.create_time}</div>
+                            <div style={{ color: '#000000D9', margin: 6 }}>{description.createTime}</div>
                             <div style={{ color: '#00000073', margin: 6 }}>扫描URL：</div>
                             <div style={{ color: '#00000073', margin: 6 }}><a href={description.url}>{description.url}</a></div>
                             <div style={{ color: '#00000073', margin: 6 }}>运行状态：</div>
