@@ -2,6 +2,7 @@ import React from "react";
 import { ProCard } from "@ant-design/pro-components"
 
 import AttributeGraph from "@/pages/Layout/Result/ResultIntelligence/util/AttributeGraph";
+import {Table} from "antd";
 
 const FeatureEngineerPage = () => {
     const data = {
@@ -94,6 +95,48 @@ const FeatureEngineerPage = () => {
             }
         ]
     }
+    const tableData =  [
+        {
+            key: "1",
+            type: "工程事务特征(代码研发周期)",
+            description: "用于反映项目研发耗时，与项目规模、技术水平、复杂度有关。",
+            mapping: "代码注释、文件修改保存记录中附带的时间信息，以及Github仓库自带的创建、更新等时间信息。",
+        },
+        {
+            key: "2",
+            type: "工程事务特征(研发规模)",
+            description: "用于反映项目的研发规模，侧面反映研发人数、文件数量、代码量等信息。",
+            mapping: "参与研发的人数，源代码文件、可执行文件等原创性文件数量，代码行数等用于反映代码量的指标。",
+        },
+        {
+            key: "3",
+            type: "工程事务特征(研发管理水平)",
+            description: "用于反映项目研发过程中参与研发、管理等工作的技术工作者的专业水平。",
+            mapping: "参与研发过程的技术工作者自身的经济、社会地位，以及能反映专业技术水平的相关指标，如掌握的技术多寡、证书等，可通过跨平台社工分析得到。",
+        },
+
+    ]
+    const columns =  [
+
+            {
+                key: "type",
+                dataIndex: "type",
+                title: "指标项",
+                width: 200,
+            },
+            {
+                key: "description",
+                dataIndex: "description",
+                title: "指标说明",
+            },
+            {
+                key: "mapping",
+                dataIndex: "mapping",
+                title: "指标映射",
+            },
+        ]
+
+
     return (
         <ProCard
             title="工程事务特征"
@@ -103,6 +146,12 @@ const FeatureEngineerPage = () => {
         >
             <ProCard>
                 <AttributeGraph data={data}></AttributeGraph>
+            </ProCard>
+            <ProCard>
+                <Table
+                    dataSource={tableData}
+                    columns={columns}
+                />
             </ProCard>
         </ProCard>
     )
