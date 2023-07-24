@@ -88,19 +88,19 @@ const FeatureFivePage = () => {
             {
                 id: "尽责性",
                 label: "尽责性",
-                 socialAttributes: [
-                     {
-                         key: "仓库文档和链接",
-                         value: "结构清晰、可读性高",
-                         url:["https://github.com/jaywcjlove/awesome-mac"]
-                     },
-                     {
+                socialAttributes: [
+                    {
+                        key: "仓库文档和链接",
+                        value: "结构清晰、可读性高",
+                        url: ["https://github.com/jaywcjlove/awesome-mac"]
+                    },
+                    {
                         key: "参考备忘清单",
                         value: "为开发人员分享快速参考备忘清单(速查表)",
-                        url:["https://github.com/jaywcjlove/reference"]
+                        url: ["https://github.com/jaywcjlove/reference"]
                     },
-                 ]
-             },
+                ]
+            },
             {
                 id: "宜人性",
                 label: "宜人性",
@@ -147,9 +147,9 @@ const FeatureFivePage = () => {
                 target: "宜人性",
             },
             {
-                 source: "github.com/Mr-Un1k0d3r/MaliciousMacroGenerator",
-                 target: "尽责性",
-             },
+                source: "github.com/jaywcjlove",
+                target: "尽责性",
+            },
             {
                 source: "github.com/jaywcjlove",
                 target: "外倾性",
