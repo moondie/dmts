@@ -1,0 +1,264 @@
+import React from "react";
+
+
+const PsychologicalTracePage = () => {
+    const data={
+        nodes:[
+        {
+                id: "arinerron的互联网社交空间",
+                label: "arinerron的互联网社交空间",
+                socialAttributes: [
+                    {
+                        key: "每月发推",
+                        value: "7.72",
+                        url: "https://twitter.com/arinerron"
+                    },
+                    {
+                        key: "与好友互动数",
+                        value: "2.74",
+                        url: "https://twitter.com/arinerron"
+                    },
+                    {
+                        key: "活跃程度",
+                        value: "相对活跃",
+                        url: "https://twitter.com/arinerron"
+                    },
+                ]
+            },
+            {
+                id: "arinerron的互联网隐私空间",
+                label: "arinerron的互联网隐私空间",
+                socialAttributes: [
+                    {
+                        key: "真实姓名",
+                        value: "Aaron Esau",
+                        url: "https://aaronesau.com/"
+
+                    },
+                    {
+                        key: "推特",
+                        value: "https://twitter.com/arinerron",
+                        url: "https://twitter.com/arinerron"
+                    },
+                    {
+                        key: "匿名性",
+                        value: "低",
+                        url: "https://twitter.com/arinerron/status/1612206626207076352"
+                    },
+                    {
+                        key: "",
+                        value: ""
+                    },
+                ]
+            },
+            {
+                id: "acedrew的互联网社交空间",
+                label: "acedrew的互联网社交空间",
+                socialAttributes: [
+                    {
+                        key: "粉丝",
+                        value: "124",
+                        url: "http://mastodon.social/@acedrew"
+                    },
+                    {
+                        key: "平台发文数",
+                        value: "53",
+                        url: "http://mastodon.social/@acedrew"
+                    },
+                    {
+                        key: "内容",
+                        value: "多数为风景图和配文",
+                        url: "http://mastodon.social/@acedrew"
+                    },
+                ]
+            },
+            {
+                id: "acedrew的互联网娱乐空间",
+                label: "acedrew的互联网娱乐空间",
+                socialAttributes: [
+                    {
+                        key: "娱乐方式",
+                        value: "摄影",
+                    },
+                    {
+                        key: "来源",
+                        value: "mastodon社交平台",
+                        url: "https://mastodon.social/@acedrew"
+                    },
+                ]
+            },
+            {
+                id: "JehanKandy的互联网社交空间",
+                label: "JehanKandy的互联网社交空间",
+                socialAttributes: [
+                    {
+                        key: "GitHub上的followers",
+                        value: "84",
+                        url: "https://github.com/JehanKandy?tab=repositories"
+                    },
+
+                ]
+            },
+            {
+                id: "JehanKandy的时间管理空间",
+                label: "JehanKandy的时间管理空间",
+                socialAttributes: [
+                    {
+                        key: "上午6：00~9：00",
+                        value: "76%",
+                        url: "https://github.com/JehanKandy"
+                    },
+                    {
+                        key: "其他",
+                        value: "24%",
+                        url: "https://github.com/JehanKandy"
+                    },
+
+                ],
+            },
+            {
+                id: "Divyanshu的互联网社交空间",
+                label: "Divyanshu的互联网社交空间",
+                socialAttributes: [
+                    {
+                        key: "粉丝",
+                        value: "565",
+                        url: "https://twitter.com/gh0st_r1d3r_0x9"
+                    },
+                    {
+                        key: "平台发文数",
+                        value: "386",
+                        url: "https://twitter.com/gh0st_r1d3r_0x9"
+                    },
+                    {
+                        key: "内容",
+                        value: "多为专业前沿知识，分享过几次电影经历",
+                        url: "https://twitter.com/gh0st_r1d3r_0x9"
+                    },
+                ]
+            },
+            {
+                id: "Divyanshu的互联网娱乐空间",
+                label: "Divyanshu的互联网娱乐空间",
+                socialAttributes: [
+                    {
+                        key: "娱乐方式",
+                        value: "读书或者电影",
+                    },
+                    {
+                        key: "来源",
+                        value: "推特",
+                        url: "https://twitter.com/gh0st_r1d3r_0x9"
+                    },
+                ]
+            },
+            {
+                id: "Divyanshu的社会属性空间",
+                label: "Divyanshu的社会属性空间",
+                socialAttributes: [
+                    {
+                        key: "职业",
+                        value: "云安全研究员",
+                        url: ["https://divyanshu-mehta.gitbook.io/researchs/"],
+                    },
+                ]
+            },
+            {
+                id: "Adrián的互联网社交空间",
+                label: "Adrián的互联网社交空间",
+                socialAttributes: [
+                    {
+                        key: "推特的粉丝",
+                        value: "693",
+                        url: "https://twitter.com/Adriantega12/media"
+                    },
+                    {
+                        key: "内容",
+                        value: "幽默风趣并多与游戏有关",
+                        url: "https://twitter.com/Adriantega12/media"
+                    },
+                ]
+            },
+            {
+                id: "Adrián的互联网娱乐空间",
+                label: "Adrián的互联网娱乐空间",
+                socialAttributes: [
+                    {
+                        key: "娱乐方式",
+                        value: "游戏",
+                    },
+                    {
+                        key: "来源",
+                        value: "推特",
+                        url: "https://twitter.com/Adriantega12/media"
+                    },
+                ]
+            },
+
+
+            {
+                id: "Adrián的性格特质空间",
+                label: "Adrián的性格特质空间",
+                socialAttributes: [
+                    {
+                        key: "外倾性",
+                        value: "高，个人信息残留较多",
+                        url: ["https://twitter.com/Adriantega12/media"],
+                    },
+                ]
+            },
+
+
+            ]
+            }
+    edges:[
+        {
+            source: "arinerron的互联网社交空间",
+            target: "arinerron的互联网隐私空间",
+            label:"真实姓名",
+        },
+        {
+            source: "acedrew的互联网社交空间",
+            target: "acedrew的互联网娱乐空间",
+            label:"兴趣爱好",
+        },
+        {
+            source: "JehanKandy的互联网社交空间",
+            target: "JehanKandy的时间管理空间",
+            label:"作息时间"
+        },
+        {
+            source: "Divyanshu的互联网社交空间",
+            target: "Divyanshu的社会属性空间",
+            label:"职业"
+            source: "Divyanshu的互联网娱乐空间",
+            target: "Divyanshu的社会属性空间",
+            label:"爱好"
+        },
+        {
+            source: "Adrián的互联网社交空间",
+            target: "Adrián的性格特质空间",
+            label:"外倾性"
+            source: "Adrián的互联网娱乐空间",
+            target: "Adrián的性格特质空间",
+            label:"外倾性"
+        }
+    ]
+    return (
+        <ProCard
+        split="horizontal"
+        headerBordered
+        bordered
+    >
+        <ProCard
+            split='vertical'
+        >
+            <ProCard title="trace">
+                <AttributeGraph data={data}></AttributeGraph>
+            </ProCard>
+            </ProCard>
+    </ProCard>
+    )
+}
+
+export default PsychologicalTracePage
