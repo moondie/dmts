@@ -4,6 +4,7 @@
 
 
 import { http } from "@/utils";
+import { Button } from "antd";
 import { makeAutoObservable } from "mobx";
 
 class ResultStore {
@@ -316,9 +317,10 @@ class ResultStore {
                     dataIndex: "type",
                     title: "特征类型",
                     width: 400,
+                    align: "center",
                     render: (value, row) => {
                         return {
-                            children: value,
+                            children: <Button type="link" href={row.url}>{value}</Button>,
                             props: { rowSpan: row.featureSpan },
                         };
                     },
@@ -336,6 +338,7 @@ class ResultStore {
                     type: "工程事务特征",
                     description: "代码研发周期",
                     featureSpan: 3,
+                    url: "/result/intelligence/feature/engineer",
                 },
                 {
                     key: "2",
@@ -357,6 +360,7 @@ class ResultStore {
                     type: "团队成员特征",
                     description: "团队规模",
                     featureSpan: 5,
+                    url: "/result/intelligence/feature/team",
                 },
                 {
                     key: "5",
@@ -392,6 +396,7 @@ class ResultStore {
                     type: "社会态特征（社会属性）",
                     description: "年龄",
                     featureSpan: 12,
+                    url: "/result/intelligence/feature/social",
                 },
                 {
                     key: "10",
@@ -476,6 +481,7 @@ class ResultStore {
                     type: "心理态特征（大五人格）",
                     description: "开放性",
                     featureSpan: 5,
+                    url: "/result/intelligence/feature/five",
                 },
                 {
                     key: "22",
@@ -511,6 +517,7 @@ class ResultStore {
                     type: "空间态特征（代码词汇特征）",
                     description: "词汇分布",
                     featureSpan: 21,
+                    url: "/result/intelligence/feature/lexical",
                 },
                 {
                     key: "27",
@@ -658,6 +665,7 @@ class ResultStore {
                     type: "空间态特征（代码布局特征）",
                     description: "制表符分布",
                     featureSpan: 6,
+                    url: "/result/intelligence/feature/layout",
                 },
                 {
                     key: "48",
@@ -700,6 +708,7 @@ class ResultStore {
                     type: "空间态特征（代码语法特征）",
                     description: "树最大深度",
                     featureSpan: 6,
+                    url: "/result/intelligence/feature/syntax",
                 },
                 {
                     key: "54",
@@ -751,9 +760,10 @@ class ResultStore {
                     dataIndex: "type",
                     title: "特征类型",
                     width: 400,
+                    align: "center",
                     render: (value, row) => {
                         return {
-                            children: value,
+                            children: <Button type="link" href={row.url}>{value}</Button>,
                             props: { rowSpan: row.featureSpan },
                         };
                     },
@@ -771,6 +781,7 @@ class ResultStore {
                     type: "社会属性",
                     description: "年龄",
                     featureSpan: 12,
+                    url: "/result/intelligence/psychological/social",
                 },
                 {
                     key: "2",
@@ -855,6 +866,7 @@ class ResultStore {
                     type: "多重空间",
                     description: "工程事务空间",
                     featureSpan: 10,
+                    url: "/result/intelligence/psychological/multispaces",
                 },
                 {
                     key: "14",
@@ -925,6 +937,7 @@ class ResultStore {
                     type: "社交跟踪范围",
                     description: "社会属性空间->互联网社交空间",
                     featureSpan: 10,
+                    url: "/result/intelligence/psychological/trace",
                 },
                 {
                     key: "24",
@@ -1004,9 +1017,10 @@ class ResultStore {
                     dataIndex: "type",
                     title: "特征类型",
                     width: 400,
+                    align: "center",
                     render: (value, row) => {
                         return {
-                            children: value,
+                            children: <Button type="link" href={row.url}>{value}</Button>,
                             props: { rowSpan: row.featureSpan },
                         };
                     },
@@ -1024,6 +1038,7 @@ class ResultStore {
                     type: "编码行为模式",
                     description: "系统调用习惯",
                     featureSpan: 10,
+                    url: "/result/intelligence/behavior/coding",
                 },
                 {
                     key: "2",
@@ -1094,6 +1109,7 @@ class ResultStore {
                     type: "社会行为模式",
                     description: "恶意攻击模式",
                     featureSpan: 8,
+                    url: "/result/intelligence/behavior/social",
                 },
                 {
                     key: "12",
